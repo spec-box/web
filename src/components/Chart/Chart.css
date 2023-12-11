@@ -1,0 +1,59 @@
+.Chart-Layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--g-spacing-4);
+
+  padding: var(--g-spacing-6);
+
+  border-radius: var(--g-border-radius-m);
+  background-color: var(--g-color-base-generic);
+}
+
+.Chart-Loader {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  justify-self: stretch;
+
+  color: var(--g-color-text-secondary);
+}
+
+.Chart-Title {
+  font: var(--sb-font-subheader-m);
+}
+
+.Chart-Header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.Chart-Content {
+  position: relative;
+  aspect-ratio: 2;
+
+  display: flex;
+  overflow: hidden;
+}
+
+.Chart-Legend {
+  display: flex;
+  flex-direction: row;
+  gap: var(--g-spacing-4);
+}
+
+.Chart-LegendBadge {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+}
+
+.Chart-LegendItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--g-spacing-2);
+}

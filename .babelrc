@@ -1,0 +1,3 @@
+{
+  "presets": ["atomic-router/babel-preset"]
+}

@@ -1,0 +1,9 @@
+.Home-ProjectName {
+  font: var(--sb-font-header-m);
+}
+
+.Home-ProjectDescription {
+  font: var(--sb-font-body-s);
+
+  color: var(--g-color-text-secondary);
+}

@@ -1,0 +1,10 @@
+.RouteLink,
+.RouteLink:visited {
+  text-decoration: none;
+
+  color: var(--g-color-text-link);
+}
+
+.RouteLink:hover {
+  color: var(--g-color-text-link-hover);
+}

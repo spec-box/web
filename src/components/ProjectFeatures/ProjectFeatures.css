@@ -1,0 +1,48 @@
+.ProjectFeatures {
+  display: flex;
+  overflow-y: auto;
+  flex-direction: column;
+
+  width: 100%;
+  padding: var(--g-spacing-6);
+}
+
+.ProjectFeatures-Item {
+  display: flex;
+  flex-direction: row;
+
+  user-select: none;
+}
+
+.ProjectFeatures-FeatureIcon,
+.ProjectFeatures-CollapseIcon {
+  display: inline-block;
+
+  vertical-align: middle;
+}
+
+.ProjectFeatures-ItemContent {
+  flex: 1;
+}
+
+.ProjectFeatures-ItemStat {
+  padding: 0 var(--g-spacing-1);
+}
+
+.ProjectFeatures-ItemStat_state_normal {
+  color: var(--g-color-text-secondary);
+}
+
+.ProjectFeatures-ItemStat_state_warning {
+  color: var(--g-color-text-danger);
+}
+
+.ProjectFeatures-Indent {
+  background: linear-gradient(
+    to right,
+    transparent 18px,
+    var(--g-color-line-generic) 18px,
+    var(--g-color-line-generic) 19px,
+    transparent 19px
+  );
+}

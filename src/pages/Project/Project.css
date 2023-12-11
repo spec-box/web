@@ -1,0 +1,23 @@
+.Project {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.Project-ListPanel,
+.Project-DetailsPanel {
+  display: flex;
+  flex: 1;
+
+  border-radius: var(--g-border-radius-xl);
+}
+
+.Project-DetailsPanel {
+  background-color: var(--g-color-base-generic);
+}
+
+.Project-FeatureCard {
+  overflow-y: auto;
+  flex: 1;
+}
