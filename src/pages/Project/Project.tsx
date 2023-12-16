@@ -1,17 +1,17 @@
-import { useEvent, useStore } from 'effector-react/scope';
-import { FC, useCallback } from 'react';
+import { useEvent, useStore } from "effector-react/scope";
+import { FC, useCallback } from "react";
 
-import { FeatureCard } from '@/components/FeatureCard/FeatureCard';
-import { ProjectContext } from '@/components/ProjectContext/ProjectContext';
-import { ProjectFeatures } from '@/components/ProjectFeatures/ProjectFeatures';
-import { useTitle } from '@/hooks';
-import * as model from '@/model/pages/project';
-import { Feature, TreeNode } from '@/types';
-import { cn } from '@bem-react/classname';
+import { FeatureCard } from "@/components/FeatureCard/FeatureCard";
+import { ProjectFeatures } from "@/components/ProjectFeatures/ProjectFeatures";
+import { useTitle } from "@/hooks";
+import * as model from "@/model/pages/project";
+import { Feature, TreeNode } from "@/types";
+import { cn } from "@bem-react/classname";
 
-import './Project.css';
+import "./Project.css";
+import { ProjectLayout } from "@/components/ProjectLayout/ProjectLayout";
 
-const bem = cn('Project');
+const bem = cn("Project");
 
 interface ProjectTreeProps {
   isPending: boolean;
@@ -51,7 +51,11 @@ const Details: FC<DetailsProps> = ({ isPending, feature, repositoryUrl }) => {
     return <div>ничего не выбрано</div>;
   } else {
     return (
-      <FeatureCard className={bem('FeatureCard')} feature={feature} repositoryUrl={repositoryUrl} />
+      <FeatureCard
+        className={bem("FeatureCard")}
+        feature={feature}
+        repositoryUrl={repositoryUrl}
+      />
     );
   }
 };
@@ -70,31 +74,37 @@ export const Project: FC = () => {
 
   const onFeatureSelected = useCallback(
     (feature: string) => loadFeature({ project: projectCode, feature }),
-    [projectCode, loadFeature],
+    [projectCode, loadFeature]
   );
 
   const navigate = useCallback(
     (project: string, feature: string) => loadFeature({ project, feature }),
-    [loadFeature],
+    [loadFeature]
   );
 
-  useTitle(structureIsPending ? 'Структура проекта' : projectTitle);
+  useTitle(structureIsPending ? "Структура проекта" : projectTitle);
 
   return (
-    <ProjectContext.Provider value={{ project: projectCode, navigate }}>
-      <div className={bem()}>
-        <div className={bem('ListPanel')}>
-          <ProjectTree
-            isPending={structureIsPending}
-            tree={tree}
-            onFeatureSelected={onFeatureSelected}
-            selectedFeatureCode={featureCode}
-          />
-        </div>
-        <div className={bem('DetailsPanel')}>
-          <Details repositoryUrl={repositoryUrl} feature={feature} isPending={featureIsPending} />
-        </div>
+    <ProjectLayout
+      contentClassName={bem()}
+      project={projectCode}
+      navigate={navigate}
+    >
+      <div className={bem("ListPanel")}>
+        <ProjectTree
+          isPending={structureIsPending}
+          tree={tree}
+          onFeatureSelected={onFeatureSelected}
+          selectedFeatureCode={featureCode}
+        />
       </div>
-    </ProjectContext.Provider>
+      <div className={bem("DetailsPanel")}>
+        <Details
+          repositoryUrl={repositoryUrl}
+          feature={feature}
+          isPending={featureIsPending}
+        />
+      </div>
+    </ProjectLayout>
   );
 };

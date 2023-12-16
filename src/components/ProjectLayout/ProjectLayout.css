@@ -1,0 +1,11 @@
+.ProjectLayout {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.ProjectLayout-Content {
+    flex: 1;
+    min-height: 0;
+}

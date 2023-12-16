@@ -10,6 +10,7 @@
   --sb-font-subheader-s: var(--g-text-subheader-font-weight) var(--g-text-subheader-1-font-size) / var(--g-text-subheader-1-line-height) var(--g-text-subheader-font-family);
 
   display: flex;
+  flex-direction: column;
   flex: 1;
 
   padding: var(--g-spacing-5);
