@@ -2,7 +2,7 @@ import { useStore } from 'effector-react/scope';
 import { FC } from 'react';
 
 import { RouteLink } from '@/components/RouteLink/RouteLink';
-import { useTitle } from '@/hooks';
+import { useTitle } from '@/hooks/useTitle';
 import { projectRoute } from '@/model';
 import * as model from '@/model/pages/home';
 import { Project } from '@/types';

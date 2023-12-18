@@ -3,7 +3,7 @@ import { FC, useCallback } from "react";
 
 import { FeatureCard } from "@/components/FeatureCard/FeatureCard";
 import { ProjectFeatures } from "@/components/ProjectFeatures/ProjectFeatures";
-import { useTitle } from "@/hooks";
+import { useTitle } from "@/hooks/useTitle";
 import * as model from "@/model/pages/project";
 import { Feature, TreeNode } from "@/types";
 import { cn } from "@bem-react/classname";

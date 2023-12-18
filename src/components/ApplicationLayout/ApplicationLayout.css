@@ -1,21 +1,19 @@
 .ApplicationLayout {
-  --g-color-text-link: var(--g-color-private-blue-500-solid);
-  --g-color-text-link-hover: var(--g-color-private-red-400-solid);
+    --g-color-text-link: var(--g-color-private-blue-500-solid);
+    --g-color-text-link-hover: var(--g-color-private-red-400-solid);
 
-  --sb-font-body-m: var(--g-text-body-font-weight) var(--g-text-body-2-font-size) / var(--g-text-body-2-line-height) var(--g-text-body-font-family);
-  --sb-font-body-s: var(--g-text-body-font-weight) var(--g-text-body-1-font-size) / var(--g-text-body-1-line-height) var(--g-text-body-font-family);
-  --sb-font-header-m: var(--g-text-header-font-weight) var(--g-text-header-2-font-size) / var(--g-text-header-2-line-height) var(--g-text-header-font-family);
-  --sb-font-header-s: var(--g-text-header-font-weight) var(--g-text-header-1-font-size) / var(--g-text-header-1-line-height) var(--g-text-header-font-family);
-  --sb-font-subheader-m: var(--g-text-subheader-font-weight) var(--g-text-subheader-2-font-size) / var(--g-text-subheader-2-line-height) var(--g-text-subheader-font-family);
-  --sb-font-subheader-s: var(--g-text-subheader-font-weight) var(--g-text-subheader-1-font-size) / var(--g-text-subheader-1-line-height) var(--g-text-subheader-font-family);
+    --sb-font-body-m: var(--g-text-body-font-weight) var(--g-text-body-2-font-size) / var(--g-text-body-2-line-height) var(--g-text-body-font-family);
+    --sb-font-body-s: var(--g-text-body-font-weight) var(--g-text-body-1-font-size) / var(--g-text-body-1-line-height) var(--g-text-body-font-family);
+    --sb-font-header-m: var(--g-text-header-font-weight) var(--g-text-header-2-font-size) / var(--g-text-header-2-line-height) var(--g-text-header-font-family);
+    --sb-font-header-s: var(--g-text-header-font-weight) var(--g-text-header-1-font-size) / var(--g-text-header-1-line-height) var(--g-text-header-font-family);
+    --sb-font-subheader-m: var(--g-text-subheader-font-weight) var(--g-text-subheader-2-font-size) / var(--g-text-subheader-2-line-height) var(--g-text-subheader-font-family);
+    --sb-font-subheader-s: var(--g-text-subheader-font-weight) var(--g-text-subheader-1-font-size) / var(--g-text-subheader-1-line-height) var(--g-text-subheader-font-family);
 
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 
-  padding: var(--g-spacing-5);
+    font: var(--sb-font-body-m);
 
-  font: var(--sb-font-body-m);
-
-  color: var(--g-color-text-primary);
+    color: var(--g-color-text-primary);
 }
