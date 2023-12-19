@@ -1,0 +1,7 @@
+.ProjectFeatures-Indent {
+    background: linear-gradient(to right,
+            transparent 18px,
+            var(--g-color-line-generic) 18px,
+            var(--g-color-line-generic) 19px,
+            transparent 19px);
+}
