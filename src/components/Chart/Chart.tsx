@@ -19,8 +19,8 @@ import { Bar, Line } from 'react-chartjs-2';
 import { StatAssertion, StatAutotestsItem } from '@/types';
 
 import { bem } from './Chart.cn';
-import { ChartLayout } from './components/Chart.Layout';
-import { ChartLegendDataset } from './components/Chart.Legend';
+import { Layout } from './components/Layout';
+import { LegendDataset } from './components/Legend';
 
 ChartJS.register(TimeScale, LinearScale, PointElement, LineElement, BarElement, Tooltip, Filler);
 
@@ -139,7 +139,7 @@ export const AssertionsChart: FC<AssertionsChartProps> = ({ stat, isPending }) =
   const legend = useMemo(
     () =>
       data.datasets.map(
-        (ds): ChartLegendDataset => ({
+        (ds): LegendDataset => ({
           color: ds.borderColor?.toString(),
           title: ds.label,
         }),
@@ -148,14 +148,14 @@ export const AssertionsChart: FC<AssertionsChartProps> = ({ stat, isPending }) =
   );
 
   return (
-    <ChartLayout
+    <Layout
       className={bem()}
       title="Покрытие автотестами"
       isPending={isPending}
       legend={legend}
     >
       <Line options={options} data={data} />
-    </ChartLayout>
+    </Layout>
   );
 };
 
@@ -170,7 +170,7 @@ export const AutotestsChart: FC<AutotestsChartProps> = ({ stat, isPending }) => 
   const legend = useMemo(
     () =>
       data.datasets.map(
-        (ds): ChartLegendDataset => ({
+        (ds): LegendDataset => ({
           color: ds.borderColor?.toString(),
           title: ds.label,
         }),
@@ -179,13 +179,13 @@ export const AutotestsChart: FC<AutotestsChartProps> = ({ stat, isPending }) => 
   );
 
   return (
-    <ChartLayout
+    <Layout
       className={bem()}
       title="Выполненные проверки"
       isPending={isPending}
       legend={legend}
     >
       <Bar options={options} data={data} />
-    </ChartLayout>
+    </Layout>
   );
 };

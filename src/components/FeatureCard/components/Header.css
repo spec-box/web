@@ -1,0 +1,35 @@
+.FeatureCard-Header {
+    display: flex;
+    flex-direction: row;
+    gap: var(--g-spacing-6);
+
+    padding: var(--g-spacing-6);
+}
+
+.FeatureCard-HeaderBody {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--g-spacing-4);
+}
+
+.FeatureCard-HeaderContent {
+    display: flex;
+    flex-direction: column;
+    gap: var(--g-spacing-2);
+}
+
+.FeatureCard-Title {
+    font: var(--sb-font-subheader-m);
+    word-break: break-word;
+}
+
+.FeatureCard-Code {
+    font: var(--sb-font-body-s);
+}
+
+.FeatureCard-Description {
+    font: var(--sb-font-body-s);
+
+    color: var(--g-color-text-secondary);
+}

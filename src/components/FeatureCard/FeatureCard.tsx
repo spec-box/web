@@ -1,11 +1,9 @@
-import { FC } from 'react';
+import { FC } from "react";
 
-import { Feature } from '@/types';
-import { bem } from './FeatureCard.cn';
-import { FeatureCardAssertionGroup } from './components/FeatureCard.AssertionGroup';
-import { FeatureCardHeader } from './components/FeatureCard.Header';
-
-import './FeatureCard.css';
+import { Feature } from "@/types";
+import { bem } from "./FeatureCard.cn";
+import { AssertionGroup } from "./components/AssertionGroup";
+import { Header } from "./components/Header";
 
 type FeatureCardProps = {
   className?: string;
@@ -17,12 +15,12 @@ export const FeatureCard: FC<FeatureCardProps> = (props) => {
   const { className, feature, repositoryUrl } = props;
 
   const groups = feature.assertionGroups.map((group, index) => (
-    <FeatureCardAssertionGroup key={index} group={group} />
+    <AssertionGroup key={index} group={group} />
   ));
 
   return (
     <div className={bem(null, [className])}>
-      <FeatureCardHeader feature={feature} repositoryUrl={repositoryUrl} />
+      <Header feature={feature} repositoryUrl={repositoryUrl} />
       {groups}
     </div>
   );
