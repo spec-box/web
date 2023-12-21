@@ -2,9 +2,10 @@ import { FC } from "react";
 
 import { FormattedText } from "@/components/FormattedText/FormattedText";
 import { Assertion as AssertionData } from "@/types";
-import { Label } from "@gravity-ui/uikit";
 
 import { bem } from "../FeatureCard.cn";
+
+import { Badge } from "./Badge";
 
 import "./Assertion.css";
 
@@ -19,16 +20,6 @@ export const Assertion: FC<AssertionProps> = (props) => {
     <div className={bem("AssertionDescription")}>{assertion.description}</div>
   ) : null;
 
-  const label = assertion.isAutomated ? (
-    <Label theme="success" size="s">
-      Done
-    </Label>
-  ) : (
-    <Label theme="danger" size="s">
-      Missing
-    </Label>
-  );
-
   return (
     <div className={bem("Assertion")}>
       <div>— </div>
@@ -38,7 +29,9 @@ export const Assertion: FC<AssertionProps> = (props) => {
         </div>
         {description}
       </div>
-      <div>{label}</div>
+      <div className={bem("AssertionBadge")}>
+        <Badge automated={assertion.isAutomated} />
+      </div>
     </div>
   );
 };

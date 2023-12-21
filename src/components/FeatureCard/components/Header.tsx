@@ -5,7 +5,7 @@ import { FormattedText } from "@/components/FormattedText/FormattedText";
 import * as model from "@/model/pages/project";
 import { Feature } from "@/types";
 import { Copy } from "@gravity-ui/icons";
-import { Button, Icon, Link } from "@gravity-ui/uikit";
+import { Button, Icon } from "@gravity-ui/uikit";
 
 import { bem } from "../FeatureCard.cn";
 
@@ -46,28 +46,37 @@ export const Header: FC<HeaderProps> = (props) => {
     [feature.filePath, repositoryUrl]
   );
 
-  const actions = link ? (
-    <div className={bem("Actions")}>
-      <Button href={link} target="_blank" size="m" view="outlined">
-        Перейти к YML
-      </Button>
-    </div>
+  const goToYmlButton = link ? (
+    <Button
+      href={link}
+      target="_blank"
+      size="m"
+      view="outlined"
+      pin="circle-circle"
+    >
+      Перейти к YML
+    </Button>
   ) : null;
 
   return (
     <div className={bem("Header")}>
       <div className={bem("HeaderBody")}>
         <div className={bem("HeaderContent")}>
-          <div className={bem("Code")}>
-            <Link view="primary" onClick={onClickCopyButton}>
-              {feature.code}
-              <Icon className={bem("CopyIcon")} size={16} data={Copy} />
-            </Link>
-          </div>
           <div className={bem("Title")}>{feature.title}</div>
           {description}
         </div>
-        {actions}
+        <div className={bem("Actions")}>
+          <Button
+            view="outlined"
+            size="m"
+            pin="circle-circle"
+            onClick={onClickCopyButton}
+          >
+            {feature.code}
+            <Icon className={bem("CopyIcon")} size={16} data={Copy} />
+          </Button>
+          {goToYmlButton}
+        </div>
       </div>
       <div className={bem("HeaderSidebar")}>
         <Stat total={total} automated={automated} />

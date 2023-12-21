@@ -10,6 +10,8 @@ import { projectRoute } from "@/model";
 import { cn } from "@bem-react/classname";
 import { PressEvent } from "@/hooks/usePress";
 
+import "./FormattedText.css";
+
 const bem = cn("FormattedText");
 
 type FormattedTextProps = {

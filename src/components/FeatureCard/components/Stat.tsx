@@ -18,7 +18,7 @@ export const Stat: FC<StatProps> = (props) => {
     <div className={bem("Stat")}>
       <div className={bem("StatLabel")}>Покрыто тестами</div>
       <div className={bem("StatInfo")}>
-        <div className={bem("StatRate")}>{rate} %</div>
+        <div className={bem("StatRate")}>{rate}%</div>
         <div className={bem("StatCount")}>
           {automated} из {total}
         </div>

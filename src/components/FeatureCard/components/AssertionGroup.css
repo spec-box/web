@@ -6,7 +6,7 @@
 .FeatureCard-AssertionGroupTitle {
     margin-bottom: var(--g-spacing-4);
 
-    font: var(--sb-font-subheader-m);
+    font: var(--sb-font-subheader-l);
     word-break: break-word;
 }
 

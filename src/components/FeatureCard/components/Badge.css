@@ -1,0 +1,14 @@
+.FeatureCard-Badge {
+    background-color: var(--g-color-base-danger-heavy);
+
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.FeatureCard-Badge_automated {
+    background-color: var(--g-color-base-positive-medium);
+}

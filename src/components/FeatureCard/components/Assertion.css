@@ -21,3 +21,7 @@
 
     color: var(--g-color-text-secondary);
 }
+
+.FeatureCard-AssertionBadge {
+    padding: 0 var(--g-spacing-1);
+}

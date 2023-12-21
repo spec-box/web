@@ -1,0 +1,11 @@
+.FormattedText code {
+    font-family: var(--g-font-family-monospace);
+    color: var(--g-color-text-misc-heavy);
+
+    background-color: var(--g-color-base-misc-light);
+    padding: var(--g-spacing-half) var(--g-spacing-1);
+    border-radius: var(--g-border-radius-s);
+    margin: 0 var(--g-spacing-half);
+
+    word-break: break-word;
+}

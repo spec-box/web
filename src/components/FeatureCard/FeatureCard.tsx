@@ -5,6 +5,8 @@ import { bem } from "./FeatureCard.cn";
 import { AssertionGroup } from "./components/AssertionGroup";
 import { Header } from "./components/Header";
 
+import './FeatureCard.css';
+
 type FeatureCardProps = {
   className?: string;
   repositoryUrl?: string;

@@ -5,7 +5,7 @@
 
     padding: var(--g-spacing-4);
 
-    border-radius: var(--g-border-radius-m);
+    border-radius: var(--g-border-radius-l);
     background-color: var(--g-color-base-background);
 }
 
@@ -23,7 +23,7 @@
 }
 
 .FeatureCard-StatRate {
-    font: var(--sb-font-subheader-m);
+    font: var(--sb-font-header-s);
 }
 
 .FeatureCard-StatCount {

@@ -1,7 +1,7 @@
 .FeatureCard-Header {
     display: flex;
     flex-direction: row;
-    gap: var(--g-spacing-6);
+    gap: var(--g-spacing-4);
 
     padding: var(--g-spacing-6);
 }
@@ -20,16 +20,18 @@
 }
 
 .FeatureCard-Title {
-    font: var(--sb-font-subheader-m);
+    font: var(--sb-font-header-m);
     word-break: break-word;
-}
-
-.FeatureCard-Code {
-    font: var(--sb-font-body-s);
 }
 
 .FeatureCard-Description {
     font: var(--sb-font-body-s);
 
     color: var(--g-color-text-secondary);
+}
+
+.FeatureCard-Actions {
+    display: flex;
+    flex-direction: row;
+    gap: var(--g-spacing-2);
 }
