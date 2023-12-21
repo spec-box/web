@@ -3,11 +3,11 @@ import { bem } from "./ListItem.cn";
 
 import "./ListItem.css";
 
-const usePress = (onPress: () => void) => {
+const usePress = (onPress?: () => void) => {
   const onKeyUp = useCallback(
     (e: KeyboardEvent) => {
       if (e.code === "Enter" || e.code === "Space") {
-        onPress();
+        onPress?.();
       }
     },
     [onPress]
@@ -25,18 +25,20 @@ const usePress = (onPress: () => void) => {
 
 export interface ListItemProps {
   className?: string;
+  view: "normal" | "flat";
   isActive?: boolean;
 
   before?: ReactNode;
   after?: ReactNode;
   children: ReactNode;
 
-  onPress: () => void;
+  onPress?: () => void;
 }
 
 export const ListItem: FC<ListItemProps> = (props) => {
   const {
     className,
+    view,
     isActive: active,
     before,
     after,
@@ -55,7 +57,7 @@ export const ListItem: FC<ListItemProps> = (props) => {
 
   return (
     <div
-      className={bem({ active }, [className])}
+      className={bem({ active, view }, [className])}
       onClick={onClick}
       onKeyUp={onKeyUp}
       onKeyDown={onKeyDown}

@@ -1,9 +1,24 @@
-.Home-ProjectName {
-  font: var(--sb-font-header-m);
+.Home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex: 1;
 }
 
-.Home-ProjectDescription {
-  font: var(--sb-font-body-s);
+.Home-Content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--g-spacing-4);
 
-  color: var(--g-color-text-secondary);
+    max-width: 360px;
+}
+
+.Home-Header {
+    font: var(--sb-font-header-s);
+}
+
+.Home-Hint {
+    font: var(--sb-font-body-s);
+    color: var(--g-color-text-secondary);
 }

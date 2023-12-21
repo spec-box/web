@@ -51,6 +51,7 @@ export const FeatureGroupItem: FC<FeatureGroupItemProps> = (props) => {
       <div className={bem("Item", { isOpen })}>
         <Indent level={level} />
         <ListItem
+          view="flat"
           className={bem("ItemContent")}
           onPress={onSelect}
           before={arrow}
@@ -96,6 +97,7 @@ export const FeatureItem: FC<FeatureItemProps> = (props) => {
     <div className={bem("Item")}>
       <Indent level={level} />
       <ListItem
+        view="flat"
         className={bem("ItemContent")}
         isActive={featureCode === selectedCode}
         onPress={onSelect}
