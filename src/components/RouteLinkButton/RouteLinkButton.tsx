@@ -1,10 +1,10 @@
-import { RouteParams } from "atomic-router";
+import { ReactNode, ComponentProps, MouseEvent, useCallback } from "react";
 
+import { RouteParams } from "atomic-router";
 import { cn } from "@bem-react/classname";
 import { Button } from "@gravity-ui/uikit";
 
 import { useRouteLink, RouteLinkParams } from "@/hooks/useRouteLink";
-import { ReactNode, ComponentProps } from "react";
 
 const bem = cn("RouteLink");
 
@@ -23,7 +23,7 @@ export function RouteLinkButton<T extends RouteParams>(
     params,
     query,
     target,
-    onClick,
+    onPress,
     children,
     ...buttonProps
   } = props;
@@ -33,14 +33,19 @@ export function RouteLinkButton<T extends RouteParams>(
     params,
     query,
     target,
-    onClick,
+    onPress,
   });
+
+  const onClick = useCallback(
+    (source: MouseEvent) => handler({ type: "mouse", source }),
+    [handler]
+  );
 
   return (
     <Button
       className={bem(null, [className])}
       href={href}
-      onClick={handler}
+      onClick={onClick}
       target={target}
       {...buttonProps}
     >

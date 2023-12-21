@@ -8,6 +8,7 @@ import {
 import { RouteLink } from "@/components/RouteLink/RouteLink";
 import { projectRoute } from "@/model";
 import { cn } from "@bem-react/classname";
+import { PressEvent } from "@/hooks/usePress";
 
 const bem = cn("FormattedText");
 
@@ -30,22 +31,25 @@ interface FeatureLinkProps {
   navigate?: OpenFeatureLinkEventHandler;
 }
 
-function isModifiedEvent(
-  event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>
-) {
+function isModifiedEvent(event: MouseEvent) {
   return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
 }
 
 const FeatureLink: FC<FeatureLinkProps> = ({ project, feature, navigate }) => {
-  const onClick = useCallback(
-    (e: MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
-      if (
-        navigate &&
-        !e.defaultPrevented && // onClick prevented default
-        e.button === 0 && // ignore everything but left clicks
-        !isModifiedEvent(e) // ignore clicks with modifier keys
-      ) {
-        e.preventDefault();
+  const onPress = useCallback(
+    (e: PressEvent) => {
+      if (e.type === "mouse") {
+        if (
+          e.source.defaultPrevented || // onClick prevented default
+          e.source.button !== 0 || // ignore everything but left clicks
+          isModifiedEvent(e.source) // ignore clicks with modifier keys)
+        ) {
+          return;
+        }
+      }
+
+      if (navigate) {
+        e.source.preventDefault();
         navigate(project, feature);
       }
     },
@@ -57,7 +61,7 @@ const FeatureLink: FC<FeatureLinkProps> = ({ project, feature, navigate }) => {
       to={projectRoute}
       params={{ project }}
       query={{ feature }}
-      onClick={onClick}
+      onPress={onPress}
     >
       {feature}
     </RouteLink>

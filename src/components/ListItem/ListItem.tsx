@@ -1,38 +1,23 @@
-import { FC, ReactNode, useCallback, KeyboardEvent } from "react";
+import { FC, ReactNode } from "react";
+
+import { PressEvent, usePress } from "@/hooks/usePress";
+
 import { bem } from "./ListItem.cn";
 
 import "./ListItem.css";
-
-const usePress = (onPress?: () => void) => {
-  const onKeyUp = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.code === "Enter" || e.code === "Space") {
-        onPress?.();
-      }
-    },
-    [onPress]
-  );
-
-  const onKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.code === "Space") {
-      // отменяем действие, чтобы список не скроллился при нажатии на пробел
-      e.preventDefault();
-    }
-  }, []);
-
-  return { onKeyUp, onKeyDown, onClick: onPress, tabIndex: 0 };
-};
 
 export interface ListItemProps {
   className?: string;
   view: "normal" | "flat";
   isActive?: boolean;
 
+  href?: string;
+
   before?: ReactNode;
   after?: ReactNode;
   children: ReactNode;
 
-  onPress?: () => void;
+  onPress?: (e: PressEvent) => void;
 }
 
 export const ListItem: FC<ListItemProps> = (props) => {
