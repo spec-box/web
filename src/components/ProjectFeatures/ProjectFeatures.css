@@ -1,6 +1,5 @@
 .ProjectFeatures {
     display: flex;
-    overflow-y: auto;
     flex-direction: column;
 
     width: 100%;

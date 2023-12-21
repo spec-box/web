@@ -8,16 +8,20 @@ const usePress = (onClick: () => void) => {
   const onKeyUp = useCallback(
     (e: KeyboardEvent) => {
       if (e.code === "Enter" || e.code === "Space") {
-        // отменяем действие, чтобы список не скроллился при нажатии на пробел
-        e.preventDefault();
-
         onClick();
       }
     },
     [onClick]
   );
 
-  return { onKeyUp, onClick, tabIndex: 0 };
+  const onKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.code === "Space") {
+      // отменяем действие, чтобы список не скроллился при нажатии на пробел
+      e.preventDefault();
+    }
+  }, []);
+
+  return { onKeyUp, onKeyDown, onClick, tabIndex: 0 };
 };
 
 export interface TreeNodeProps {
@@ -32,13 +36,14 @@ export interface TreeNodeProps {
 export const TreeNode: FC<TreeNodeProps> = (props) => {
   const { className, icon, stat, text, onSelect, isActive: active } = props;
 
-  const { onClick, onKeyUp, tabIndex } = usePress(onSelect);
+  const { onClick, onKeyUp, onKeyDown, tabIndex } = usePress(onSelect);
 
   return (
     <div
       className={bem("TreeNode", { active }, [className])}
       onClick={onClick}
       onKeyUp={onKeyUp}
+      onKeyDown={onKeyDown}
       tabIndex={tabIndex}
     >
       {icon}

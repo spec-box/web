@@ -9,6 +9,9 @@
     --sb-font-subheader-m: var(--g-text-subheader-font-weight) var(--g-text-subheader-2-font-size) / var(--g-text-subheader-2-line-height) var(--g-text-subheader-font-family);
     --sb-font-subheader-s: var(--g-text-subheader-font-weight) var(--g-text-subheader-1-font-size) / var(--g-text-subheader-1-line-height) var(--g-text-subheader-font-family);
 
+    --sb-outline-width: 2px;
+    --sb-border-radius-3-xl: 24px;
+
     display: flex;
     flex-direction: column;
     flex: 1;

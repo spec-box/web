@@ -5,7 +5,7 @@
     justify-content: space-between;
 
     min-height: 0;
-    gap: 4px;
+    gap: var(--g-spacing-6);
 }
 
 .Project-ListPanel,
@@ -13,14 +13,11 @@
     display: flex;
     flex: 1;
 
-    border-radius: var(--g-border-radius-xl);
+    padding: var(--sb-outline-width);
+    overflow-y: auto;
 }
 
 .Project-DetailsPanel {
+    border-radius: var(--sb-border-radius-3-xl);
     background-color: var(--g-color-base-generic);
-}
-
-.Project-FeatureCard {
-    overflow-y: auto;
-    flex: 1;
 }

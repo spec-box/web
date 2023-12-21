@@ -1,7 +1,3 @@
-.ProjectFeatures-ItemStat {
-    padding: 0 var(--g-spacing-1);
-}
-
 .ProjectFeatures-ItemStat_state_normal {
     color: var(--g-color-text-secondary);
 }
