@@ -11,6 +11,9 @@
     gap: var(--g-spacing-2);
 
     font: var(--sb-font-body-s);
+    text-decoration: none;
+    color: var(--g-color-text-primary);
+    user-select: none;
 }
 
 .ListItem:focus-visible {

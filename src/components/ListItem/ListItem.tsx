@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC, HTMLAttributes, ReactNode } from "react";
 
 import { PressEvent, usePress } from "@/hooks/usePress";
 
@@ -12,6 +12,7 @@ export interface ListItemProps {
   isActive?: boolean;
 
   href?: string;
+  target?: string;
 
   before?: ReactNode;
   after?: ReactNode;
@@ -22,6 +23,8 @@ export interface ListItemProps {
 
 export const ListItem: FC<ListItemProps> = (props) => {
   const {
+    href,
+    target,
     className,
     view,
     isActive: active,
@@ -36,21 +39,32 @@ export const ListItem: FC<ListItemProps> = (props) => {
   const beforeElement = before ? (
     <div className={bem("Before")}>{before}</div>
   ) : null;
+
   const afterElement = after ? (
     <div className={bem("After")}>{after}</div>
   ) : null;
 
-  return (
-    <div
-      className={bem({ active, view }, [className])}
-      onClick={onClick}
-      onKeyUp={onKeyUp}
-      onKeyDown={onKeyDown}
-      tabIndex={tabIndex}
-    >
+  const content = (
+    <>
       {beforeElement}
       <div className={bem("Content")}>{children}</div>
       {afterElement}
-    </div>
+    </>
+  );
+
+  const elemProps: HTMLAttributes<HTMLElement> = {
+    className: bem({ active, view }, [className]),
+    onClick,
+    onKeyUp,
+    onKeyDown,
+    tabIndex,
+  };
+
+  return href ? (
+    <a href={href} target={target} {...elemProps}>
+      {content}
+    </a>
+  ) : (
+    <div {...elemProps}>{content}</div>
   );
 };
