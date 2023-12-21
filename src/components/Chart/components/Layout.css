@@ -5,7 +5,7 @@
 
     padding: var(--g-spacing-6);
 
-    border-radius: var(--g-border-radius-m);
+    border-radius: var(--sb-border-radius-3-xl);
     background-color: var(--g-color-base-generic);
 }
 
@@ -21,7 +21,8 @@
 }
 
 .Chart-Title {
-    font: var(--sb-font-subheader-m);
+    font: var(--sb-font-subheader-l);
+    font-weight: normal;
 }
 
 .Chart-Header {

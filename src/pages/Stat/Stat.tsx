@@ -7,6 +7,8 @@ import { ProjectLayout } from "@/components/ProjectLayout/ProjectLayout";
 import { useTitle } from "@/hooks/useTitle";
 import * as model from "@/model/pages/stat";
 
+import "./Stat.css";
+
 const bem = cn("Stat");
 
 export const Stat: FC = () => {
@@ -18,10 +20,10 @@ export const Stat: FC = () => {
   return (
     <ProjectLayout contentClassName={bem()} project={project.code}>
       <div className={bem("Row", ["row", "gy-3"])}>
-        <div className={bem("Col", ["col-xs-12", "col-md-6"])}>
+        <div className={bem("Col", ["col-xs-12", "col-lg-6"])}>
           <AssertionsChart isPending={isLoading} stat={assertions} />
         </div>
-        <div className={bem("Col", ["col-xs-12", "col-md-6"])}>
+        <div className={bem("Col", ["col-xs-12", "col-lg-6"])}>
           <AutotestsChart isPending={isLoading} stat={autotests} />
         </div>
       </div>
