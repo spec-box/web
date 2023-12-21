@@ -3,12 +3,12 @@ import { ListUl } from "@gravity-ui/icons";
 import { ArrowToggle, Icon } from "@gravity-ui/uikit";
 import { useEvent, useStoreMap } from "effector-react/scope";
 
+import { ListItem } from "@/components/ListItem/ListItem";
 import { FeatureTreeNode, GroupTreeNode } from "@/types";
 import { $collapseState, toggle } from "@/model/pages/project";
 
 import { bem } from "../ProjectFeatures.cn";
 
-import { TreeNode } from "./TreeNode";
 import { ItemStat } from "./ItemStat";
 import { Indent } from "./Indent";
 
@@ -50,13 +50,14 @@ export const FeatureGroupItem: FC<FeatureGroupItemProps> = (props) => {
     <>
       <div className={bem("Item", { isOpen })}>
         <Indent level={level} />
-        <TreeNode
+        <ListItem
           className={bem("ItemContent")}
-          onSelect={onSelect}
-          text={title}
-          icon={arrow}
-          stat={stat}
-        />
+          onPress={onSelect}
+          before={arrow}
+          after={stat}
+        >
+          {title}
+        </ListItem>
       </div>
       {isOpen ? children : null}
     </>
@@ -94,14 +95,15 @@ export const FeatureItem: FC<FeatureItemProps> = (props) => {
   return (
     <div className={bem("Item")}>
       <Indent level={level} />
-      <TreeNode
+      <ListItem
         className={bem("ItemContent")}
         isActive={featureCode === selectedCode}
-        onSelect={onSelect}
-        text={title}
-        icon={featureIcon}
-        stat={stat}
-      />
+        onPress={onSelect}
+        before={featureIcon}
+        after={stat}
+      >
+        {title}
+      </ListItem>
     </div>
   );
 };

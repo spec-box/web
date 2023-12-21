@@ -5,13 +5,6 @@
     user-select: none;
 }
 
-.ProjectFeatures-FeatureIcon,
-.ProjectFeatures-CollapseIcon {
-    display: inline-block;
-
-    vertical-align: middle;
-}
-
 .ProjectFeatures-ItemContent {
     flex: 1;
 }

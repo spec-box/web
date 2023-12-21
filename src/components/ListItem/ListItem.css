@@ -1,30 +1,36 @@
-.ProjectFeatures-TreeNode {
+.ListItem {
     display: flex;
     flex-direction: row;
     align-items: center;
 
-    padding: 9px var(--g-spacing-3);
+    padding: 0 var(--g-spacing-4);
 
     cursor: pointer;
 
-    border-radius: var(--g-border-radius-l);
+    border-radius: var(--sb-border-radius-2-xl);
     gap: var(--g-spacing-2);
 
     font: var(--sb-font-body-s);
 }
 
-.ProjectFeatures-TreeNode:focus-visible {
+.ListItem:focus-visible {
     outline: var(--sb-outline-width) solid var(--g-color-line-focus);
 }
 
-.ProjectFeatures-TreeNode:hover {
+.ListItem:hover {
     background-color: var(--g-color-base-generic);
 }
 
-.ProjectFeatures-TreeNodeText {
+.ListItem-Before,
+.ListItem-After,
+.ListItem-Content {
+    padding: 9px 0;
+}
+
+.ListItem-Content {
     flex: 1;
 }
 
-.ProjectFeatures-TreeNode_active {
+.ListItem_active {
     background-color: var(--g-color-base-generic);
 }
