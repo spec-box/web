@@ -27,6 +27,7 @@ export interface BaseTreeNode {
   title: string;
   totalCount: number;
   automatedCount: number;
+  sortOrder?: number;
 }
 
 export interface FeatureTreeNode extends BaseTreeNode {

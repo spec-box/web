@@ -2,6 +2,8 @@ import { FC, useMemo } from "react";
 
 import { TreeNode } from "@/types";
 
+import { compareTreeNodes } from "../lib/compareTreeNodes";
+
 import { FeatureItem, FeatureGroupItem } from "./FeatureItem";
 
 interface TreeItemProps {
@@ -16,7 +18,7 @@ export const TreeItem: FC<TreeItemProps> = (props) => {
   const { level, tree, node, onFeatureSelect, selectedFeatureCode } = props;
 
   const nodes = useMemo(
-    () => tree.filter((n) => n.parentId === node.id),
+    () => tree.filter((n) => n.parentId === node.id).sort(compareTreeNodes),
     [tree, node.id]
   );
 

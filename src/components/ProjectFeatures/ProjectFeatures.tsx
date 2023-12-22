@@ -2,6 +2,7 @@ import { FC, useCallback } from "react";
 
 import { TreeNode } from "@/types";
 
+import { compareTreeNodes } from "./lib/compareTreeNodes";
 import { TreeItem } from "./components/TreeItem";
 import { bem } from "./ProjectFeatures.cn";
 
@@ -24,6 +25,7 @@ export const ProjectFeatures: FC<ProjectFeaturesProps> = (props) => {
 
   const items = tree
     .filter((node) => node.parentId === undefined)
+    .sort(compareTreeNodes)
     .map((node) => (
       <TreeItem
         level={0}

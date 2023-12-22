@@ -551,6 +551,13 @@ export const SpecBoxWebApiModelProjectTreeNodeModel: coreClient.CompositeMapper 
         type: {
           name: "Number"
         }
+      },
+      sortOrder: {
+        serializedName: "sortOrder",
+        nullable: true,
+        type: {
+          name: "Number"
+        }
       }
     }
   }

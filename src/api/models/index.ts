@@ -88,6 +88,7 @@ export interface SpecBoxWebApiModelProjectTreeNodeModel {
   title: string;
   totalCount: number;
   automatedCount: number;
+  sortOrder?: number;
 }
 
 export interface SpecBoxWebApiModelStatAutotestsStatUploadData {
