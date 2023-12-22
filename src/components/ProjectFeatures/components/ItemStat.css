@@ -1,0 +1,7 @@
+.ProjectFeatures-ItemStat_state_normal {
+    color: var(--g-color-text-secondary);
+}
+
+.ProjectFeatures-ItemStat_state_warning {
+    color: var(--g-color-text-danger);
+}

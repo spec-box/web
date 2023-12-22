@@ -1,0 +1,10 @@
+.ProjectFeatures-Item {
+    display: flex;
+    flex-direction: row;
+
+    user-select: none;
+}
+
+.ProjectFeatures-ItemContent {
+    flex: 1;
+}

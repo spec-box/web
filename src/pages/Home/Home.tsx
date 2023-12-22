@@ -1,59 +1,37 @@
-import { useStore } from 'effector-react/scope';
-import { FC } from 'react';
+import { useStore } from "effector-react/scope";
+import { FC } from "react";
 
-import { RouteLink } from '@/components/RouteLink/RouteLink';
-import { useTitle } from '@/hooks';
-import { projectRoute } from '@/model';
-import * as model from '@/model/pages/home';
-import { Project } from '@/types';
-import { cn } from '@bem-react/classname';
+import { useTitle } from "@/hooks/useTitle";
+import * as model from "@/model/pages/home";
+import { cn } from "@bem-react/classname";
 
-import './Home.css';
+import "./Home.css";
+import { ProjectList } from "@/components/ProjectList/ProjectList";
 
-const bem = cn('Home');
-
-interface ProjectListItemProps {
-  project: Project;
-}
-
-const ProjectListItem: FC<ProjectListItemProps> = ({ project }) => {
-  const description = project.description ? (
-    <div className={bem('ProjectDescription')}>{project.description}</div>
-  ) : undefined;
-
-  return (
-    <div>
-      <div className={bem('ProjectName')}>
-        <RouteLink to={projectRoute} params={{ project: project.code }}>
-          {project.title}
-        </RouteLink>
-      </div>
-      {description}
-    </div>
-  );
-};
+const bem = cn("Home");
 
 export const Home: FC = () => {
   const projects = useStore(model.$projects);
   const projectsIsPending = useStore(model.$projectsIsLoading);
 
-  useTitle('Проекты');
+  useTitle("Проекты");
 
   const content = projectsIsPending ? (
-    <>загрузка...</>
+    <div>загрузка...</div>
   ) : (
-    projects.map((p) => <ProjectListItem key={p.code} project={p} />)
+    <ProjectList projects={projects} />
   );
 
   return (
-    <div>
-      <h1>Spec Box</h1>
-      <p>
-        Spec Box — это база функциональных требований, данные для которой хранятся в yml файлах в
-        коде проектов.
-      </p>
-      <h2>Проекты</h2>
-      <div>{content}</div>
+    <div className={bem()}>
+      <div className={bem("Content")}>
+        <div className={bem("Header")}>Проекты</div>
+        {content}
+        <div className={bem("Hint")}>
+          Spec Box — это база функциональных требований, данные для которой
+          хранятся в yml файлах в коде проектов.
+        </div>
+      </div>
     </div>
   );
 };

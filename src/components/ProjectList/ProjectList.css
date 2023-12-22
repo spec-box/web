@@ -1,6 +1,6 @@
-.ProjectFeatures {
+.ProjectList {
     display: flex;
     flex-direction: column;
 
-    width: 100%;
+    gap: var(--g-spacing-1);
 }

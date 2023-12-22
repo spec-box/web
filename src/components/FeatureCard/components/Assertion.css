@@ -1,0 +1,27 @@
+.FeatureCard-Assertion {
+    display: flex;
+    flex-direction: row;
+    gap: var(--g-spacing-2);
+}
+
+.FeatureCard-AssertionContent {
+    flex: 1;
+}
+
+.FeatureCard-AssertionTitle {
+    word-break: break-word;
+}
+
+.FeatureCard-AssertionTitle::first-letter {
+    text-transform: uppercase;
+}
+
+.FeatureCard-AssertionDescription {
+    font: var(--sb-font-body-s);
+
+    color: var(--g-color-text-secondary);
+}
+
+.FeatureCard-AssertionBadge {
+    padding: 0 var(--g-spacing-1);
+}

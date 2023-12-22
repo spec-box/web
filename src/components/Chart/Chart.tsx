@@ -19,8 +19,8 @@ import { Bar, Line } from 'react-chartjs-2';
 import { StatAssertion, StatAutotestsItem } from '@/types';
 
 import { bem } from './Chart.cn';
-import { ChartLayout } from './components/Chart.Layout';
-import { ChartLegendDataset } from './components/Chart.Legend';
+import { Layout } from './components/Layout';
+import { LegendDataset } from './components/Legend';
 
 ChartJS.register(TimeScale, LinearScale, PointElement, LineElement, BarElement, Tooltip, Filler);
 
@@ -37,7 +37,7 @@ const options: ChartOptions<'line' | 'bar'> = {
   elements: {
     point: {
       radius: 0,
-      hitRadius: 30,
+      hitRadius: 10,
       hoverRadius: 0,
     },
     line: {
@@ -50,7 +50,7 @@ const options: ChartOptions<'line' | 'bar'> = {
       alignToPixels: true,
       ticks: {
         maxRotation: 0,
-        autoSkipPadding: 10,
+        autoSkipPadding: 32,
       },
       adapters: {
         date: { locale: ru },
@@ -81,18 +81,18 @@ const createAssertionsDataSets = (data: StatAssertion[]): ChartData<'line', Poin
   return {
     datasets: [
       {
-        cubicInterpolationMode: 'monotone',
+        cubicInterpolationMode: 'default',
         label: 'Автоматизировано',
-        borderColor: '#6673FF',
-        backgroundColor: '#99A2FF',
+        borderColor: '#348BDC',
+        backgroundColor: 'rgb(134, 193, 247)',
         data: automated,
         fill: true,
       },
       {
-        cubicInterpolationMode: 'monotone',
+        cubicInterpolationMode: 'default',
         label: 'Всего',
-        borderColor: '#FF3399',
-        backgroundColor: '#FF66B29A',
+        borderColor: '#E9033A',
+        backgroundColor: '#FF003D4D',
         data: total,
         fill: true,
       },
@@ -121,8 +121,8 @@ const createAutotestsDataSets = (data: StatAutotestsItem[]): ChartData<'bar', Po
     datasets: [
       {
         label: 'Количество за день',
-        borderColor: '#6673FF',
-        backgroundColor: '#99A2FF',
+        borderColor: '#348BDC',
+        backgroundColor: 'rgba(54, 151, 241, 0.5)',
         data: autotests,
       },
     ],
@@ -139,7 +139,7 @@ export const AssertionsChart: FC<AssertionsChartProps> = ({ stat, isPending }) =
   const legend = useMemo(
     () =>
       data.datasets.map(
-        (ds): ChartLegendDataset => ({
+        (ds): LegendDataset => ({
           color: ds.borderColor?.toString(),
           title: ds.label,
         }),
@@ -148,14 +148,14 @@ export const AssertionsChart: FC<AssertionsChartProps> = ({ stat, isPending }) =
   );
 
   return (
-    <ChartLayout
+    <Layout
       className={bem()}
       title="Покрытие автотестами"
       isPending={isPending}
       legend={legend}
     >
       <Line options={options} data={data} />
-    </ChartLayout>
+    </Layout>
   );
 };
 
@@ -170,7 +170,7 @@ export const AutotestsChart: FC<AutotestsChartProps> = ({ stat, isPending }) => 
   const legend = useMemo(
     () =>
       data.datasets.map(
-        (ds): ChartLegendDataset => ({
+        (ds): LegendDataset => ({
           color: ds.borderColor?.toString(),
           title: ds.label,
         }),
@@ -179,13 +179,13 @@ export const AutotestsChart: FC<AutotestsChartProps> = ({ stat, isPending }) => 
   );
 
   return (
-    <ChartLayout
+    <Layout
       className={bem()}
       title="Выполненные проверки"
       isPending={isPending}
       legend={legend}
     >
       <Bar options={options} data={data} />
-    </ChartLayout>
+    </Layout>
   );
 };
