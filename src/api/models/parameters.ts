@@ -1,11 +1,11 @@
 import {
   OperationParameter,
   OperationURLParameter,
-  OperationQueryParameter
+  OperationQueryParameter,
 } from "@azure/core-client";
 import {
   SpecBoxWebApiModelUploadData as SpecBoxWebApiModelUploadDataMapper,
-  SpecBoxWebApiModelStatAutotestsStatUploadData as SpecBoxWebApiModelStatAutotestsStatUploadDataMapper
+  SpecBoxWebApiModelStatAutotestsStatUploadData as SpecBoxWebApiModelStatAutotestsStatUploadDataMapper,
 } from "../models/mappers";
 
 export const accept: OperationParameter = {
@@ -15,9 +15,9 @@ export const accept: OperationParameter = {
     isConstant: true,
     serializedName: "Accept",
     type: {
-      name: "String"
-    }
-  }
+      name: "String",
+    },
+  },
 };
 
 export const $host: OperationURLParameter = {
@@ -26,10 +26,10 @@ export const $host: OperationURLParameter = {
     serializedName: "$host",
     required: true,
     type: {
-      name: "String"
-    }
+      name: "String",
+    },
   },
-  skipEncoding: true
+  skipEncoding: true,
 };
 
 export const contentType: OperationParameter = {
@@ -39,14 +39,14 @@ export const contentType: OperationParameter = {
     isConstant: true,
     serializedName: "Content-Type",
     type: {
-      name: "String"
-    }
-  }
+      name: "String",
+    },
+  },
 };
 
 export const body: OperationParameter = {
   parameterPath: ["options", "body"],
-  mapper: SpecBoxWebApiModelUploadDataMapper
+  mapper: SpecBoxWebApiModelUploadDataMapper,
 };
 
 export const project: OperationQueryParameter = {
@@ -54,9 +54,9 @@ export const project: OperationQueryParameter = {
   mapper: {
     serializedName: "project",
     type: {
-      name: "String"
-    }
-  }
+      name: "String",
+    },
+  },
 };
 
 export const project1: OperationURLParameter = {
@@ -65,9 +65,9 @@ export const project1: OperationURLParameter = {
     serializedName: "project",
     required: true,
     type: {
-      name: "String"
-    }
-  }
+      name: "String",
+    },
+  },
 };
 
 export const feature: OperationURLParameter = {
@@ -76,24 +76,24 @@ export const feature: OperationURLParameter = {
     serializedName: "feature",
     required: true,
     type: {
-      name: "String"
-    }
-  }
+      name: "String",
+    },
+  },
 };
 
 export const body1: OperationParameter = {
   parameterPath: ["options", "body"],
-  mapper: SpecBoxWebApiModelStatAutotestsStatUploadDataMapper
+  mapper: SpecBoxWebApiModelStatAutotestsStatUploadDataMapper,
 };
 
-export const from: OperationQueryParameter = {
+export const fromParam: OperationQueryParameter = {
   parameterPath: ["options", "from"],
   mapper: {
     serializedName: "from",
     type: {
-      name: "DateTime"
-    }
-  }
+      name: "DateTime",
+    },
+  },
 };
 
 export const to: OperationQueryParameter = {
@@ -101,7 +101,7 @@ export const to: OperationQueryParameter = {
   mapper: {
     serializedName: "to",
     type: {
-      name: "DateTime"
-    }
-  }
+      name: "DateTime",
+    },
+  },
 };

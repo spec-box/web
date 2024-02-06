@@ -14,7 +14,7 @@ import {
   ProjectsProjectStructureResponse,
   StatUploadAutotestsOptionalParams,
   StatOptionalParams,
-  StatResponse
+  StatResponse,
 } from "./models";
 
 export class SpecBoxWebApi extends coreClient.ServiceClient {
@@ -35,7 +35,7 @@ export class SpecBoxWebApi extends coreClient.ServiceClient {
       options = {};
     }
     const defaults: SpecBoxWebApiOptionalParams = {
-      requestContentType: "application/json; charset=utf-8"
+      requestContentType: "application/json; charset=utf-8",
     };
 
     const packageDetails = `azsdk-js-specBoxWebApi/1.0.0-beta.1`;
@@ -48,9 +48,9 @@ export class SpecBoxWebApi extends coreClient.ServiceClient {
       ...defaults,
       ...options,
       userAgentOptions: {
-        userAgentPrefix
+        userAgentPrefix,
       },
-      endpoint: options.endpoint ?? options.baseUri ?? "{$host}"
+      endpoint: options.endpoint ?? options.baseUri ?? "{$host}",
     };
     super(optionsWithDefaults);
     // Parameter assignments
@@ -127,12 +127,12 @@ const configOperationSpec: coreClient.OperationSpec = {
   httpMethod: "GET",
   responses: {
     200: {
-      bodyMapper: Mappers.SpecBoxWebApiModelDefaultConfigurationModel
-    }
+      bodyMapper: Mappers.SpecBoxWebApiModelDefaultConfigurationModel,
+    },
   },
   urlParameters: [Parameters.$host],
   headerParameters: [Parameters.accept],
-  serializer
+  serializer,
 };
 const exportUploadOperationSpec: coreClient.OperationSpec = {
   path: "/export/upload",
@@ -143,7 +143,7 @@ const exportUploadOperationSpec: coreClient.OperationSpec = {
   urlParameters: [Parameters.$host],
   headerParameters: [Parameters.contentType],
   mediaType: "json",
-  serializer
+  serializer,
 };
 const projectsListOperationSpec: coreClient.OperationSpec = {
   path: "/projects/list",
@@ -156,40 +156,40 @@ const projectsListOperationSpec: coreClient.OperationSpec = {
           element: {
             type: {
               name: "Composite",
-              className: "SpecBoxWebApiModelCommonProjectModel"
-            }
-          }
-        }
-      }
-    }
+              className: "SpecBoxWebApiModelCommonProjectModel",
+            },
+          },
+        },
+      },
+    },
   },
   urlParameters: [Parameters.$host],
   headerParameters: [Parameters.accept],
-  serializer
+  serializer,
 };
 const projectsProjectFeaturesFeatureOperationSpec: coreClient.OperationSpec = {
   path: "/projects/{project}/features/{feature}",
   httpMethod: "GET",
   responses: {
     200: {
-      bodyMapper: Mappers.SpecBoxWebApiModelProjectFeatureModel
-    }
+      bodyMapper: Mappers.SpecBoxWebApiModelProjectFeatureModel,
+    },
   },
   urlParameters: [Parameters.$host, Parameters.project1, Parameters.feature],
   headerParameters: [Parameters.accept],
-  serializer
+  serializer,
 };
 const projectsProjectStructureOperationSpec: coreClient.OperationSpec = {
   path: "/projects/{project}/structure",
   httpMethod: "GET",
   responses: {
     200: {
-      bodyMapper: Mappers.SpecBoxWebApiModelProjectStructureModel
-    }
+      bodyMapper: Mappers.SpecBoxWebApiModelProjectStructureModel,
+    },
   },
   urlParameters: [Parameters.$host, Parameters.project1],
   headerParameters: [Parameters.accept],
-  serializer
+  serializer,
 };
 const statUploadAutotestsOperationSpec: coreClient.OperationSpec = {
   path: "/stat/upload-autotests",
@@ -200,18 +200,18 @@ const statUploadAutotestsOperationSpec: coreClient.OperationSpec = {
   urlParameters: [Parameters.$host],
   headerParameters: [Parameters.contentType],
   mediaType: "json",
-  serializer
+  serializer,
 };
 const statOperationSpec: coreClient.OperationSpec = {
   path: "/stat",
   httpMethod: "GET",
   responses: {
     200: {
-      bodyMapper: Mappers.SpecBoxWebApiModelStatModel
-    }
+      bodyMapper: Mappers.SpecBoxWebApiModelStatModel,
+    },
   },
-  queryParameters: [Parameters.project, Parameters.from, Parameters.to],
+  queryParameters: [Parameters.project, Parameters.fromParam, Parameters.to],
   urlParameters: [Parameters.$host],
   headerParameters: [Parameters.accept],
-  serializer
+  serializer,
 };

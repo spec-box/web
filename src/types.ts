@@ -24,7 +24,7 @@ export interface Assertion {
 export interface BaseTreeNode {
   id: string;
   parentId?: string;
-  title: string;
+  title?: string;
   totalCount: number;
   automatedCount: number;
   sortOrder?: number;

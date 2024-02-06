@@ -46,7 +46,7 @@
     background-color: var(--g-color-base-generic);
 }
 
-.ListItem_view_normal.ListItem_active,
-.ListItem_view_flat.ListItem_active {
+.ListItem_view_normal.ListItem_state_active,
+.ListItem_view_flat.ListItem_state_active {
     background-color: var(--g-color-base-generic);
 }

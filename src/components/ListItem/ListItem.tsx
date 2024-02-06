@@ -6,10 +6,12 @@ import { bem } from "./ListItem.cn";
 
 import "./ListItem.css";
 
+export type ListItemState = "normal" | "active";
+
 export interface ListItemProps {
   className?: string;
   view: "normal" | "flat";
-  isActive?: boolean;
+  state?: ListItemState;
 
   href?: string;
   target?: string;
@@ -27,7 +29,7 @@ export const ListItem: FC<ListItemProps> = (props) => {
     target,
     className,
     view,
-    isActive: active,
+    state = "normal",
     before,
     after,
     children,
@@ -53,7 +55,7 @@ export const ListItem: FC<ListItemProps> = (props) => {
   );
 
   const elemProps: HTMLAttributes<HTMLElement> = {
-    className: bem({ active, view }, [className]),
+    className: bem({ state, view }, [className]),
     onClick,
     onKeyUp,
     onKeyDown,

@@ -85,7 +85,7 @@ export interface SpecBoxWebApiModelProjectTreeNodeModel {
   id: string;
   parentId?: string;
   featureCode?: string;
-  title: string;
+  title?: string;
   totalCount: number;
   automatedCount: number;
   sortOrder?: number;
@@ -140,14 +140,16 @@ export interface ProjectsProjectFeaturesFeatureOptionalParams
   extends coreClient.OperationOptions {}
 
 /** Contains response data for the projectsProjectFeaturesFeature operation. */
-export type ProjectsProjectFeaturesFeatureResponse = SpecBoxWebApiModelProjectFeatureModel;
+export type ProjectsProjectFeaturesFeatureResponse =
+  SpecBoxWebApiModelProjectFeatureModel;
 
 /** Optional parameters. */
 export interface ProjectsProjectStructureOptionalParams
   extends coreClient.OperationOptions {}
 
 /** Contains response data for the projectsProjectStructure operation. */
-export type ProjectsProjectStructureResponse = SpecBoxWebApiModelProjectStructureModel;
+export type ProjectsProjectStructureResponse =
+  SpecBoxWebApiModelProjectStructureModel;
 
 /** Optional parameters. */
 export interface StatUploadAutotestsOptionalParams

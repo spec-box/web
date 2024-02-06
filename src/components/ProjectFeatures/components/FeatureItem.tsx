@@ -3,7 +3,7 @@ import { ListUl } from "@gravity-ui/icons";
 import { ArrowToggle, Icon } from "@gravity-ui/uikit";
 import { useEvent, useStoreMap } from "effector-react/scope";
 
-import { ListItem } from "@/components/ListItem/ListItem";
+import { ListItem, ListItemState } from "@/components/ListItem/ListItem";
 import { FeatureTreeNode, GroupTreeNode } from "@/types";
 import { $collapseState, toggle } from "@/model/pages/project";
 
@@ -46,6 +46,8 @@ export const FeatureGroupItem: FC<FeatureGroupItemProps> = (props) => {
     <ItemStat totalCount={totalCount} automatedCount={automatedCount} />
   );
 
+  const displayText = title === undefined ? "[значение атрибута не указано]" : title;
+
   return (
     <>
       <div className={bem("Item", { isOpen })}>
@@ -57,7 +59,7 @@ export const FeatureGroupItem: FC<FeatureGroupItemProps> = (props) => {
           before={arrow}
           after={stat}
         >
-          {title}
+          {displayText}
         </ListItem>
       </div>
       {isOpen ? children : null}
@@ -93,13 +95,16 @@ export const FeatureItem: FC<FeatureItemProps> = (props) => {
     <ItemStat totalCount={totalCount} automatedCount={automatedCount} />
   );
 
+  const state: ListItemState =
+    featureCode === selectedCode ? "active" : "normal";
+
   return (
     <div className={bem("Item")}>
       <Indent level={level} />
       <ListItem
         view="flat"
         className={bem("ItemContent")}
-        isActive={featureCode === selectedCode}
+        state={state}
         onPress={onSelect}
         before={featureIcon}
         after={stat}
