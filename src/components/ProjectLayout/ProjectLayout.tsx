@@ -3,8 +3,8 @@ import { FC, ReactNode } from "react";
 import { cn } from "@bem-react/classname";
 import { Icon, Skeleton } from "@gravity-ui/uikit";
 import { useStore } from "effector-react/scope";
-import { Box } from "@gravity-ui/icons";
 
+import Logo from "@/assets/logo.svg?react";
 import {
   ProjectContext,
   OpenFeatureLinkEventHandler,
@@ -67,7 +67,7 @@ export const ProjectLayout: FC<ProjectLayoutProps> = (props) => {
               size="l"
               pin="circle-circle"
             >
-              <Icon size={24} data={Box} />
+              <Icon data={Logo} size={24} />
             </RouteLinkButton>
           </div>
           <div className={bem("Navigation")}>
