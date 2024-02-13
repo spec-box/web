@@ -1,7 +1,18 @@
+.ProjectFeatures-ItemStat {
+    display: flex;
+    flex-direction: row;
+}
+
 .ProjectFeatures-ItemStat_state_normal {
     color: var(--g-color-text-secondary);
 }
 
 .ProjectFeatures-ItemStat_state_warning {
     color: var(--g-color-text-danger);
+}
+
+.ProjectFeatures-ItemStatValue {
+    min-width: 4em;
+    text-align: right;
+    white-space: nowrap;
 }

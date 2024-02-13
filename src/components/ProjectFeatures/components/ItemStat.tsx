@@ -12,5 +12,10 @@ export const ItemStat: FC<{ totalCount: number; automatedCount: number }> = (
   const rate = totalCount ? Math.round((automatedCount / totalCount) * 100) : 0;
   const state = rate > RATE_LIMIT ? "normal" : "warning";
 
-  return <div className={bem("ItemStat", { state })}>{rate}%</div>;
+  return (
+    <div className={bem("ItemStat", { state })}>
+      <div className={bem("ItemStatValue")}>{automatedCount} / {totalCount}</div>
+      <div className={bem("ItemStatValue")}>{rate}%</div>
+    </div>
+  );
 };
