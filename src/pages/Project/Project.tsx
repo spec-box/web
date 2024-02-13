@@ -10,6 +10,7 @@ import { cn } from "@bem-react/classname";
 
 import "./Project.css";
 import { ProjectLayout } from "@/components/ProjectLayout/ProjectLayout";
+import { PlaceholderMessage } from "@/components/PlaceholderMessage/PlaceholderMessage";
 
 const bem = cn("Project");
 
@@ -48,7 +49,13 @@ const Details: FC<DetailsProps> = ({ isPending, feature, repositoryUrl }) => {
   if (isPending) {
     return <div>загрузка</div>;
   } else if (!feature) {
-    return <div>ничего не выбрано</div>;
+    return (
+      <PlaceholderMessage
+        className={bem("EmptyState")}
+        title="Ничего не выбрано"
+        description="Выберите сценарий из списка для просмотра статистики"
+      />
+    );
   } else {
     return (
       <FeatureCard
