@@ -1,6 +1,6 @@
 import { createRoute, querySync } from 'atomic-router';
 import copy from 'copy-to-clipboard';
-import { combine, createEvent, createStore, restore, sample } from 'effector';
+import { combine, createEvent, createStore, merge, restore, sample, split } from 'effector';
 import { toast } from 'react-toastify';
 
 import { mapFeature, mapStructure } from '@/mappers';
@@ -80,7 +80,9 @@ export const loadFeature = createEvent<LoadFeatureFxParams>();
 export const resetFeature = createEvent();
 
 // код выбранной фичи (появляется в момент выбора)
-export const $featureCode = createStore<string>('').on(loadFeatureFx, (_, { feature }) => feature);
+export const $featureCode = createStore<string>('')
+  .on(loadFeatureFx, (_, { feature }) => feature)
+  .reset(resetFeature);
 
 // данные выбранной фичи (появляются после загрузки)
 export const $feature = createStore<Feature | null>(null).reset(resetFeature);
@@ -141,14 +143,18 @@ sample({
   target: loadStructureFx,
 });
 
-sample({
-  clock: [projectRoute.opened, projectRoute.updated],
-  filter: ({ query: { feature } }) => Boolean(feature),
-  fn: ({ params: { project = '' }, query: { feature = '' } }) => ({
-    project,
-    feature,
-  }),
-  target: loadFeatureFx,
+split({
+  source: merge([projectRoute.opened, projectRoute.updated]).map(
+    ({ params: { project = '' }, query: { feature = '' } }): LoadFeatureFxParams => ({
+      project,
+      feature,
+    }),
+  ),
+  match: ({ feature }: LoadFeatureFxParams) => (feature ? 'load' : 'reset'),
+  cases: {
+    load: loadFeatureFx,
+    reset: resetFeature,
+  },
 });
 
 sample({

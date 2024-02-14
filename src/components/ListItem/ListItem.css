@@ -14,14 +14,12 @@
     text-decoration: none;
     color: var(--g-color-text-primary);
     user-select: none;
+
+    transition: background-color 0.15s linear;
 }
 
 .ListItem:focus-visible {
     outline: var(--sb-outline-width) solid var(--g-color-line-focus);
-}
-
-.ListItem:hover {
-    background-color: var(--g-color-base-generic);
 }
 
 .ListItem-Before,
@@ -42,8 +40,12 @@
     background-color: transparent;
 }
 
+.ListItem_view_normal:hover {
+    background-color: var(--g-color-base-generic-hover);
+}
+
 .ListItem_view_flat:hover {
-    background-color: var(--g-color-base-generic);
+    background-color: var(--g-color-base-simple-hover);
 }
 
 .ListItem_view_normal.ListItem_state_active,

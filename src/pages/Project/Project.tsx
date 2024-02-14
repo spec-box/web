@@ -53,7 +53,7 @@ const Details: FC<DetailsProps> = ({ isPending, feature, repositoryUrl }) => {
       <PlaceholderMessage
         className={bem("EmptyState")}
         title="Ничего не выбрано"
-        description="Выберите сценарий из списка для просмотра статистики"
+        description="Выберите элемент из списка для просмотра детальной информации"
       />
     );
   } else {
