@@ -1,13 +1,13 @@
-import { FC } from "react";
+import { FC } from 'react';
 
-import { bem } from "../FeatureCard.cn";
+import { bem } from '../FeatureCard.cn';
 
-import "./Badge.css";
+import './Badge.css';
 
 export interface BadgeProps {
   automated: boolean;
 }
 
 export const Badge: FC<BadgeProps> = ({ automated }) => {
-  return <div className={bem("Badge", { automated })}></div>;
+  return <div className={bem('Badge', { automated })}></div>;
 };

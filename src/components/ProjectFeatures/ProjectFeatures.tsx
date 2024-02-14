@@ -1,12 +1,12 @@
-import { FC, useCallback } from "react";
+import { FC, useCallback } from 'react';
 
-import { TreeNode } from "@/types";
+import { TreeNode } from '@/types';
 
-import { compareTreeNodes } from "./lib/compareTreeNodes";
-import { TreeItem } from "./components/TreeItem";
-import { bem } from "./ProjectFeatures.cn";
+import { compareTreeNodes } from './lib/compareTreeNodes';
+import { TreeItem } from './components/TreeItem';
+import { bem } from './ProjectFeatures.cn';
 
-import "./ProjectFeatures.css";
+import './ProjectFeatures.css';
 
 interface ProjectFeaturesProps {
   parentId?: string;
@@ -20,7 +20,7 @@ export const ProjectFeatures: FC<ProjectFeaturesProps> = (props) => {
 
   const onSelect = useCallback(
     (featureCode: string) => onFeatureSelected(featureCode),
-    [onFeatureSelected]
+    [onFeatureSelected],
   );
 
   const items = tree

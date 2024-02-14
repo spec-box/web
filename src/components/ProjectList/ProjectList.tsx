@@ -1,9 +1,9 @@
-import { FC } from "react";
+import { FC } from 'react';
 
-import { Project } from "@/types";
+import { Project } from '@/types';
 
-import { Item } from "./components/Item";
-import { bem } from "./ProjectList.cn";
+import { Item } from './components/Item';
+import { bem } from './ProjectList.cn';
 
 import './ProjectList.css';
 

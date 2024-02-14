@@ -1,9 +1,9 @@
-import { FC } from "react";
+import { FC } from 'react';
 
-import { Feature } from "@/types";
-import { bem } from "./FeatureCard.cn";
-import { AssertionGroup } from "./components/AssertionGroup";
-import { Header } from "./components/Header";
+import { Feature } from '@/types';
+import { bem } from './FeatureCard.cn';
+import { AssertionGroup } from './components/AssertionGroup';
+import { Header } from './components/Header';
 
 import './FeatureCard.css';
 

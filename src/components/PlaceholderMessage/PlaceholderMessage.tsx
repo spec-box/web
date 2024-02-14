@@ -1,10 +1,10 @@
-import { FC } from "react";
+import { FC } from 'react';
 
-import { cn } from "@bem-react/classname";
+import { cn } from '@bem-react/classname';
 
-import "./PlaceholderMessage.css";
+import './PlaceholderMessage.css';
 
-const bem = cn("PlaceholderMessage");
+const bem = cn('PlaceholderMessage');
 
 type PlaceholderMessageProps = {
   className?: string;
@@ -15,17 +15,15 @@ type PlaceholderMessageProps = {
 };
 
 export const PlaceholderMessage: FC<PlaceholderMessageProps> = (props) => {
-  const title = props.title ? (
-    <div className={bem("Title")}>{props.title}</div>
-  ) : undefined;
+  const title = props.title ? <div className={bem('Title')}>{props.title}</div> : undefined;
 
   const description = props.description ? (
-    <div className={bem("Description")}>{props.description}</div>
+    <div className={bem('Description')}>{props.description}</div>
   ) : undefined;
 
   return (
     <div className={bem(null, [props.className])}>
-      <div className={bem("Content", [props.contentClassName])}>
+      <div className={bem('Content', [props.contentClassName])}>
         {title}
         {description}
       </div>

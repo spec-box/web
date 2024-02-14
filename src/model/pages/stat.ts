@@ -47,6 +47,6 @@ export const $statIsLoading = loadStatFx.pending;
 
 sample({
   clock: [statRoute.opened],
-  fn: ({ params: { project = ''}, query: { from, to } }) => ({ project, from, to }),
+  fn: ({ params: { project = '' }, query: { from, to } }) => ({ project, from, to }),
   target: loadStatFx,
 });

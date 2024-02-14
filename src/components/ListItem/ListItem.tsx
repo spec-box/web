@@ -1,16 +1,16 @@
-import { FC, HTMLAttributes, ReactNode } from "react";
+import { FC, HTMLAttributes, ReactNode } from 'react';
 
-import { PressEvent, usePress } from "@/hooks/usePress";
+import { PressEvent, usePress } from '@/hooks/usePress';
 
-import { bem } from "./ListItem.cn";
+import { bem } from './ListItem.cn';
 
-import "./ListItem.css";
+import './ListItem.css';
 
-export type ListItemState = "normal" | "active";
+export type ListItemState = 'normal' | 'active';
 
 export interface ListItemProps {
   className?: string;
-  view: "normal" | "flat";
+  view: 'normal' | 'flat';
   state?: ListItemState;
 
   href?: string;
@@ -29,7 +29,7 @@ export const ListItem: FC<ListItemProps> = (props) => {
     target,
     className,
     view,
-    state = "normal",
+    state = 'normal',
     before,
     after,
     children,
@@ -38,18 +38,14 @@ export const ListItem: FC<ListItemProps> = (props) => {
 
   const { onClick, onKeyUp, onKeyDown, tabIndex } = usePress(onPress);
 
-  const beforeElement = before ? (
-    <div className={bem("Before")}>{before}</div>
-  ) : null;
+  const beforeElement = before ? <div className={bem('Before')}>{before}</div> : null;
 
-  const afterElement = after ? (
-    <div className={bem("After")}>{after}</div>
-  ) : null;
+  const afterElement = after ? <div className={bem('After')}>{after}</div> : null;
 
   const content = (
     <>
       {beforeElement}
-      <div className={bem("Content")}>{children}</div>
+      <div className={bem('Content')}>{children}</div>
       {afterElement}
     </>
   );

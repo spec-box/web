@@ -148,12 +148,7 @@ export const AssertionsChart: FC<AssertionsChartProps> = ({ stat, isPending }) =
   );
 
   return (
-    <Layout
-      className={bem()}
-      title="Покрытие автотестами"
-      isPending={isPending}
-      legend={legend}
-    >
+    <Layout className={bem()} title="Покрытие автотестами" isPending={isPending} legend={legend}>
       <Line options={options} data={data} />
     </Layout>
   );
@@ -179,12 +174,7 @@ export const AutotestsChart: FC<AutotestsChartProps> = ({ stat, isPending }) => 
   );
 
   return (
-    <Layout
-      className={bem()}
-      title="Выполненные проверки"
-      isPending={isPending}
-      legend={legend}
-    >
+    <Layout className={bem()} title="Выполненные проверки" isPending={isPending} legend={legend}>
       <Bar options={options} data={data} />
     </Layout>
   );

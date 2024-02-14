@@ -1,6 +1,6 @@
 .ProjectList {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    gap: var(--g-spacing-1);
+  gap: var(--g-spacing-1);
 }

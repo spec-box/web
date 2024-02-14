@@ -1,18 +1,18 @@
-import { FC, ReactNode, useCallback } from "react";
-import { ListUl } from "@gravity-ui/icons";
-import { ArrowToggle, Icon } from "@gravity-ui/uikit";
-import { useEvent, useStoreMap } from "effector-react/scope";
+import { FC, ReactNode, useCallback } from 'react';
+import { ListUl } from '@gravity-ui/icons';
+import { ArrowToggle, Icon } from '@gravity-ui/uikit';
+import { useEvent, useStoreMap } from 'effector-react/scope';
 
-import { ListItem, ListItemState } from "@/components/ListItem/ListItem";
-import { FeatureTreeNode, GroupTreeNode } from "@/types";
-import { $collapseState, toggle } from "@/model/pages/project";
+import { ListItem, ListItemState } from '@/components/ListItem/ListItem';
+import { FeatureTreeNode, GroupTreeNode } from '@/types';
+import { $collapseState, toggle } from '@/model/pages/project';
 
-import { bem } from "../ProjectFeatures.cn";
+import { bem } from '../ProjectFeatures.cn';
 
-import { ItemStat } from "./ItemStat";
-import { Indent } from "./Indent";
+import { ItemStat } from './ItemStat';
+import { Indent } from './Indent';
 
-import "./FeatureItem.css";
+import './FeatureItem.css';
 
 interface FeatureGroupItemProps {
   level: number;
@@ -20,8 +20,7 @@ interface FeatureGroupItemProps {
   children: ReactNode;
 }
 
-const useIsOpen = (id: string) =>
-  useStoreMap($collapseState, (s) => Boolean(s[id]));
+const useIsOpen = (id: string) => useStoreMap($collapseState, (s) => Boolean(s[id]));
 
 export const FeatureGroupItem: FC<FeatureGroupItemProps> = (props) => {
   const {
@@ -36,25 +35,20 @@ export const FeatureGroupItem: FC<FeatureGroupItemProps> = (props) => {
   const onSelect = useCallback(() => toggleItem(id), [toggleItem, id]);
 
   const arrow = (
-    <ArrowToggle
-      className={bem("CollapseIcon")}
-      direction={isOpen ? "bottom" : "right"}
-    />
+    <ArrowToggle className={bem('CollapseIcon')} direction={isOpen ? 'bottom' : 'right'} />
   );
 
-  const stat = (
-    <ItemStat totalCount={totalCount} automatedCount={automatedCount} />
-  );
+  const stat = <ItemStat totalCount={totalCount} automatedCount={automatedCount} />;
 
-  const displayText = title === undefined ? "[значение атрибута не указано]" : title;
+  const displayText = title === undefined ? '[значение атрибута не указано]' : title;
 
   return (
     <>
-      <div className={bem("Item", { isOpen })}>
+      <div className={bem('Item', { isOpen })}>
         <Indent level={level} />
         <ListItem
           view="flat"
-          className={bem("ItemContent")}
+          className={bem('ItemContent')}
           onPress={onSelect}
           before={arrow}
           after={stat}
@@ -74,9 +68,7 @@ interface FeatureItemProps {
   selectedCode?: string;
 }
 
-const featureIcon = (
-  <Icon className={bem("FeatureIcon")} size={16} data={ListUl} />
-);
+const featureIcon = <Icon className={bem('FeatureIcon')} size={16} data={ListUl} />;
 
 export const FeatureItem: FC<FeatureItemProps> = (props) => {
   const {
@@ -86,24 +78,18 @@ export const FeatureItem: FC<FeatureItemProps> = (props) => {
     level,
   } = props;
 
-  const onSelect = useCallback(
-    () => onFeatureSelect(featureCode),
-    [featureCode, onFeatureSelect]
-  );
+  const onSelect = useCallback(() => onFeatureSelect(featureCode), [featureCode, onFeatureSelect]);
 
-  const stat = (
-    <ItemStat totalCount={totalCount} automatedCount={automatedCount} />
-  );
+  const stat = <ItemStat totalCount={totalCount} automatedCount={automatedCount} />;
 
-  const state: ListItemState =
-    featureCode === selectedCode ? "active" : "normal";
+  const state: ListItemState = featureCode === selectedCode ? 'active' : 'normal';
 
   return (
-    <div className={bem("Item")}>
+    <div className={bem('Item')}>
       <Indent level={level} />
       <ListItem
         view="flat"
-        className={bem("ItemContent")}
+        className={bem('ItemContent')}
         state={state}
         onPress={onSelect}
         before={featureIcon}

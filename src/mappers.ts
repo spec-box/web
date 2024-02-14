@@ -6,7 +6,7 @@ import {
   SpecBoxWebApiModelProjectStructureModel,
   SpecBoxWebApiModelProjectTreeNodeModel,
   StatResponse,
-} from "./api";
+} from './api';
 import {
   Assertion,
   AssertionGroup,
@@ -15,16 +15,14 @@ import {
   ProjectStat,
   ProjectStructure,
   TreeNode,
-} from "./types";
+} from './types';
 
-export const mapFeature = (
-  input: SpecBoxWebApiModelProjectFeatureModel
-): Feature => {
+export const mapFeature = (input: SpecBoxWebApiModelProjectFeatureModel): Feature => {
   const { code, title, description, filePath } = input;
 
   const assertionGroups = input.assertionGroups.map(mapAssertionGroup);
   const allAssertions = new Array<Assertion>().concat(
-    ...assertionGroups.map((gr) => gr.assertions)
+    ...assertionGroups.map((gr) => gr.assertions),
   );
 
   const total = allAssertions.length;
@@ -44,7 +42,7 @@ export const mapFeature = (
 };
 
 export const mapAssertionGroup = (
-  input: SpecBoxWebApiModelProjectAssertionGroupModel
+  input: SpecBoxWebApiModelProjectAssertionGroupModel,
 ): AssertionGroup => {
   const { title, assertions } = input;
 
@@ -54,17 +52,13 @@ export const mapAssertionGroup = (
   };
 };
 
-export const mapAssertion = (
-  input: SpecBoxWebApiModelProjectAssertionModel
-): Assertion => {
+export const mapAssertion = (input: SpecBoxWebApiModelProjectAssertionModel): Assertion => {
   const { title, description, isAutomated } = input;
 
   return { title, description, isAutomated };
 };
 
-export const mapProject = (
-  project: SpecBoxWebApiModelCommonProjectModel
-): Project => {
+export const mapProject = (project: SpecBoxWebApiModelCommonProjectModel): Project => {
   const { code, title, description, repositoryUrl } = project;
 
   return { code, title, description, repositoryUrl };
@@ -81,19 +75,11 @@ export const mapStructure = ({
 };
 
 function mapTreeNode(node: SpecBoxWebApiModelProjectTreeNodeModel): TreeNode {
-  const {
-    totalCount,
-    automatedCount,
-    id,
-    title,
-    featureCode,
-    parentId,
-    sortOrder,
-  } = node;
+  const { totalCount, automatedCount, id, title, featureCode, parentId, sortOrder } = node;
 
   if (featureCode) {
     return {
-      type: "feature",
+      type: 'feature',
       totalCount,
       automatedCount,
       id,
@@ -105,7 +91,7 @@ function mapTreeNode(node: SpecBoxWebApiModelProjectTreeNodeModel): TreeNode {
   }
 
   return {
-    type: "group",
+    type: 'group',
     totalCount,
     automatedCount,
     id,
@@ -116,13 +102,11 @@ function mapTreeNode(node: SpecBoxWebApiModelProjectTreeNodeModel): TreeNode {
 }
 
 export function mapProjectStat(stat: StatResponse): ProjectStat {
-  const assertions = stat.assertions.map(
-    ({ automatedCount, totalCount, timestamp }) => ({
-      automatedCount,
-      totalCount,
-      timestamp,
-    })
-  );
+  const assertions = stat.assertions.map(({ automatedCount, totalCount, timestamp }) => ({
+    automatedCount,
+    totalCount,
+    timestamp,
+  }));
 
   const autotests = stat.autotests.map(({ timestamp, assertionsCount }) => ({
     assertionsCount,

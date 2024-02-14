@@ -1,3 +1,3 @@
-import { cn } from "@bem-react/classname";
+import { cn } from '@bem-react/classname';
 
-export const bem = cn("ListItem");
+export const bem = cn('ListItem');

@@ -1,8 +1,8 @@
-import { RouteInstance, RouteParams, RouteQuery } from "atomic-router";
-import { useLink } from "atomic-router-react/scope";
-import { useCallback } from "react";
-import { useEvent } from "effector-react/scope";
-import { PressEvent } from "./usePress";
+import { RouteInstance, RouteParams, RouteQuery } from 'atomic-router';
+import { useLink } from 'atomic-router-react/scope';
+import { useCallback } from 'react';
+import { useEvent } from 'effector-react/scope';
+import { PressEvent } from './usePress';
 
 export interface RouteLinkParams<T extends RouteParams> {
   to: RouteInstance<T>;
@@ -12,9 +12,7 @@ export interface RouteLinkParams<T extends RouteParams> {
   onPress?: (e: PressEvent) => void;
 }
 
-export const useRouteLink = <T extends RouteParams>(
-  args: RouteLinkParams<T>
-) => {
+export const useRouteLink = <T extends RouteParams>(args: RouteLinkParams<T>) => {
   const { to, params, query, target, onPress } = args;
 
   const href = useLink(to, params);
@@ -30,17 +28,14 @@ export const useRouteLink = <T extends RouteParams>(
       }
 
       // let browser handle "_blank" target and etc
-      if (target && target !== "_self") {
+      if (target && target !== '_self') {
         return;
       }
 
       // skip modified events (like cmd + click to open the link in new tab)
-      if (e.type === "mouse") {
+      if (e.type === 'mouse') {
         const comboKey =
-          e.source.metaKey ||
-          e.source.altKey ||
-          e.source.ctrlKey ||
-          e.source.shiftKey;
+          e.source.metaKey || e.source.altKey || e.source.ctrlKey || e.source.shiftKey;
 
         if (comboKey || e.source.button !== 0) {
           return;
@@ -54,7 +49,7 @@ export const useRouteLink = <T extends RouteParams>(
         query: query || {},
       });
     },
-    [navigate, params, query, target, onPress]
+    [navigate, params, query, target, onPress],
   );
 
   return { href, handler };

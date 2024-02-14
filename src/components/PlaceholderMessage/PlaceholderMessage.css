@@ -1,24 +1,24 @@
 .PlaceholderMessage {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .PlaceholderMessage-Content {
-    max-width: 200px;
-    display: flex;
-    flex-direction: column;
-    gap: var(--g-spacing-3);
+  max-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--g-spacing-3);
 
-    text-align: center;
+  text-align: center;
 }
 
 .PlaceholderMessage-Title {
-    font: var(--sb-font-subheader-l);
-    color: var(--g-color-text-primary);
+  font: var(--sb-font-subheader-l);
+  color: var(--g-color-text-primary);
 }
 
 .PlaceholderMessage-Description {
-    font: var(--sb-font-body-s);
-    color: var(--g-color-text-secondary);
+  font: var(--sb-font-body-s);
+  color: var(--g-color-text-secondary);
 }

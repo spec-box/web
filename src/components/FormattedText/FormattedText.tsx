@@ -1,18 +1,18 @@
-import { FC, MouseEvent, ReactNode, useCallback, useContext } from "react";
-import reactStringReplace from "react-string-replace";
+import { FC, MouseEvent, ReactNode, useCallback, useContext } from 'react';
+import reactStringReplace from 'react-string-replace';
 
 import {
   OpenFeatureLinkEventHandler,
   ProjectContext,
-} from "@/components/ProjectContext/ProjectContext";
-import { RouteLink } from "@/components/RouteLink/RouteLink";
-import { projectRoute } from "@/model";
-import { cn } from "@bem-react/classname";
-import { PressEvent } from "@/hooks/usePress";
+} from '@/components/ProjectContext/ProjectContext';
+import { RouteLink } from '@/components/RouteLink/RouteLink';
+import { projectRoute } from '@/model';
+import { cn } from '@bem-react/classname';
+import { PressEvent } from '@/hooks/usePress';
 
-import "./FormattedText.css";
+import './FormattedText.css';
 
-const bem = cn("FormattedText");
+const bem = cn('FormattedText');
 
 type FormattedTextProps = {
   className?: string;
@@ -23,9 +23,7 @@ interface FormattedValueProps {
   children: ReactNode;
 }
 
-const FormattedValue: FC<FormattedValueProps> = ({ children }) => (
-  <code>{children}</code>
-);
+const FormattedValue: FC<FormattedValueProps> = ({ children }) => <code>{children}</code>;
 
 interface FeatureLinkProps {
   project: string;
@@ -40,7 +38,7 @@ function isModifiedEvent(event: MouseEvent) {
 const FeatureLink: FC<FeatureLinkProps> = ({ project, feature, navigate }) => {
   const onPress = useCallback(
     (e: PressEvent) => {
-      if (e.type === "mouse") {
+      if (e.type === 'mouse') {
         if (
           e.source.defaultPrevented || // onClick prevented default
           e.source.button !== 0 || // ignore everything but left clicks
@@ -55,16 +53,11 @@ const FeatureLink: FC<FeatureLinkProps> = ({ project, feature, navigate }) => {
         navigate(project, feature);
       }
     },
-    [project, feature, navigate]
+    [project, feature, navigate],
   );
 
   return (
-    <RouteLink
-      to={projectRoute}
-      params={{ project }}
-      query={{ feature }}
-      onPress={onPress}
-    >
+    <RouteLink to={projectRoute} params={{ project }} query={{ feature }} onPress={onPress}>
       {feature}
     </RouteLink>
   );
@@ -77,11 +70,9 @@ export const FormattedText: FC<FormattedTextProps> = (props) => {
 
   // Match URLs
   // для корректной замены в регулярном выражении должна быть ровно одна группа
-  let replacedText = reactStringReplace(
-    text,
-    /(https?:\/\/\S+)/gi,
-    (match, i) => <FormattedValue key={match + i}>{match}</FormattedValue>
-  );
+  let replacedText = reactStringReplace(text, /(https?:\/\/\S+)/gi, (match, i) => (
+    <FormattedValue key={match + i}>{match}</FormattedValue>
+  ));
 
   // Match relative paths
   replacedText = reactStringReplace(replacedText, /\s(\/\S+)/g, (match, i) => (
@@ -89,22 +80,13 @@ export const FormattedText: FC<FormattedTextProps> = (props) => {
   ));
 
   // Match $-mentions
-  replacedText = reactStringReplace(
-    replacedText,
-    /\$([A-Za-z][A-Za-z0-9-_]*)/g,
-    (feature, i) => {
-      return project ? (
-        <FeatureLink
-          key={feature + i}
-          project={project}
-          feature={feature}
-          navigate={navigate}
-        />
-      ) : (
-        <FormattedValue key={feature + i}>${feature}</FormattedValue>
-      );
-    }
-  );
+  replacedText = reactStringReplace(replacedText, /\$([A-Za-z][A-Za-z0-9-_]*)/g, (feature, i) => {
+    return project ? (
+      <FeatureLink key={feature + i} project={project} feature={feature} navigate={navigate} />
+    ) : (
+      <FormattedValue key={feature + i}>${feature}</FormattedValue>
+    );
+  });
 
   return <span className={bem(null, [className])}>{replacedText}</span>;
 };
