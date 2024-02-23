@@ -18,6 +18,7 @@
     "@bem-react/di": "5.0.0",
     "@gravity-ui/icons": "2.8.1",
     "@gravity-ui/uikit": "5.25.0",
+    "@spec-box/text-parser": "0.1.0",
     "atomic-router": "0.8.0",
     "atomic-router-react": "0.8.5",
     "bootstrap": "5.3.2",
