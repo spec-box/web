@@ -30,7 +30,7 @@ export const Assertion: FC<AssertionProps> = (props) => {
         {description}
       </div>
       <div className={bem('AssertionBadge')}>
-        <Badge automated={assertion.isAutomated} />
+        <Badge automationState={assertion.automationState} />
       </div>
     </div>
   );

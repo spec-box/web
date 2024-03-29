@@ -26,7 +26,8 @@ export const mapFeature = (input: SpecBoxWebApiModelProjectFeatureModel): Featur
   );
 
   const total = allAssertions.length;
-  const automated = allAssertions.filter((a) => a.isAutomated).length;
+  const automated = allAssertions.filter((a) => a.automationState === 'Automated').length;
+  const problem = allAssertions.filter((a) => a.automationState === 'Problem').length;
 
   return {
     code,
@@ -37,6 +38,7 @@ export const mapFeature = (input: SpecBoxWebApiModelProjectFeatureModel): Featur
     assertionsCount: {
       total,
       automated,
+      problem,
     },
   };
 };
@@ -53,9 +55,9 @@ export const mapAssertionGroup = (
 };
 
 export const mapAssertion = (input: SpecBoxWebApiModelProjectAssertionModel): Assertion => {
-  const { title, description, isAutomated } = input;
+  const { title, description, automationState } = input;
 
-  return { title, description, isAutomated };
+  return { title, description, automationState };
 };
 
 export const mapProject = (project: SpecBoxWebApiModelCommonProjectModel): Project => {
@@ -75,16 +77,28 @@ export const mapStructure = ({
 };
 
 function mapTreeNode(node: SpecBoxWebApiModelProjectTreeNodeModel): TreeNode {
-  const { totalCount, automatedCount, id, title, featureCode, parentId, sortOrder } = node;
+  const {
+    totalCount,
+    automatedCount,
+    problemCount,
+    id,
+    title,
+    featureCode,
+    featureType,
+    parentId,
+    sortOrder,
+  } = node;
 
   if (featureCode) {
     return {
       type: 'feature',
       totalCount,
       automatedCount,
+      problemCount,
       id,
       title,
       featureCode,
+      featureType,
       parentId,
       sortOrder,
     };
@@ -94,6 +108,7 @@ function mapTreeNode(node: SpecBoxWebApiModelProjectTreeNodeModel): TreeNode {
     type: 'group',
     totalCount,
     automatedCount,
+    problemCount,
     id,
     title,
     parentId,

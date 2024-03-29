@@ -13,6 +13,7 @@ export interface SpecBoxWebApiModelUploadData {
 export interface SpecBoxWebApiModelUploadFeatureModel {
   code: string;
   title: string;
+  featureType?: FeatureType;
   description?: string;
   filePath?: string;
   groups: SpecBoxWebApiModelUploadAssertionGroupModel[];
@@ -28,7 +29,8 @@ export interface SpecBoxWebApiModelUploadAssertionGroupModel {
 export interface SpecBoxWebApiModelUploadAssertionModel {
   title: string;
   description?: string;
-  isAutomated: boolean;
+  isAutomated?: boolean;
+  automationState?: AutomationState;
 }
 
 export interface SpecBoxWebApiModelUploadAttributeModel {
@@ -58,6 +60,7 @@ export interface SpecBoxWebApiModelCommonProjectModel {
 export interface SpecBoxWebApiModelProjectFeatureModel {
   code: string;
   title: string;
+  featureType?: FeatureType;
   description?: string;
   filePath?: string;
   /** NOTE: This property will not be serialized. It can only be populated by the server. */
@@ -73,7 +76,7 @@ export interface SpecBoxWebApiModelProjectAssertionGroupModel {
 export interface SpecBoxWebApiModelProjectAssertionModel {
   title: string;
   description?: string;
-  isAutomated: boolean;
+  automationState: AutomationState;
 }
 
 export interface SpecBoxWebApiModelProjectStructureModel {
@@ -85,9 +88,11 @@ export interface SpecBoxWebApiModelProjectTreeNodeModel {
   id: string;
   parentId?: string;
   featureCode?: string;
+  featureType?: FeatureType;
   title?: string;
   totalCount: number;
   automatedCount: number;
+  problemCount: number;
   sortOrder?: number;
 }
 
@@ -107,6 +112,7 @@ export interface SpecBoxWebApiModelStatAssertionsStatModel {
   timestamp: Date;
   totalCount: number;
   automatedCount: number;
+  problemCount: number;
 }
 
 export interface SpecBoxWebApiModelStatAutotestsStatModel {
@@ -114,6 +120,11 @@ export interface SpecBoxWebApiModelStatAutotestsStatModel {
   duration: number;
   assertionsCount: number;
 }
+
+/** Defines values for FeatureType. */
+export type FeatureType = 'Functional' | 'Visual';
+/** Defines values for AutomationState. */
+export type AutomationState = 'Unknown' | 'Automated' | 'Problem';
 
 /** Optional parameters. */
 export interface ConfigOptionalParams extends coreClient.OperationOptions {}

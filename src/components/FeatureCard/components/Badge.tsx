@@ -1,13 +1,18 @@
 import { FC } from 'react';
 
+import { AutomationState } from '@/api';
+
 import { bem } from '../FeatureCard.cn';
 
 import './Badge.css';
 
 export interface BadgeProps {
-  automated: boolean;
+  automationState: AutomationState;
 }
 
-export const Badge: FC<BadgeProps> = ({ automated }) => {
-  return <div className={bem('Badge', { automated })}></div>;
+export const Badge: FC<BadgeProps> = ({ automationState }) => {
+  const automated = automationState === 'Automated';
+  const problem = automationState === 'Problem';
+
+  return <div className={bem('Badge', { automated, problem })}></div>;
 };

@@ -1,3 +1,5 @@
+import { AutomationState, FeatureType } from './api';
+
 export interface Feature {
   code: string;
   title: string;
@@ -7,6 +9,7 @@ export interface Feature {
   assertionsCount: {
     total: number;
     automated: number;
+    problem: number;
   };
 }
 
@@ -18,7 +21,7 @@ export interface AssertionGroup {
 export interface Assertion {
   title: string;
   description?: string;
-  isAutomated: boolean;
+  automationState: AutomationState;
 }
 
 export interface BaseTreeNode {
@@ -27,12 +30,14 @@ export interface BaseTreeNode {
   title?: string;
   totalCount: number;
   automatedCount: number;
+  problemCount: number;
   sortOrder?: number;
 }
 
 export interface FeatureTreeNode extends BaseTreeNode {
   type: 'feature';
   featureCode: string;
+  featureType?: FeatureType;
 }
 
 export interface GroupTreeNode extends BaseTreeNode {

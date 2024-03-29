@@ -12,3 +12,7 @@
 .FeatureCard-Badge_automated {
   background-color: var(--g-color-base-positive-medium);
 }
+
+.FeatureCard-Badge_problem {
+  background-color: var(--g-color-base-warning-heavy);
+}
