@@ -117,11 +117,14 @@ function mapTreeNode(node: SpecBoxWebApiModelProjectTreeNodeModel): TreeNode {
 }
 
 export function mapProjectStat(stat: StatResponse): ProjectStat {
-  const assertions = stat.assertions.map(({ automatedCount, totalCount, timestamp }) => ({
-    automatedCount,
-    totalCount,
-    timestamp,
-  }));
+  const assertions = stat.assertions.map(
+    ({ problemCount, automatedCount, totalCount, timestamp }) => ({
+      problemCount,
+      automatedCount,
+      totalCount,
+      timestamp,
+    }),
+  );
 
   const autotests = stat.autotests.map(({ timestamp, assertionsCount }) => ({
     assertionsCount,

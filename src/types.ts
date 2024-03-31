@@ -62,6 +62,7 @@ export interface StatAssertion {
   timestamp: Date;
   totalCount: number;
   automatedCount: number;
+  problemCount: number;
 }
 
 export interface StatAutotestsItem {
