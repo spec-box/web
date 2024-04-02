@@ -1,5 +1,5 @@
 import { FC, ReactNode, useCallback } from 'react';
-import { ListUl } from '@gravity-ui/icons';
+import { ListUl, Picture } from '@gravity-ui/icons';
 import { ArrowToggle, Icon } from '@gravity-ui/uikit';
 import { useEvent, useStoreMap } from 'effector-react/scope';
 
@@ -11,6 +11,7 @@ import { bem } from '../ProjectFeatures.cn';
 
 import { ItemStat } from './ItemStat';
 import { Indent } from './Indent';
+import { Problems } from './Problems';
 
 import './FeatureItem.css';
 
@@ -25,7 +26,7 @@ const useIsOpen = (id: string) => useStoreMap($collapseState, (s) => Boolean(s[i
 export const FeatureGroupItem: FC<FeatureGroupItemProps> = (props) => {
   const {
     level,
-    node: { totalCount, automatedCount, title, id },
+    node: { totalCount, automatedCount, problemCount, title, id },
     children,
   } = props;
 
@@ -39,6 +40,7 @@ export const FeatureGroupItem: FC<FeatureGroupItemProps> = (props) => {
   );
 
   const stat = <ItemStat totalCount={totalCount} automatedCount={automatedCount} />;
+  const problems = problemCount && !isOpen ? <Problems count={problemCount} /> : null;
 
   const displayText = title === undefined ? '[значение атрибута не указано]' : title;
 
@@ -54,6 +56,7 @@ export const FeatureGroupItem: FC<FeatureGroupItemProps> = (props) => {
           after={stat}
         >
           {displayText}
+          {problems}
         </ListItem>
       </div>
       {isOpen ? children : null}
@@ -68,11 +71,12 @@ interface FeatureItemProps {
   selectedCode?: string;
 }
 
-const featureIcon = <Icon className={bem('FeatureIcon')} size={16} data={ListUl} />;
+const commonFeatureIcon = <Icon className={bem('FeatureIcon')} size={16} data={ListUl} />;
+const visualFeatureIcon = <Icon className={bem('FeatureIcon')} size={16} data={Picture} />;
 
 export const FeatureItem: FC<FeatureItemProps> = (props) => {
   const {
-    node: { totalCount, automatedCount, featureCode, title },
+    node: { totalCount, automatedCount, problemCount, featureCode, featureType, title },
     onSelect: onFeatureSelect,
     selectedCode,
     level,
@@ -84,6 +88,10 @@ export const FeatureItem: FC<FeatureItemProps> = (props) => {
 
   const state: ListItemState = featureCode === selectedCode ? 'active' : 'normal';
 
+  const icon = featureType === 'Visual' ? visualFeatureIcon : commonFeatureIcon;
+
+  const problems = problemCount ? <Problems count={problemCount} /> : null;
+
   return (
     <div className={bem('Item')}>
       <Indent level={level} />
@@ -92,10 +100,11 @@ export const FeatureItem: FC<FeatureItemProps> = (props) => {
         className={bem('ItemContent')}
         state={state}
         onPress={onSelect}
-        before={featureIcon}
+        before={icon}
         after={stat}
       >
         {title}
+        {problems}
       </ListItem>
     </div>
   );

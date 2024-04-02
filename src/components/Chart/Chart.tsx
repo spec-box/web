@@ -68,18 +68,31 @@ const options: ChartOptions<'line' | 'bar'> = {
 };
 
 const createAssertionsDataSets = (data: StatAssertion[]): ChartData<'line', Point[], string> => {
-  const { total, automated } = data.reduce<{ total: Point[]; automated: Point[] }>(
-    (a, { timestamp, totalCount, automatedCount }) => {
+  const { total, automated, problem } = data.reduce<{
+    total: Point[];
+    automated: Point[];
+    problem: Point[];
+  }>(
+    (a, { timestamp, totalCount, automatedCount, problemCount }) => {
       a.total.push({ x: timestamp, y: totalCount });
       a.automated.push({ x: timestamp, y: automatedCount });
+      a.problem.push({ x: timestamp, y: problemCount });
 
       return a;
     },
-    { total: [], automated: [] },
+    { total: [], automated: [], problem: [] },
   );
 
   return {
     datasets: [
+      {
+        cubicInterpolationMode: 'default',
+        label: 'Проблемы',
+        borderColor: 'rgb(189, 92, 10)',
+        backgroundColor: 'rgb(255, 190, 92)',
+        data: problem,
+        fill: false,
+      },
       {
         cubicInterpolationMode: 'default',
         label: 'Автоматизировано',

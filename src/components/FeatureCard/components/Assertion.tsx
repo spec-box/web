@@ -22,15 +22,14 @@ export const Assertion: FC<AssertionProps> = (props) => {
 
   return (
     <div className={bem('Assertion')}>
-      <div>— </div>
+      <div className={bem('AssertionBadge')}>
+        <Badge automationState={assertion.automationState} />
+      </div>
       <div className={bem('AssertionContent')}>
         <div className={bem('AssertionTitle')}>
           <FormattedText text={assertion.title} />
         </div>
         {description}
-      </div>
-      <div className={bem('AssertionBadge')}>
-        <Badge automated={assertion.isAutomated} />
       </div>
     </div>
   );
