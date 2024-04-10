@@ -98,7 +98,7 @@ export const Project: FC = () => {
         />
       </div>
       <div className={bem('DetailsPanel')}>
-        <Details repositoryUrl={repositoryUrl} feature={feature} isPending={featureIsPending} />
+        <Details repositoryUrl={repositoryUrl} feature={feature} isPending={structureIsPending || featureIsPending} />
       </div>
     </ProjectLayout>
   );
