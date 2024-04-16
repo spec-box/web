@@ -113,6 +113,7 @@ function mapTreeNode(node: SpecBoxWebApiModelProjectTreeNodeModel): TreeNode {
     title,
     parentId,
     sortOrder,
+    childrenIds: [],
   };
 }
 

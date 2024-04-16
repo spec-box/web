@@ -42,6 +42,7 @@ export interface FeatureTreeNode extends BaseTreeNode {
 
 export interface GroupTreeNode extends BaseTreeNode {
   type: 'group';
+  childrenIds: string[];
 }
 
 export type TreeNode = GroupTreeNode | FeatureTreeNode;

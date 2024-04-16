@@ -1,18 +1,25 @@
-import { createRoute, querySync } from 'atomic-router';
+import { createRoute, querySync, RouteParamsAndQuery } from 'atomic-router';
 import copy from 'copy-to-clipboard';
-import { combine, createEvent, createStore, merge, restore, sample, split } from 'effector';
+import { combine, createEvent, createStore, merge, restore, sample } from 'effector';
 import { toast } from 'react-toastify';
 
 import { mapFeature, mapStructure } from '@/mappers';
 import { Feature, ProjectStructure, TreeNode } from '@/types';
 
 import { controls } from '../common';
-import { StoreDependencies, createSpecBoxEffect } from '../scope';
+import { createSpecBoxEffect, StoreDependencies } from '../scope';
+import { searchIn } from '../tree.ts';
 
 const STRUCTURE_STUB: ProjectStructure = {
   tree: [],
   project: { code: '', title: '' },
 };
+
+const extractStateFrom = ({ params, query }: RouteParamsAndQuery<{ project?: string }>) => ({
+  project: params.project || '',
+  feature: query.feature || '',
+  search: query.search || '',
+});
 
 export const projectRoute = createRoute<{ project?: string }>();
 
@@ -37,6 +44,7 @@ export const loadStructureFx = createSpecBoxEffect(
 );
 
 export const $structure = restore(loadStructureFx.doneData, STRUCTURE_STUB);
+export const $filteredStructure = restore(loadStructureFx.doneData, STRUCTURE_STUB);
 export const $structureIsLoading = loadStructureFx.pending;
 
 export const toggle = createEvent<string>();
@@ -78,6 +86,9 @@ export const loadFeatureFx = createSpecBoxEffect(
 
 export const loadFeature = createEvent<LoadFeatureFxParams>();
 export const resetFeature = createEvent();
+export const searchChanged = createEvent<string>();
+
+export const $search = restore(searchChanged, '').reset(projectRoute.closed);
 
 // код выбранной фичи (появляется в момент выбора)
 export const $featureCode = createStore<string>('')
@@ -94,6 +105,7 @@ querySync({
       loadFeature.map(({ feature }) => feature),
       null,
     ),
+    search: $search,
   },
   route: projectRoute,
   controls,
@@ -129,6 +141,34 @@ const getExpandedIds = (args: { feature: Feature | null; tree: ProjectStructure 
 };
 
 sample({
+  clock: projectRoute.opened,
+  fn: extractStateFrom,
+  target: loadStructureFx,
+});
+
+sample({
+  clock: merge([projectRoute.opened, projectRoute.updated]),
+  source: $featureCode,
+  filter: (currentFeature, query) => {
+    const selectedFeature = extractStateFrom(query).feature;
+    return Boolean(selectedFeature) && currentFeature !== selectedFeature;
+  },
+  fn: (_, query) => extractStateFrom(query),
+  target: loadFeatureFx,
+});
+
+sample({
+  clock: projectRoute.updated,
+  filter: ({ query: { feature = '' } }) => !feature,
+  target: resetFeature,
+});
+
+sample({
+  clock: loadFeatureFx.doneData,
+  target: $feature,
+});
+
+sample({
   clock: combine({
     feature: $feature,
     tree: $structure,
@@ -138,28 +178,19 @@ sample({
 });
 
 sample({
-  clock: [projectRoute.opened],
-  fn: ({ params: { project = '' } }) => ({ project }),
-  target: loadStructureFx,
-});
+  clock: combine({
+    tree: $structure,
+    search: $search,
+  }),
+  fn: ({ search, tree }) => {
+    const result = searchIn(tree.tree, search);
 
-split({
-  source: merge([projectRoute.opened, projectRoute.updated]).map(
-    ({ params: { project = '' }, query: { feature = '' } }): LoadFeatureFxParams => ({
-      project,
-      feature,
-    }),
-  ),
-  match: ({ feature }: LoadFeatureFxParams) => (feature ? 'load' : 'reset'),
-  cases: {
-    load: loadFeatureFx,
-    reset: resetFeature,
+    return {
+      project: tree.project,
+      tree: result,
+    };
   },
-});
-
-sample({
-  clock: loadFeatureFx.doneData,
-  target: $feature,
+  target: $filteredStructure,
 });
 
 export const copyToClipboard = createEvent<CopyToClipboardParams>();

@@ -14,11 +14,13 @@ import { Indent } from './Indent';
 import { Problems } from './Problems';
 
 import './FeatureItem.css';
+import { SearchMatch } from '@/components/SearchMatch/SearchMatch.tsx';
 
 interface FeatureGroupItemProps {
   level: number;
   node: GroupTreeNode;
   children: ReactNode;
+  search?: string;
 }
 
 const useIsOpen = (id: string) => useStoreMap($collapseState, (s) => Boolean(s[id]));
@@ -28,6 +30,7 @@ export const FeatureGroupItem: FC<FeatureGroupItemProps> = (props) => {
     level,
     node: { totalCount, automatedCount, problemCount, title, id },
     children,
+    search = '',
   } = props;
 
   const isOpen = useIsOpen(id);
@@ -55,7 +58,7 @@ export const FeatureGroupItem: FC<FeatureGroupItemProps> = (props) => {
           before={arrow}
           after={stat}
         >
-          {displayText}
+          <SearchMatch search={search} content={displayText} />
           {problems}
         </ListItem>
       </div>
@@ -69,6 +72,7 @@ interface FeatureItemProps {
   node: FeatureTreeNode;
   onSelect: (featureCode: string) => void;
   selectedCode?: string;
+  search?: string;
 }
 
 const commonFeatureIcon = <Icon className={bem('FeatureIcon')} size={16} data={ListUl} />;
@@ -76,10 +80,11 @@ const visualFeatureIcon = <Icon className={bem('FeatureIcon')} size={16} data={P
 
 export const FeatureItem: FC<FeatureItemProps> = (props) => {
   const {
-    node: { totalCount, automatedCount, problemCount, featureCode, featureType, title },
+    node: { totalCount, automatedCount, problemCount, featureCode, featureType, title = '' },
     onSelect: onFeatureSelect,
     selectedCode,
     level,
+    search = '',
   } = props;
 
   const onSelect = useCallback(() => onFeatureSelect(featureCode), [featureCode, onFeatureSelect]);
@@ -103,7 +108,7 @@ export const FeatureItem: FC<FeatureItemProps> = (props) => {
         before={icon}
         after={stat}
       >
-        {title}
+        <SearchMatch search={search} content={title} />
         {problems}
       </ListItem>
     </div>
