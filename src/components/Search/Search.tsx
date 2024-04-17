@@ -1,6 +1,9 @@
 import { ChangeEvent, FC, useCallback, useEffect, useRef, useState } from 'react';
 import { TextInput } from '@gravity-ui/uikit';
 
+import './Search.css';
+import { bem } from './Search.cn.ts';
+
 export interface SearchProps {
   value: string;
   onChange: (value: string) => void;
@@ -33,6 +36,7 @@ export const Search: FC<SearchProps> = ({ value, onChange }) => {
 
   return (
     <TextInput
+      className={bem()}
       placeholder="Поиск"
       size="l"
       hasClear
