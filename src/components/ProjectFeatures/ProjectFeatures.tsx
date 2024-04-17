@@ -13,11 +13,10 @@ interface ProjectFeaturesProps {
   tree: TreeNode[];
   selectedFeatureCode?: string;
   onFeatureSelected: (featureCode: string) => void;
-  search?: string;
 }
 
 export const ProjectFeatures: FC<ProjectFeaturesProps> = (props) => {
-  const { tree, selectedFeatureCode, search, onFeatureSelected } = props;
+  const { tree, selectedFeatureCode, onFeatureSelected } = props;
 
   const onSelect = useCallback(
     (featureCode: string) => onFeatureSelected(featureCode),
@@ -35,7 +34,6 @@ export const ProjectFeatures: FC<ProjectFeaturesProps> = (props) => {
         node={node}
         selectedFeatureCode={selectedFeatureCode}
         onFeatureSelect={onSelect}
-        search={search}
       />
     ));
 

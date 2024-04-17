@@ -24,6 +24,8 @@ export interface Assertion {
   automationState: AutomationState;
 }
 
+export type Highlight = [number, number];
+
 export interface BaseTreeNode {
   id: string;
   parentId?: string;
@@ -32,6 +34,7 @@ export interface BaseTreeNode {
   automatedCount: number;
   problemCount: number;
   sortOrder?: number;
+  highlight?: Highlight;
 }
 
 export interface FeatureTreeNode extends BaseTreeNode {

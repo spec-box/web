@@ -20,11 +20,10 @@ interface ProjectTreeProps {
   tree: TreeNode[];
   onFeatureSelected: (featureCode: string) => void;
   selectedFeatureCode?: string;
-  search?: string;
 }
 
 const ProjectTree: FC<ProjectTreeProps> = (props) => {
-  const { isPending, tree, onFeatureSelected, selectedFeatureCode, search } = props;
+  const { isPending, tree, onFeatureSelected, selectedFeatureCode } = props;
 
   // todo: сделать обработку пустого значения
 
@@ -36,7 +35,6 @@ const ProjectTree: FC<ProjectTreeProps> = (props) => {
         tree={tree}
         selectedFeatureCode={selectedFeatureCode}
         onFeatureSelected={onFeatureSelected}
-        search={search}
       />
     );
   }
@@ -102,7 +100,6 @@ export const Project: FC = () => {
           tree={tree}
           onFeatureSelected={onFeatureSelected}
           selectedFeatureCode={featureCode}
-          search={search}
         />
       </div>
       <div className={bem('DetailsPanel')}>

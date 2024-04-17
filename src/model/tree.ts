@@ -1,4 +1,4 @@
-import type { NormalizedTree, TreeNode } from '@/types.ts';
+import type { NormalizedTree, TreeNode, Highlight } from '@/types.ts';
 
 type NodeVisitor = (node: TreeNode) => void;
 
@@ -45,10 +45,15 @@ const parents = (node: TreeNode, tree: NormalizedTree, visitor?: NodeVisitor): T
   return result;
 };
 
-export const searchIn = (nodes: TreeNode[], query: string) => {
+export const searchIn = (nodes: TreeNode[], query: string): TreeNode[] => {
   nodes = structuredClone(nodes);
   query = (query ?? '').trim().toLowerCase();
-  const selector = (node: TreeNode) => (node.title ?? '').toLowerCase().includes(query);
+
+  const selector = (node: TreeNode): Highlight | undefined => {
+    const idx = (node.title ?? '').toLowerCase().indexOf(query);
+    if (idx === -1) return undefined;
+    return [idx, idx + query.length];
+  };
 
   const result = new Set<TreeNode>();
   const stack: string[] = [];
@@ -56,16 +61,20 @@ export const searchIn = (nodes: TreeNode[], query: string) => {
 
   while (stack.length) {
     const item = tree[stack.pop()!];
+    const match = selector(item);
+    item.highlight = match;
 
-    if (!selector(item)) {
+    if (!match) {
       if (item.type === 'group') item.childrenIds.forEach((x) => stack.push(x));
       continue;
     }
 
-    const visitor: NodeVisitor = (x) => result.add(x);
+    subtree(item, tree, (node) => {
+      result.add(node);
+      node.highlight = selector(node);
+    });
 
-    subtree(item, tree, visitor);
-    parents(item, tree, visitor);
+    parents(item, tree, (node) => result.add(node));
   }
 
   return Array.from(result);

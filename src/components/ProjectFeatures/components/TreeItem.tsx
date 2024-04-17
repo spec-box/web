@@ -12,11 +12,10 @@ interface TreeItemProps {
   tree: TreeNode[];
   onFeatureSelect: (featureCode: string) => void;
   selectedFeatureCode?: string;
-  search?: string;
 }
 
 export const TreeItem: FC<TreeItemProps> = (props) => {
-  const { level, tree, node, search, onFeatureSelect, selectedFeatureCode } = props;
+  const { level, tree, node, onFeatureSelect, selectedFeatureCode } = props;
 
   const nodes = useMemo(
     () => tree.filter((n) => n.parentId === node.id).sort(compareTreeNodes),
@@ -31,7 +30,6 @@ export const TreeItem: FC<TreeItemProps> = (props) => {
       tree={tree}
       onFeatureSelect={onFeatureSelect}
       selectedFeatureCode={selectedFeatureCode}
-      search={search}
     />
   ));
 
@@ -43,12 +41,11 @@ export const TreeItem: FC<TreeItemProps> = (props) => {
           node={node}
           onSelect={onFeatureSelect}
           selectedCode={selectedFeatureCode}
-          search={search}
         />
       );
     case 'group':
       return (
-        <FeatureGroupItem level={level} key={node.id} node={node} search={search}>
+        <FeatureGroupItem level={level} key={node.id} node={node}>
           {children}
         </FeatureGroupItem>
       );

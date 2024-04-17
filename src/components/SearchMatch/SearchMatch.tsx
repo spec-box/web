@@ -1,26 +1,20 @@
 import { FC } from 'react';
 import { bem } from './SearchMatch.cn.ts';
+import type { Highlight } from '@/types.ts';
 
 import './SearchMatch.css';
 
 interface SearchMatchProps {
-  search: string;
+  highlight?: Highlight;
   content: string;
 }
 
-const slice = (search: string, content: string): string[] => {
-  search = (search ?? '').trim().toLocaleLowerCase();
-  const startIdx = content.toLocaleLowerCase().indexOf(search);
-
-  if (startIdx < 0) return ['', '', content];
-
-  const lastIdx = startIdx + search.length;
-
-  return [content.slice(0, startIdx), content.slice(startIdx, lastIdx), content.slice(lastIdx)];
+const slice = (content: string, [startIdx, endIdx]: Highlight): string[] => {
+  return [content.slice(0, startIdx), content.slice(startIdx, endIdx), content.slice(endIdx)];
 };
 
-export const SearchMatch: FC<SearchMatchProps> = ({ search, content }) => {
-  const [left, middle, right] = slice(search, content);
+export const SearchMatch: FC<SearchMatchProps> = ({ highlight = [0, 0], content }) => {
+  const [left, middle, right] = slice(content, highlight);
 
   return (
     <span className={bem()}>
