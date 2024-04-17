@@ -66,6 +66,17 @@ export interface SpecBoxWebApiModelProjectFeatureModel {
   /** NOTE: This property will not be serialized. It can only be populated by the server. */
   readonly assertionGroups: SpecBoxWebApiModelProjectAssertionGroupModel[];
 }
+export interface SpecBoxWebApiModelDependentFeatureModel {
+  code: string;
+  title: string;
+  featureType?: FeatureType;
+  assertionsCount: number,
+  automatedCount: number,
+}
+
+export interface SpecBoxWebApiModelProjectFeatureWithDependenciesModel extends SpecBoxWebApiModelProjectFeatureModel {
+  dependencies? : SpecBoxWebApiModelDependentFeatureModel[]
+}
 
 export interface SpecBoxWebApiModelProjectAssertionGroupModel {
   title: string;
@@ -148,7 +159,7 @@ export type ProjectsListResponse = SpecBoxWebApiModelCommonProjectModel[];
 export interface ProjectsProjectFeaturesFeatureOptionalParams extends coreClient.OperationOptions {}
 
 /** Contains response data for the projectsProjectFeaturesFeature operation. */
-export type ProjectsProjectFeaturesFeatureResponse = SpecBoxWebApiModelProjectFeatureModel;
+export type ProjectsProjectFeaturesFeatureResponse = SpecBoxWebApiModelProjectFeatureWithDependenciesModel;
 
 /** Optional parameters. */
 export interface ProjectsProjectStructureOptionalParams extends coreClient.OperationOptions {}

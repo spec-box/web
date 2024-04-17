@@ -84,7 +84,7 @@ export class SpecBoxWebApi extends coreClient.ServiceClient {
   ): Promise<ProjectsProjectFeaturesFeatureResponse> {
     return this.sendOperationRequest(
       { project, feature, options },
-      projectsProjectFeaturesFeatureOperationSpec,
+    projectsProjectFeaturesFeatureOperationSpec,
     );
   }
 

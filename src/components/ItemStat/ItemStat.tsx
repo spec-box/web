@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { RATE_LIMIT, bem } from '../ProjectFeatures.cn';
+import { RATE_LIMIT, bem } from './ItemStat.cn';
 
 import './ItemStat.css';
 
@@ -11,11 +11,11 @@ export const ItemStat: FC<{ totalCount: number; automatedCount: number }> = (pro
   const state = rate > RATE_LIMIT ? 'normal' : 'warning';
 
   return (
-    <div className={bem('ItemStat', { state })}>
-      <div className={bem('ItemStatValue')}>
+    <div className={bem('Content', { state })}>
+      <div className={bem('Value')}>
         {automatedCount} / {totalCount}
       </div>
-      <div className={bem('ItemStatValue')}>{rate}%</div>
+      <div className={bem('Value')}>{rate}%</div>
     </div>
   );
 };
