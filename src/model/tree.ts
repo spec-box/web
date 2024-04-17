@@ -32,7 +32,11 @@ const parent = (node: TreeNode, tree: NormalizedTree): TreeNode | undefined => {
   return tree[node.parentId ?? ''];
 };
 
-const parents = (node: TreeNode, tree: NormalizedTree, visitor?: NodeVisitor): TreeNode[] => {
+export const parents = (
+  node: TreeNode,
+  tree: NormalizedTree,
+  visitor?: NodeVisitor,
+): TreeNode[] => {
   const result: TreeNode[] = [];
   let ancestor = parent(node, tree);
 

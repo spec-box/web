@@ -8,7 +8,7 @@ import { Feature, ProjectStructure, TreeNode } from '@/types';
 
 import { controls } from '../common';
 import { createSpecBoxEffect, StoreDependencies } from '../scope';
-import { searchIn } from '../tree.ts';
+import { normalize, parents, searchIn } from '../tree.ts';
 
 const STRUCTURE_STUB: ProjectStructure = {
   tree: [],
@@ -111,33 +111,25 @@ querySync({
   controls,
 });
 
-// при выборе активной фичи раскрываем всех её родителей
+// при выборе активной фичи или при совпадении фичи при поиске раскрываем всех её родителей
 const getExpandedIds = (args: { feature: Feature | null; tree: ProjectStructure }): string[] => {
   const {
     feature,
     tree: { tree },
   } = args;
-  const result: string[] = [];
+  const result = new Set<string>();
+  const normalized = normalize(tree);
+  const isSearchMatch = (node: TreeNode) => Boolean(node.highlight && node.highlight[1] !== 0);
+  const isFeatureMatch = (node: TreeNode) =>
+    node.type === 'feature' && node.featureCode === feature?.code;
 
-  if (feature && tree.length) {
-    let target: TreeNode | undefined;
-
-    const obj = tree.reduce<Record<string, TreeNode>>((a, node) => {
-      a[node.id] = node;
-
-      if (node.type === 'feature' && node.featureCode === feature.code) {
-        target = node;
-      }
-
-      return a;
-    }, {});
-
-    for (let id = target?.id; id !== undefined; id = obj[id]?.parentId) {
-      result.push(id);
+  for (const node of tree) {
+    if (isSearchMatch(node) || isFeatureMatch(node)) {
+      parents(node, normalized, (x) => result.add(x.id));
     }
   }
 
-  return result;
+  return Array.from(result);
 };
 
 sample({
@@ -170,15 +162,6 @@ sample({
 
 sample({
   clock: combine({
-    feature: $feature,
-    tree: $structure,
-  }),
-  fn: getExpandedIds,
-  target: expand,
-});
-
-sample({
-  clock: combine({
     tree: $structure,
     search: $search,
   }),
@@ -191,6 +174,15 @@ sample({
     };
   },
   target: $filteredStructure,
+});
+
+sample({
+  clock: combine({
+    feature: $feature,
+    tree: $filteredStructure,
+  }),
+  fn: getExpandedIds,
+  target: expand,
 });
 
 export const copyToClipboard = createEvent<CopyToClipboardParams>();
