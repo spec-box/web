@@ -3,6 +3,7 @@ import {
   SpecBoxWebApiModelProjectAssertionGroupModel,
   SpecBoxWebApiModelProjectAssertionModel,
   SpecBoxWebApiModelProjectFeatureModel,
+  SpecBoxWebApiModelProjectFeatureWithDependenciesModel,
   SpecBoxWebApiModelProjectStructureModel,
   SpecBoxWebApiModelProjectTreeNodeModel,
   StatResponse,
@@ -17,8 +18,8 @@ import {
   TreeNode,
 } from './types';
 
-export const mapFeature = (input: SpecBoxWebApiModelProjectFeatureModel): Feature => {
-  const { code, title, description, filePath } = input;
+export const mapFeatureBaseField = (input: SpecBoxWebApiModelProjectFeatureModel): Feature => {
+  const { code, title, description, filePath, featureType } = input;
 
   const assertionGroups = input.assertionGroups.map(mapAssertionGroup);
   const allAssertions = new Array<Assertion>().concat(
@@ -34,6 +35,7 @@ export const mapFeature = (input: SpecBoxWebApiModelProjectFeatureModel): Featur
     title,
     description,
     filePath,
+    featureType,
     assertionGroups,
     assertionsCount: {
       total,
@@ -42,6 +44,13 @@ export const mapFeature = (input: SpecBoxWebApiModelProjectFeatureModel): Featur
     },
   };
 };
+
+
+export const mapFeature = (input: SpecBoxWebApiModelProjectFeatureWithDependenciesModel) =>{
+    const baseFieldMaping = mapFeatureBaseField(input);
+    const {dependencies} = input
+    return {...baseFieldMaping, dependencies }
+}
 
 export const mapAssertionGroup = (
   input: SpecBoxWebApiModelProjectAssertionGroupModel,

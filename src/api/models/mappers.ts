@@ -410,6 +410,19 @@ export const SpecBoxWebApiModelProjectFeatureModel: coreClient.CompositeMapper =
           name: 'String',
         },
       },
+      dependencies: {
+        serializedName: 'dependencies',
+        required: false,
+        type:{
+          name: 'Sequence',
+          element:{
+            type: {
+              name: 'Composite',
+              className: 'SpecBoxWebApiModelDependentFeatureModel'
+            }
+          }
+        }
+      },
       assertionGroups: {
         serializedName: 'assertionGroups',
         required: true,
@@ -424,6 +437,56 @@ export const SpecBoxWebApiModelProjectFeatureModel: coreClient.CompositeMapper =
           },
         },
       },
+    },
+  },
+};
+
+export const SpecBoxWebApiModelDependentFeatureModel: coreClient.CompositeMapper = {
+  type: {
+    name: 'Composite',
+    className: 'SpecBoxWebApiModelDependentFeatureModel',
+    modelProperties: {
+      code: {
+        constraints: {
+          MinLength: 1,
+        },
+        serializedName: 'code',
+        required: true,
+        type: {
+          name: 'String',
+        },
+      },
+      title: {
+        constraints: {
+          MinLength: 1,
+        },
+        serializedName: 'title',
+        required: true,
+        type: {
+          name: 'String',
+        },
+      },
+      featureType: {
+        serializedName: 'featureType',
+        type: {
+          name: 'Enum',
+          allowedValues: ['Functional', 'Visual'],
+        },
+      },
+      assertionsCount: {
+        serializedName: 'assertionsCount',
+        required: true,
+        type: {
+          name: 'Number',
+        },
+      },
+      automatedCount: {
+        serializedName: 'automatedCount',
+        required: true,
+        type: {
+          name: 'Number',
+        },
+      }
     },
   },
 };

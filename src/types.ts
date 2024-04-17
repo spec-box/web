@@ -5,12 +5,22 @@ export interface Feature {
   title: string;
   description?: string;
   filePath?: string;
+  featureType?: FeatureType 
+  dependencies?: DependentFeature[]
   assertionGroups: AssertionGroup[];
   assertionsCount: {
     total: number;
     automated: number;
     problem: number;
   };
+}
+
+export interface DependentFeature{
+  code: string;
+  title: string;
+  featureType?: FeatureType
+  assertionsCount: number
+  automatedCount: number
 }
 
 export interface AssertionGroup {
