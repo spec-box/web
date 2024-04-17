@@ -1,25 +1,11 @@
-import { TreeNode } from '@/types.ts';
+import type { NormalizedTree, TreeNode } from '@/types.ts';
 
-export const normalize = (nodes: TreeNode[]): Record<string, TreeNode> => {
-  nodes = structuredClone(nodes);
+export const normalize = (nodes: TreeNode[]): NormalizedTree => {
+  return nodes.reduce((acc, node) => {
+    acc[node.id] = node;
 
-  const tree = nodes.reduce(
-    (acc, node) => {
-      acc[node.id] = node;
-      return acc;
-    },
-    {} as Record<string, TreeNode>,
-  );
-
-  nodes.forEach((node) => {
-    const parent = tree[node.parentId ?? ''];
-
-    if (parent?.type === 'group') {
-      parent.childrenIds.push(node.id);
-    }
-  });
-
-  return tree;
+    return acc;
+  }, {} as NormalizedTree);
 };
 
 export const searchIn = (nodes: TreeNode[], query: string) => {
@@ -64,7 +50,5 @@ export const searchIn = (nodes: TreeNode[], query: string) => {
     }
   }
 
-  const resultArr = Array.from(result);
-
-  return resultArr;
+  return Array.from(result);
 };

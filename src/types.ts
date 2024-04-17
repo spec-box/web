@@ -47,6 +47,8 @@ export interface GroupTreeNode extends BaseTreeNode {
 
 export type TreeNode = GroupTreeNode | FeatureTreeNode;
 
+export type NormalizedTree = Record<string, TreeNode>;
+
 export interface ProjectStructure {
   project: Project;
   tree: TreeNode[];

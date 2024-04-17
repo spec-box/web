@@ -16,6 +16,7 @@ import {
   ProjectStructure,
   TreeNode,
 } from './types';
+import { normalize } from './model/tree.ts';
 
 export const mapFeature = (input: SpecBoxWebApiModelProjectFeatureModel): Feature => {
   const { code, title, description, filePath } = input;
@@ -72,9 +73,24 @@ export const mapStructure = ({
 }: SpecBoxWebApiModelProjectStructureModel): ProjectStructure => {
   return {
     project: mapProject(project),
-    tree: tree.map(mapTreeNode),
+    tree: mapTree(tree),
   };
 };
+
+function mapTree(tree: SpecBoxWebApiModelProjectTreeNodeModel[]): TreeNode[] {
+  const nodes = tree.map(mapTreeNode);
+  const normalized = normalize(nodes);
+
+  nodes.forEach((node) => {
+    const parent = normalized[node.parentId ?? ''];
+
+    if (parent?.type === 'group') {
+      parent.childrenIds.push(node.id);
+    }
+  });
+
+  return nodes;
+}
 
 function mapTreeNode(node: SpecBoxWebApiModelProjectTreeNodeModel): TreeNode {
   const {
