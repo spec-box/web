@@ -1,53 +1,71 @@
 import type { NormalizedTree, TreeNode } from '@/types.ts';
 
-export const normalize = (nodes: TreeNode[]): NormalizedTree => {
+type NodeVisitor = (node: TreeNode) => void;
+
+export const normalize = (nodes: TreeNode[], visitor?: NodeVisitor): NormalizedTree => {
   return nodes.reduce((acc, node) => {
     acc[node.id] = node;
+    visitor?.(node);
 
     return acc;
   }, {} as NormalizedTree);
 };
 
+const subtree = (node: TreeNode, tree: NormalizedTree, visitor?: NodeVisitor): TreeNode[] => {
+  const result = [node];
+  visitor?.(node);
+
+  if (node.type !== 'group') return result;
+
+  const stack = [...node.childrenIds];
+  while (stack.length) {
+    const item = tree[stack.pop()!];
+    result.push(item);
+    visitor?.(item);
+    if (item.type === 'group') item.childrenIds.forEach((x) => stack.push(x));
+  }
+
+  return result;
+};
+
+const parent = (node: TreeNode, tree: NormalizedTree): TreeNode | undefined => {
+  return tree[node.parentId ?? ''];
+};
+
+const parents = (node: TreeNode, tree: NormalizedTree, visitor?: NodeVisitor): TreeNode[] => {
+  const result: TreeNode[] = [];
+  let ancestor = parent(node, tree);
+
+  while (ancestor) {
+    result.push(ancestor);
+    visitor?.(ancestor);
+    ancestor = parent(ancestor, tree);
+  }
+
+  return result;
+};
+
 export const searchIn = (nodes: TreeNode[], query: string) => {
-  const tree = normalize(nodes);
-  query = (query ?? '').toLowerCase();
+  nodes = structuredClone(nodes);
+  query = (query ?? '').trim().toLowerCase();
   const selector = (node: TreeNode) => (node.title ?? '').toLowerCase().includes(query);
 
   const result = new Set<TreeNode>();
-  const stack = nodes.filter((node) => node.parentId === undefined).map((i) => i.id);
-
-  const subtree = (node: TreeNode): TreeNode[] => {
-    const result = [node];
-
-    if (node.type !== 'group') return result;
-
-    const stack = [...node.childrenIds];
-    while (stack.length) {
-      const item = tree[stack.pop()!];
-      if (item.type === 'group') stack.push(...item.childrenIds);
-      result.push(item);
-    }
-
-    return result;
-  };
+  const stack: string[] = [];
+  const tree = normalize(nodes, (node) => node.parentId === undefined && stack.push(node.id));
 
   while (stack.length) {
     const item = tree[stack.pop()!];
 
     if (!selector(item)) {
-      if (item.type === 'group') {
-        stack.push(...item.childrenIds);
-      }
+      if (item.type === 'group') item.childrenIds.forEach((x) => stack.push(x));
       continue;
     }
 
-    subtree(item).forEach((x) => result.add(x));
+    const visitor: NodeVisitor = (x) => result.add(x);
 
-    let parent = tree[item.parentId ?? ''];
-    while (parent) {
-      result.add(parent);
-      parent = tree[parent.parentId ?? ''];
-    }
+    subtree(item, tree, visitor);
+    parents(item, tree, visitor);
   }
 
   return Array.from(result);
