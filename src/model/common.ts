@@ -1,19 +1,15 @@
 import { createRouterControls } from 'atomic-router';
-import { createEffect, createEvent, createStore, sample } from 'effector';
+import { createEvent, sample } from 'effector';
+import { $theme, createSpecBoxEffect } from './scope';
+import { Theme } from '@/localStorage';
 
 export const controls = createRouterControls();
 
-export type Theme = 'light' | 'dark';
-
-export const LS_KEY_THEME = 'theme';
-
-const saveThemeFx = createEffect((theme: Theme) => {
-  localStorage.setItem(LS_KEY_THEME, theme);
+const saveThemeFx = createSpecBoxEffect(async (theme: Theme, { ls }) => {
+  ls.setTheme(theme);
 });
 
 export const toggleThemeEvent = createEvent();
-
-export const $theme = createStore<Theme>('light');
 
 const themeByPrevTheme = {
   light: 'dark',
