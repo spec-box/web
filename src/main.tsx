@@ -9,6 +9,7 @@ import ReactDOM from 'react-dom/client';
 import { SpecBoxWebApi, SpecBoxWebApiModelDefaultConfigurationModel } from '@/api';
 import {
   AnalyticsApi,
+  LS_KEY_THEME,
   controls,
   createScope,
   homeRoute,
