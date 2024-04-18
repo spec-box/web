@@ -1,4 +1,11 @@
-import { AutomationState, FeatureType } from './api';
+import {
+  AutomationState,
+  FeatureType,
+  SpecBoxWebApiModelProjectGraphModel,
+  SpecBoxWebApiModelProjectNodeModel,
+} from './api';
+import { IUserEdge, IUserNode } from '@antv/graphin';
+import { ModelConfig } from '@antv/g6-core/lib/types';
 
 export interface Feature {
   code: string;
@@ -91,3 +98,16 @@ export interface ProjectStat {
   assertions: StatAssertion[];
   autotests: StatAutotestsItem[];
 }
+export interface ProjectGraph extends SpecBoxWebApiModelProjectGraphModel {
+  project: Project;
+}
+
+export interface DrawnNode extends SpecBoxWebApiModelProjectNodeModel, IUserNode {}
+
+export interface ProjectGraphData {
+  nodes: DrawnNode[];
+  edges: IUserEdge[];
+  project: Project;
+}
+
+export interface CfgConfig extends ModelConfig, SpecBoxWebApiModelProjectNodeModel {}
