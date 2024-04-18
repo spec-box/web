@@ -7,7 +7,15 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import { SpecBoxWebApi, SpecBoxWebApiModelDefaultConfigurationModel } from '@/api';
-import { AnalyticsApi, controls, createScope, homeRoute, projectRoute, statRoute } from '@/model';
+import {
+  AnalyticsApi,
+  LS_KEY_THEME,
+  controls,
+  createScope,
+  homeRoute,
+  projectRoute,
+  statRoute,
+} from '@/model';
 
 import { Application } from './Application';
 
@@ -25,7 +33,11 @@ declare global {
 // scope // XXX
 const api = new SpecBoxWebApi(window.location.origin + '/api', { allowInsecureConnection: true });
 const analytics = window.__SPEC_BOX_ANALYTICS_API;
-const scope = createScope({ api, analytics });
+
+const themeFromLs = localStorage.getItem(LS_KEY_THEME);
+const theme = themeFromLs === 'light' || themeFromLs === 'dark' ? themeFromLs : 'light';
+
+const scope = createScope({ api, analytics }, theme);
 
 // router
 const routes = [

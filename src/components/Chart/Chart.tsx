@@ -15,7 +15,9 @@ import { startOfDay } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { FC, useMemo } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
+import { useUnit } from 'effector-react/scope';
 
+import { $theme } from '@/model';
 import { StatAssertion, StatAutotestsItem } from '@/types';
 
 import { bem } from './Chart.cn';
@@ -29,45 +31,86 @@ interface Point {
   y: number;
 }
 
-const options: ChartOptions<'line' | 'bar'> = {
-  // https://github.com/chartjs/Chart.js/issues/11005
-  maintainAspectRatio: false,
-  responsive: true,
-  interaction: { mode: 'index' },
-  elements: {
-    point: {
-      radius: 0,
-      hitRadius: 10,
-      hoverRadius: 0,
-    },
-    line: {
-      borderWidth: 2,
-    },
-  },
-  scales: {
-    x: {
-      type: 'time',
-      alignToPixels: true,
-      ticks: {
-        maxRotation: 0,
-        autoSkipPadding: 32,
+const getOptions = (config: {
+  xGridColor: string;
+  xTicksColor: string;
+  yGridColor: string;
+  yTicksColor: string;
+}): ChartOptions<'line' | 'bar'> => {
+  const { xGridColor, xTicksColor, yGridColor, yTicksColor } = config;
+
+  return {
+    // https://github.com/chartjs/Chart.js/issues/11005
+    maintainAspectRatio: false,
+    responsive: true,
+    interaction: { mode: 'index' },
+    elements: {
+      point: {
+        radius: 0,
+        hitRadius: 10,
+        hoverRadius: 0,
       },
-      adapters: {
-        date: { locale: ru },
-      },
-      time: {
-        tooltipFormat: 'PPP',
-        displayFormats: { day: 'd MMM' },
-        unit: 'day',
+      line: {
+        borderWidth: 2,
       },
     },
-    y: {
-      min: 0,
+    scales: {
+      x: {
+        grid: {
+          color: xGridColor,
+        },
+        type: 'time',
+        alignToPixels: true,
+        ticks: {
+          color: xTicksColor,
+          maxRotation: 0,
+          autoSkipPadding: 32,
+        },
+        adapters: {
+          date: { locale: ru },
+        },
+        time: {
+          tooltipFormat: 'PPP',
+          displayFormats: { day: 'd MMM' },
+          unit: 'day',
+        },
+      },
+      y: {
+        grid: {
+          color: yGridColor,
+        },
+        ticks: {
+          color: yTicksColor,
+        },
+        min: 0,
+      },
     },
-  },
+  };
 };
 
-const createAssertionsDataSets = (data: StatAssertion[]): ChartData<'line', Point[], string> => {
+const axisGridColorByTheme = {
+  light: '#0000001a',
+  dark: '#ffffff26',
+} as const;
+
+const axisTicksColorByTheme = {
+  light: '#00000080',
+  dark: '#ffffff80',
+} as const;
+
+type Colors = {
+  borderColor: string;
+  backgroundColor?: string;
+};
+
+type CreateAssertionsDataSetsMeta = {
+  colors: Record<'problem' | 'automated' | 'total', Colors>;
+};
+
+const createAssertionsDataSets = (
+  data: StatAssertion[],
+  meta: CreateAssertionsDataSetsMeta,
+): ChartData<'line', Point[], string> => {
   const { total, automated, problem } = data.reduce<{
     total: Point[];
     automated: Point[];
@@ -86,26 +129,23 @@ const createAssertionsDataSets = (data: StatAssertion[]): ChartData<'line', Poin
   return {
     datasets: [
       {
+        ...meta.colors.problem,
         cubicInterpolationMode: 'default',
         label: 'Проблемы',
-        borderColor: 'rgb(189, 92, 10)',
-        backgroundColor: 'rgb(255, 190, 92)',
         data: problem,
         fill: false,
       },
       {
+        ...meta.colors.automated,
         cubicInterpolationMode: 'default',
         label: 'Автоматизировано',
-        borderColor: '#348BDC',
-        backgroundColor: 'rgb(134, 193, 247)',
         data: automated,
         fill: true,
       },
       {
+        ...meta.colors.total,
         cubicInterpolationMode: 'default',
         label: 'Всего',
-        borderColor: '#E9033A',
-        backgroundColor: '#FF003D4D',
         data: total,
         fill: true,
       },
@@ -113,7 +153,14 @@ const createAssertionsDataSets = (data: StatAssertion[]): ChartData<'line', Poin
   };
 };
 
-const createAutotestsDataSets = (data: StatAutotestsItem[]): ChartData<'bar', Point[], string> => {
+type CreateAutotestsDataSetsMeta = {
+  colors: Colors;
+};
+
+const createAutotestsDataSets = (
+  data: StatAutotestsItem[],
+  meta: CreateAutotestsDataSetsMeta,
+): ChartData<'bar', Point[], string> => {
   const totals = data.reduce<Map<number, number>>((a, { timestamp, assertionsCount }) => {
     const day = Number(startOfDay(timestamp));
 
@@ -133,9 +180,8 @@ const createAutotestsDataSets = (data: StatAutotestsItem[]): ChartData<'bar', Po
   return {
     datasets: [
       {
+        ...meta.colors,
         label: 'Количество за день',
-        borderColor: '#348BDC',
-        backgroundColor: 'rgba(54, 151, 241, 0.5)',
         data: autotests,
       },
     ],
@@ -148,7 +194,27 @@ export interface AssertionsChartProps {
 }
 
 export const AssertionsChart: FC<AssertionsChartProps> = ({ stat, isPending }) => {
-  const data = useMemo(() => createAssertionsDataSets(stat), [stat]);
+  const theme = useUnit($theme);
+
+  const data = useMemo(
+    () =>
+      createAssertionsDataSets(stat, {
+        colors: {
+          problem: {
+            borderColor: theme === 'light' ? '#FFBE5C' : '#FFC56C',
+          },
+          automated: {
+            borderColor: theme === 'light' ? '#348BDC' : '#4AA1F2',
+            backgroundColor: theme === 'light' ? '#BDD8F3' : '#3B6696',
+          },
+          total: {
+            borderColor: theme === 'light' ? '#E9033A' : '#E8476D',
+            backgroundColor: theme === 'light' ? '#FF66B299' : '#E5325D80',
+          },
+        },
+      }),
+    [stat, theme],
+  );
   const legend = useMemo(
     () =>
       data.datasets.map(
@@ -160,10 +226,24 @@ export const AssertionsChart: FC<AssertionsChartProps> = ({ stat, isPending }) =
     [data],
   );
 
+  const options = useMemo(
+    () =>
+      getOptions({
+        xGridColor: axisGridColorByTheme[theme],
+        xTicksColor: axisTicksColorByTheme[theme],
+        yGridColor: axisGridColorByTheme[theme],
+        yTicksColor: axisTicksColorByTheme[theme],
+      }),
+    [theme],
+  );
+
   return (
-    <Layout className={bem()} title="Покрытие автотестами" isPending={isPending} legend={legend}>
-      <Line options={options} data={data} />
-    </Layout>
+    <>
+      <div className="TestTest" />
+      <Layout className={bem()} title="Покрытие автотестами" isPending={isPending} legend={legend}>
+        <Line options={options} data={data} />
+      </Layout>
+    </>
   );
 };
 
@@ -173,7 +253,18 @@ export interface AutotestsChartProps {
 }
 
 export const AutotestsChart: FC<AutotestsChartProps> = ({ stat, isPending }) => {
-  const data = useMemo(() => createAutotestsDataSets(stat), [stat]);
+  const theme = useUnit($theme);
+
+  const data = useMemo(
+    () =>
+      createAutotestsDataSets(stat, {
+        colors: {
+          borderColor: theme === 'light' ? '#E9033A' : '#E8476D',
+          backgroundColor: theme === 'light' ? '#FF66B299' : '#E5325D80',
+        },
+      }),
+    [stat, theme],
+  );
 
   const legend = useMemo(
     () =>
@@ -184,6 +275,17 @@ export const AutotestsChart: FC<AutotestsChartProps> = ({ stat, isPending }) => 
         }),
       ),
     [data],
+  );
+
+  const options = useMemo(
+    () =>
+      getOptions({
+        xGridColor: axisGridColorByTheme[theme],
+        xTicksColor: axisTicksColorByTheme[theme],
+        yGridColor: axisGridColorByTheme[theme],
+        yTicksColor: axisTicksColorByTheme[theme],
+      }),
+    [theme],
   );
 
   return (

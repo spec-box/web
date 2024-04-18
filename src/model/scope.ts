@@ -1,6 +1,7 @@
 import { Effect, attach, createEffect, createStore, fork } from 'effector';
 
 import { SpecBoxWebApi } from '@/api';
+import { $theme, Theme } from './common';
 
 export const $deps = createStore<StoreDependencies>(null as unknown as StoreDependencies);
 
@@ -14,9 +15,12 @@ export interface StoreDependencies {
   analytics?: AnalyticsApi;
 }
 
-export const createScope = (deps: StoreDependencies) => {
+export const createScope = (deps: StoreDependencies, theme: Theme) => {
   return fork({
-    values: [[$deps, deps]],
+    values: [
+      [$deps, deps],
+      [$theme, theme],
+    ],
   });
 };
 
