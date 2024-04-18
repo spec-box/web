@@ -4,6 +4,7 @@ import { ArrowToggle, Icon } from '@gravity-ui/uikit';
 import { useEvent, useStoreMap } from 'effector-react/scope';
 
 import { ListItem, ListItemState } from '@/components/ListItem/ListItem';
+import { SearchMatch } from '@/components/SearchMatch/SearchMatch';
 import { FeatureTreeNode, GroupTreeNode } from '@/types';
 import { $collapseState, toggle } from '@/model/pages/project';
 
@@ -26,7 +27,7 @@ const useIsOpen = (id: string) => useStoreMap($collapseState, (s) => Boolean(s[i
 export const FeatureGroupItem: FC<FeatureGroupItemProps> = (props) => {
   const {
     level,
-    node: { totalCount, automatedCount, problemCount, title, id },
+    node: { totalCount, automatedCount, problemCount, title, id, highlight },
     children,
   } = props;
 
@@ -55,7 +56,7 @@ export const FeatureGroupItem: FC<FeatureGroupItemProps> = (props) => {
           before={arrow}
           after={stat}
         >
-          {displayText}
+          <SearchMatch content={displayText} highlight={highlight} />
           {problems}
         </ListItem>
       </div>
@@ -76,7 +77,15 @@ const visualFeatureIcon = <Icon className={bem('FeatureIcon')} size={16} data={P
 
 export const FeatureItem: FC<FeatureItemProps> = (props) => {
   const {
-    node: { totalCount, automatedCount, problemCount, featureCode, featureType, title },
+    node: {
+      totalCount,
+      automatedCount,
+      problemCount,
+      featureCode,
+      featureType,
+      title = '',
+      highlight,
+    },
     onSelect: onFeatureSelect,
     selectedCode,
     level,
@@ -103,7 +112,7 @@ export const FeatureItem: FC<FeatureItemProps> = (props) => {
         before={icon}
         after={stat}
       >
-        {title}
+        <SearchMatch content={title} highlight={highlight} />
         {problems}
       </ListItem>
     </div>

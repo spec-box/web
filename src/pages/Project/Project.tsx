@@ -1,4 +1,4 @@
-import { useEvent, useStore } from 'effector-react/scope';
+import { useUnit } from 'effector-react/scope';
 import { FC, useCallback } from 'react';
 
 import { FeatureCard } from '@/components/FeatureCard/FeatureCard';
@@ -11,6 +11,7 @@ import { cn } from '@bem-react/classname';
 import './Project.css';
 import { ProjectLayout } from '@/components/ProjectLayout/ProjectLayout';
 import { PlaceholderMessage } from '@/components/PlaceholderMessage/PlaceholderMessage';
+import { Search } from '@/components/Search/Search.tsx';
 
 const bem = cn('Project');
 
@@ -64,16 +65,18 @@ const Details: FC<DetailsProps> = ({ isPending, feature, repositoryUrl }) => {
 };
 
 export const Project: FC = () => {
-  const structureIsPending = useStore(model.$structureIsLoading);
+  const structureIsPending = useUnit(model.$structureIsLoading);
   const {
     project: { code: projectCode, title: projectTitle, repositoryUrl },
     tree,
-  } = useStore(model.$structure);
+  } = useUnit(model.$filteredStructure);
 
-  const loadFeature = useEvent(model.loadFeature);
-  const feature = useStore(model.$feature);
-  const featureCode = useStore(model.$featureCode);
-  const featureIsPending = useStore(model.$featureIsPending);
+  const loadFeature = useUnit(model.loadFeature);
+  const feature = useUnit(model.$feature);
+  const featureCode = useUnit(model.$featureCode);
+  const featureIsPending = useUnit(model.$featureIsPending);
+  const search = useUnit(model.$search);
+  const changeSearch = useUnit(model.searchChanged);
 
   const onFeatureSelected = useCallback(
     (feature: string) => loadFeature({ project: projectCode, feature }),
@@ -90,6 +93,8 @@ export const Project: FC = () => {
   return (
     <ProjectLayout contentClassName={bem()} project={projectCode} navigate={navigate}>
       <div className={bem('ListPanel')}>
+        <Search value={search} onChange={changeSearch} />
+
         <ProjectTree
           isPending={structureIsPending}
           tree={tree}
@@ -98,7 +103,11 @@ export const Project: FC = () => {
         />
       </div>
       <div className={bem('DetailsPanel')}>
-        <Details repositoryUrl={repositoryUrl} feature={feature} isPending={structureIsPending || featureIsPending} />
+        <Details
+          repositoryUrl={repositoryUrl}
+          feature={feature}
+          isPending={structureIsPending || featureIsPending}
+        />
       </div>
     </ProjectLayout>
   );
