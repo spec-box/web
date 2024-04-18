@@ -1,0 +1,9 @@
+.Graph .graphin-components-contextmenu {
+  border-radius: 16px;
+  width: auto !important;
+  max-width: 360px;
+  background-color: var(--g-color-base-background) !important;
+}
+.Graph .graphin-core {
+  background-color: var(--g-color-base-background) !important;
+}

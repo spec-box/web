@@ -13,7 +13,7 @@ import { RouteLinkButton } from '@/components/RouteLinkButton/RouteLinkButton';
 import { ThemeToggler } from '@/components/ThemeToggler/ThemeToggler';
 import { Header } from '@/components/Header/Header';
 
-import { homeRoute, projectRoute, statRoute } from '@/model';
+import { homeRoute, projectRoute, statRoute, graphRoute } from '@/model';
 
 import './ProjectLayout.css';
 
@@ -70,6 +70,7 @@ export const ProjectLayout: FC<ProjectLayoutProps> = (props) => {
             <>
               <NavItem to={projectRoute} project={project} text="Структура" />
               <NavItem to={statRoute} project={project} text="Статистика" />
+              <NavItem to={graphRoute} project={project} text="Карта продукта" />
             </>
           }
           itemsRight={<ThemeToggler />}

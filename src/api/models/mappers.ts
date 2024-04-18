@@ -746,12 +746,25 @@ export const SpecBoxWebApiModelProjectNodeModel: coreClient.CompositeMapper = {
           name: 'Uuid',
         },
       },
+<<<<<<< HEAD
       featureCode: {
         constraints: {
           MinLength: 1,
         },
         serializedName: 'featureCode',
         required: true,
+=======
+      parentId: {
+        serializedName: 'parentId',
+        nullable: true,
+        type: {
+          name: 'Uuid',
+        },
+      },
+      featureCode: {
+        serializedName: 'featureCode',
+        nullable: true,
+>>>>>>> 5b2f00c (feat(spec-box): add project graph)
         type: {
           name: 'String',
         },
@@ -764,11 +777,16 @@ export const SpecBoxWebApiModelProjectNodeModel: coreClient.CompositeMapper = {
         },
       },
       title: {
+<<<<<<< HEAD
         constraints: {
           MinLength: 1,
         },
         serializedName: 'title',
         required: true,
+=======
+        serializedName: 'title',
+        nullable: true,
+>>>>>>> 5b2f00c (feat(spec-box): add project graph)
         type: {
           name: 'String',
         },
