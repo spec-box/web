@@ -2,7 +2,7 @@ import { RouteInstance } from 'atomic-router';
 import { FC, ReactNode } from 'react';
 import { cn } from '@bem-react/classname';
 import { Icon, Skeleton } from '@gravity-ui/uikit';
-import { useStore } from 'effector-react/scope';
+import { useUnit } from 'effector-react/scope';
 
 import Logo from '@/assets/logo.svg?react';
 import {
@@ -10,6 +10,8 @@ import {
   OpenFeatureLinkEventHandler,
 } from '@/components/ProjectContext/ProjectContext';
 import { RouteLinkButton } from '@/components/RouteLinkButton/RouteLinkButton';
+import { ThemeToggler } from '@/components/ThemeToggler/ThemeToggler';
+import { Header } from '@/components/Header/Header';
 
 import { homeRoute, projectRoute, statRoute } from '@/model';
 
@@ -31,7 +33,7 @@ interface NavItemProps {
 }
 
 const NavItem: FC<NavItemProps> = ({ to, text, project }) => {
-  const isOpened = useStore(to.$isOpened);
+  const isOpened = useUnit(to.$isOpened);
 
   if (!project) {
     return <Skeleton />;
@@ -52,8 +54,8 @@ export const ProjectLayout: FC<ProjectLayoutProps> = (props) => {
   return (
     <ProjectContext.Provider value={{ project, navigate }}>
       <div className={bem()}>
-        <div className={bem('Header')}>
-          <div className={bem('Logo')}>
+        <Header
+          logo={
             <RouteLinkButton
               to={homeRoute}
               params={{}}
@@ -63,12 +65,15 @@ export const ProjectLayout: FC<ProjectLayoutProps> = (props) => {
             >
               <Icon data={Logo} size={24} />
             </RouteLinkButton>
-          </div>
-          <div className={bem('Navigation')}>
-            <NavItem to={projectRoute} project={project} text="Структура" />
-            <NavItem to={statRoute} project={project} text="Статистика" />
-          </div>
-        </div>
+          }
+          navigation={
+            <>
+              <NavItem to={projectRoute} project={project} text="Структура" />
+              <NavItem to={statRoute} project={project} text="Статистика" />
+            </>
+          }
+          itemsRight={<ThemeToggler />}
+        />
         <div className={bem('Content', [contentClassName])}>{children}</div>
       </div>
     </ProjectContext.Provider>

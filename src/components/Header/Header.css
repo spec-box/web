@@ -1,0 +1,20 @@
+.Header {
+    padding: var(--g-spacing-4) var(--g-spacing-8);
+
+    display: flex;
+    gap: var(--g-spacing-6);
+    justify-content: space-between;
+}
+
+.Header-Left,
+.Header-Right {
+    display: flex;
+    gap: var(--g-spacing-6);
+}
+
+.Header-Navigation {
+    display: flex;
+    flex-direction: row;
+    gap: var(--g-spacing-2);
+    justify-content: space-between;
+}

@@ -5,6 +5,8 @@ import '@gravity-ui/uikit/styles/fonts.css';
 import '@gravity-ui/uikit/styles/styles.css';
 
 import './ApplicationLayout.css';
+import { $theme } from '@/model';
+import { useUnit } from 'effector-react/scope';
 
 const bem = cn('ApplicationLayout');
 
@@ -13,5 +15,7 @@ type ApplicationLayoutProps = {
 };
 
 export const ApplicationLayout: FC<ApplicationLayoutProps> = ({ children }) => {
-  return <div className={bem(null, ['g-root', 'g-root_theme_light'])}>{children}</div>;
+  const theme = useUnit($theme);
+
+  return <div className={bem(null, ['g-root', `g-root_theme_${theme}`])}>{children}</div>;
 };

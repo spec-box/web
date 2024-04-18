@@ -13,6 +13,7 @@ import { Application } from './Application';
 
 import 'bootstrap/dist/css/bootstrap-grid.css';
 import './index.css';
+import { specBoxLs } from './localStorage';
 
 // golbals
 declare global {
@@ -25,7 +26,11 @@ declare global {
 // scope // XXX
 const api = new SpecBoxWebApi(window.location.origin + '/api', { allowInsecureConnection: true });
 const analytics = window.__SPEC_BOX_ANALYTICS_API;
-const scope = createScope({ api, analytics });
+
+const themeFromLs = specBoxLs.getTheme();
+const theme = themeFromLs === 'light' || themeFromLs === 'dark' ? themeFromLs : 'light';
+
+const scope = createScope({ api, analytics, ls: specBoxLs }, theme);
 
 // router
 const routes = [
