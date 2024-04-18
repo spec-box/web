@@ -1,6 +1,6 @@
 .ThemeToggler.g-button.g-button_pin_round-round.g-button {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 .ThemeToggler.g-button.g-button_pin_round-round::before {
-    border-radius: 50%;
+  border-radius: 50%;
 }

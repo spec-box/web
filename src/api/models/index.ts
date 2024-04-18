@@ -5,6 +5,7 @@ export interface SpecBoxWebApiModelDefaultConfigurationModel {
 }
 
 export interface SpecBoxWebApiModelUploadData {
+  message?: string;
   features: SpecBoxWebApiModelUploadFeatureModel[];
   attributes: SpecBoxWebApiModelUploadAttributeModel[];
   trees: SpecBoxWebApiModelUploadTreeModel[];
@@ -19,6 +20,7 @@ export interface SpecBoxWebApiModelUploadFeatureModel {
   groups: SpecBoxWebApiModelUploadAssertionGroupModel[];
   /** Dictionary of <components·1i2d5w·schemas·specbox-webapi-model-upload-featuremodel·properties·attributes·additionalproperties> */
   attributes?: { [propertyName: string]: string[] | null };
+  dependencies?: string[];
 }
 
 export interface SpecBoxWebApiModelUploadAssertionGroupModel {
@@ -63,22 +65,23 @@ export interface SpecBoxWebApiModelProjectFeatureModel {
   featureType?: FeatureType;
   description?: string;
   filePath?: string;
-  dependencies? : SpecBoxWebApiModelDependentFeatureModel[]
+  dependencies: SpecBoxWebApiModelProjectFeatureDependencyModel[];
   /** NOTE: This property will not be serialized. It can only be populated by the server. */
   readonly assertionGroups: SpecBoxWebApiModelProjectAssertionGroupModel[];
 }
-export interface SpecBoxWebApiModelDependentFeatureModel {
+
+export interface SpecBoxWebApiModelProjectFeatureDependencyModel {
   code: string;
   title: string;
   featureType?: FeatureType;
-  assertionsCount: number,
-  automatedCount: number,
+  totalCount: number;
+  automatedCount: number;
+  problemCount: number;
 }
-
-
 
 export interface SpecBoxWebApiModelProjectAssertionGroupModel {
   title: string;
+  sortOrder?: number;
   /** NOTE: This property will not be serialized. It can only be populated by the server. */
   readonly assertions: SpecBoxWebApiModelProjectAssertionModel[];
 }
@@ -86,6 +89,7 @@ export interface SpecBoxWebApiModelProjectAssertionGroupModel {
 export interface SpecBoxWebApiModelProjectAssertionModel {
   title: string;
   description?: string;
+  sortOrder?: number;
   automationState: AutomationState;
 }
 
@@ -104,6 +108,26 @@ export interface SpecBoxWebApiModelProjectTreeNodeModel {
   automatedCount: number;
   problemCount: number;
   sortOrder?: number;
+}
+
+export interface SpecBoxWebApiModelProjectGraphModel {
+  nodes: SpecBoxWebApiModelProjectNodeModel[];
+  edges: SpecBoxWebApiModelProjectEdgeModel[];
+}
+
+export interface SpecBoxWebApiModelProjectNodeModel {
+  id: string;
+  featureCode: string;
+  featureType?: FeatureType;
+  title: string;
+  totalCount: number;
+  automatedCount: number;
+  problemCount: number;
+}
+
+export interface SpecBoxWebApiModelProjectEdgeModel {
+  sourceId: string;
+  targetId: string;
 }
 
 export interface SpecBoxWebApiModelStatAutotestsStatUploadData {
@@ -165,6 +189,12 @@ export interface ProjectsProjectStructureOptionalParams extends coreClient.Opera
 
 /** Contains response data for the projectsProjectStructure operation. */
 export type ProjectsProjectStructureResponse = SpecBoxWebApiModelProjectStructureModel;
+
+/** Optional parameters. */
+export interface ProjectsProjectGraphOptionalParams extends coreClient.OperationOptions {}
+
+/** Contains response data for the projectsProjectGraph operation. */
+export type ProjectsProjectGraphResponse = SpecBoxWebApiModelProjectGraphModel;
 
 /** Optional parameters. */
 export interface StatUploadAutotestsOptionalParams extends coreClient.OperationOptions {

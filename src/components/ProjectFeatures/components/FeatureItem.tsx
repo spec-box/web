@@ -10,7 +10,7 @@ import { $collapseState, toggle } from '@/model/pages/project';
 
 import { bem } from '../ProjectFeatures.cn';
 
-import { ItemStat } from '@/components/ItemStat/ItemStat'
+import { ItemStat } from '@/components/ItemStat/ItemStat';
 import { Indent } from './Indent';
 import { Problems } from './Problems';
 
