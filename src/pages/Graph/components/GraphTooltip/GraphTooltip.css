@@ -1,0 +1,10 @@
+.GraphTooltip {
+  padding: var(--g-spacing-4);
+}
+.GraphTooltip-Label {
+  border-radius: 100px;
+}
+.GraphTooltip-Title {
+  font: var(--sb-font-subheader-l);
+  margin: var(--g-spacing-1) 0 var(--g-spacing-2);
+}

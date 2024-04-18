@@ -12,6 +12,8 @@ import {
   AssertionGroup,
   Feature,
   Project,
+  ProjectGraph,
+  ProjectGraphData,
   ProjectStat,
   ProjectStructure,
   TreeNode,
@@ -154,5 +156,18 @@ export function mapProjectStat(stat: StatResponse): ProjectStat {
     project: mapProject(stat.project),
     assertions,
     autotests,
+  };
+}
+
+export function mapProjectGraph({ nodes, edges, project }: ProjectGraph): ProjectGraphData {
+  return {
+    nodes: nodes.map(({ title, ...arg }) => ({
+      ...arg,
+      title,
+      label: title,
+      style: { label: { value: title } },
+    })),
+    edges: edges.map(({ sourceId, targetId }) => ({ target: targetId, source: sourceId })),
+    project,
   };
 }
