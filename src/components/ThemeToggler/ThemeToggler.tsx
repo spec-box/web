@@ -1,23 +1,22 @@
+import { ReactNode } from 'react';
 import { Button, Icon } from '@gravity-ui/uikit';
 import { Moon, Sun } from '@gravity-ui/icons';
 import { useUnit } from 'effector-react/scope';
-import { cn } from '@bem-react/classname';
-import { $theme, toggleThemeEvent } from '@/model';
-import './ThemeToggler.css';
+import { Theme } from '@/localStorage';
 
-const bem = cn('ThemeToggler');
+import { $theme, toggleThemeEvent } from '@/model';
 
 export const ThemeToggler = () => {
   const theme = useUnit($theme);
   const toggleTheme = useUnit(toggleThemeEvent);
 
   return (
-    <Button size="l" view="outlined" onClick={toggleTheme} className={bem()}>
+    <Button size="l" view="outlined" pin="circle-circle" onClick={toggleTheme}>
       {ThemeToIcon[theme]}
     </Button>
   );
 };
-const ThemeToIcon = {
+const ThemeToIcon: Record<Theme, ReactNode> = {
   light: <Icon data={Moon} />,
   dark: <Icon data={Sun} />,
 };
