@@ -105,26 +105,26 @@ querySync({
       loadFeature.map(({ feature }) => feature),
       null,
     ),
-    search: $search,
   },
   route: projectRoute,
   controls,
 });
 
-// при выборе активной фичи или при совпадении фичи при поиске раскрываем всех её родителей
-const getExpandedIds = (args: { feature: Feature | null; tree: ProjectStructure }): string[] => {
-  const {
-    feature,
-    tree: { tree },
-  } = args;
+querySync({
+  source: { search: $search },
+  route: projectRoute,
+  controls,
+});
+
+const getExpandedIds = (
+  selector: (node: TreeNode) => boolean,
+  { tree }: ProjectStructure,
+): string[] => {
   const result = new Set<string>();
   const normalized = normalize(tree);
-  const isSearchMatch = (node: TreeNode) => Boolean(node.highlight && node.highlight[1] !== 0);
-  const isFeatureMatch = (node: TreeNode) =>
-    node.type === 'feature' && node.featureCode === feature?.code;
 
   for (const node of tree) {
-    if (isSearchMatch(node) || isFeatureMatch(node)) {
+    if (selector(node)) {
       parents(node, normalized, (x) => result.add(x.id));
     }
   }
@@ -156,6 +156,11 @@ sample({
 });
 
 sample({
+  clock: projectRoute.closed,
+  target: resetFeature,
+});
+
+sample({
   clock: loadFeatureFx.doneData,
   target: $feature,
 });
@@ -176,12 +181,30 @@ sample({
   target: $filteredStructure,
 });
 
+// при выборе активной фичи раскрываем всех её родителей
 sample({
   clock: combine({
     feature: $feature,
     tree: $filteredStructure,
   }),
-  fn: getExpandedIds,
+  filter: ({ feature }) => Boolean(feature),
+  fn: ({ feature, tree }) => {
+    const isFeatureMatch = (node: TreeNode) =>
+      node.type === 'feature' && node.featureCode === feature?.code;
+
+    return getExpandedIds(isFeatureMatch, tree);
+  },
+  target: expand,
+});
+
+// при изменении дерева раскрываем родителей всех совпавших фичей
+sample({
+  clock: $filteredStructure,
+  fn: (tree) => {
+    const isSearchMatch = (node: TreeNode) => Boolean(node.highlight && node.highlight[1] !== 0);
+
+    return getExpandedIds(isSearchMatch, tree);
+  },
   target: expand,
 });
 
