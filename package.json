@@ -13,6 +13,9 @@
     "test:report": "npm t -- --json --outputFile=jest-report.json"
   },
   "dependencies": {
+    "@antv/graphin": "2.7.27",
+    "@antv/graphin-components": "2.4.1",
+    "@antv/graphin-icons": "1.0.0",
     "@azure/core-client": "1.7.3",
     "@azure/core-rest-pipeline": "1.12.0",
     "@bem-react/classname": "1.6.0",
