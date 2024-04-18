@@ -1,4 +1,4 @@
-import { useEvent, useStore } from 'effector-react/scope';
+import { useEvent, useStore, useUnit } from 'effector-react/scope';
 import { FC, useCallback } from 'react';
 
 import { FeatureCard } from '@/components/FeatureCard/FeatureCard';
@@ -11,6 +11,7 @@ import { cn } from '@bem-react/classname';
 import './Project.css';
 import { ProjectLayout } from '@/components/ProjectLayout/ProjectLayout';
 import { PlaceholderMessage } from '@/components/PlaceholderMessage/PlaceholderMessage';
+import {RadioButton} from '@gravity-ui/uikit';
 
 const bem = cn('Project');
 
@@ -23,6 +24,7 @@ interface ProjectTreeProps {
 
 const ProjectTree: FC<ProjectTreeProps> = (props) => {
   const { isPending, tree, onFeatureSelected, selectedFeatureCode } = props;
+  
 
   // todo: сделать обработку пустого значения
 
@@ -87,9 +89,25 @@ export const Project: FC = () => {
 
   useTitle(structureIsPending ? 'Структура проекта' : projectTitle);
 
+  const toggleTree = useUnit(model.toggleTree)
+  const treeCode = useUnit(model.$treeCode)
+  const selectOptions = [
+  {value: 'sections', content: 'По разделам'},
+  {value: 'pages', content: 'По страницам'},
+  // {value: 'features', content: 'По блокам'},
+]
+
   return (
     <ProjectLayout contentClassName={bem()} project={projectCode} navigate={navigate}>
-      <div className={bem('ListPanel')}>
+      <div className={bem('t')}><RadioButton
+      style={{marginBottom: '20px', marginLeft: '15px'}} 
+          options={selectOptions} 
+          defaultValue={treeCode}
+          onUpdate={(value)=> {
+            console.log(value);
+            toggleTree(value)}}
+        />
+        <div className={bem('ListPanel')}>
         <ProjectTree
           isPending={structureIsPending}
           tree={tree}
@@ -97,6 +115,8 @@ export const Project: FC = () => {
           selectedFeatureCode={featureCode}
         />
       </div>
+    </div>
+      
       <div className={bem('DetailsPanel')}>
         <Details repositoryUrl={repositoryUrl} feature={feature} isPending={structureIsPending || featureIsPending} />
       </div>

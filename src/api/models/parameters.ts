@@ -70,6 +70,17 @@ export const project1: OperationURLParameter = {
   },
 };
 
+export const treeCode: OperationURLParameter = {
+  parameterPath: 'treeCode',
+  mapper: {
+    serializedName: 'treeCode',
+    required: true,
+    type: {
+      name: 'String',
+    },
+  },
+};
+
 export const feature: OperationURLParameter = {
   parameterPath: 'feature',
   mapper: {

@@ -16,17 +16,19 @@ const STRUCTURE_STUB: ProjectStructure = {
 
 export const projectRoute = createRoute<{ project?: string }>();
 
+
 export interface LoadStructureFxParams {
   project: string;
+  treeCode: string;
 }
 
 export const loadStructureFx = createSpecBoxEffect(
   async (
-    { project }: LoadStructureFxParams,
+    { project, treeCode }: LoadStructureFxParams,
     deps: StoreDependencies,
   ): Promise<ProjectStructure> => {
     try {
-      const response = await deps.api.projectsProjectStructure(project);
+      const response = await deps.api.projectsProjectStructure(project, treeCode);
 
       return mapStructure(response);
     } catch (e) {
@@ -127,7 +129,14 @@ const getExpandedIds = (args: { feature: Feature | null; tree: ProjectStructure 
 
   return result;
 };
+export const $treeCode = createStore<string>('sections')
+export const toggleTree = createEvent<string>();
+export const $project = createStore<string>('')
 
+sample({
+  clock: toggleTree,
+  target: $treeCode
+})
 sample({
   clock: combine({
     feature: $feature,
@@ -139,7 +148,21 @@ sample({
 
 sample({
   clock: [projectRoute.opened],
-  fn: ({ params: { project = '' } }) => ({ project }),
+  source: $treeCode,
+  fn: (treeCode, { params: { project = '' } }) => ({ project, treeCode }),
+  target: loadStructureFx,
+});
+
+sample({
+  clock: [projectRoute.opened],
+  fn: ({ params: { project = '' } }) => project,
+  target: $project,
+});
+
+sample({
+  clock: $treeCode,
+  source: $project,
+  fn: (project, treeCode) => ({ project, treeCode }),
   target: loadStructureFx,
 });
 

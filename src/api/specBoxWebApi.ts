@@ -94,9 +94,10 @@ export class SpecBoxWebApi extends coreClient.ServiceClient {
    */
   projectsProjectStructure(
     project: string,
+    treeCode: string,
     options?: ProjectsProjectStructureOptionalParams,
   ): Promise<ProjectsProjectStructureResponse> {
-    return this.sendOperationRequest({ project, options }, projectsProjectStructureOperationSpec);
+    return this.sendOperationRequest({ project, treeCode, options }, projectsProjectStructureOperationSpec);
   }
 
   /** @param options The options parameters. */
@@ -170,14 +171,14 @@ const projectsProjectFeaturesFeatureOperationSpec: coreClient.OperationSpec = {
   serializer,
 };
 const projectsProjectStructureOperationSpec: coreClient.OperationSpec = {
-  path: '/projects/{project}/structure',
+  path: '/projects/{project}/{treeCode}/structure',
   httpMethod: 'GET',
   responses: {
     200: {
       bodyMapper: Mappers.SpecBoxWebApiModelProjectStructureModel,
     },
   },
-  urlParameters: [Parameters.$host, Parameters.project1],
+  urlParameters: [Parameters.$host, Parameters.treeCode, Parameters.project1],
   headerParameters: [Parameters.accept],
   serializer,
 };
