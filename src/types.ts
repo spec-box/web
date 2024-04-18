@@ -5,8 +5,8 @@ export interface Feature {
   title: string;
   description?: string;
   filePath?: string;
-  featureType?: FeatureType 
-  dependencies?: DependentFeature[]
+  featureType?: FeatureType;
+  dependencies?: DependentFeature[];
   assertionGroups: AssertionGroup[];
   assertionsCount: {
     total: number;
@@ -15,12 +15,12 @@ export interface Feature {
   };
 }
 
-export interface DependentFeature{
+export interface DependentFeature {
   code: string;
   title: string;
-  featureType?: FeatureType
-  assertionsCount: number
-  automatedCount: number
+  featureType?: FeatureType;
+  assertionsCount: number;
+  automatedCount: number;
 }
 
 export interface AssertionGroup {

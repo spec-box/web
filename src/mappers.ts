@@ -46,9 +46,6 @@ export const mapFeature = (input: SpecBoxWebApiModelProjectFeatureModel): Featur
   };
 };
 
-
-
-
 export const mapAssertionGroup = (
   input: SpecBoxWebApiModelProjectAssertionGroupModel,
 ): AssertionGroup => {
