@@ -24,7 +24,9 @@ export const FeatureCard: FC<FeatureCardProps> = (props) => {
   return (
     <div className={bem(null, [className])}>
       <Header feature={feature} repositoryUrl={repositoryUrl} />
-      {feature.dependencies?.length ? (<DependenciesFeaturesList features={feature.dependencies} />) : null}
+      {feature.dependencies?.length ? (
+        <DependenciesFeaturesList features={feature.dependencies} />
+      ) : null}
       {groups}
     </div>
   );

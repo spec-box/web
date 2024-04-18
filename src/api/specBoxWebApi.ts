@@ -12,6 +12,8 @@ import {
   ProjectsProjectFeaturesFeatureResponse,
   ProjectsProjectStructureOptionalParams,
   ProjectsProjectStructureResponse,
+  ProjectsProjectGraphOptionalParams,
+  ProjectsProjectGraphResponse,
   StatUploadAutotestsOptionalParams,
   StatOptionalParams,
   StatResponse,
@@ -84,7 +86,7 @@ export class SpecBoxWebApi extends coreClient.ServiceClient {
   ): Promise<ProjectsProjectFeaturesFeatureResponse> {
     return this.sendOperationRequest(
       { project, feature, options },
-    projectsProjectFeaturesFeatureOperationSpec,
+      projectsProjectFeaturesFeatureOperationSpec,
     );
   }
 
@@ -97,6 +99,17 @@ export class SpecBoxWebApi extends coreClient.ServiceClient {
     options?: ProjectsProjectStructureOptionalParams,
   ): Promise<ProjectsProjectStructureResponse> {
     return this.sendOperationRequest({ project, options }, projectsProjectStructureOperationSpec);
+  }
+
+  /**
+   * @param project
+   * @param options The options parameters.
+   */
+  projectsProjectGraph(
+    project: string,
+    options?: ProjectsProjectGraphOptionalParams,
+  ): Promise<ProjectsProjectGraphResponse> {
+    return this.sendOperationRequest({ project, options }, projectsProjectGraphOperationSpec);
   }
 
   /** @param options The options parameters. */
@@ -175,6 +188,18 @@ const projectsProjectStructureOperationSpec: coreClient.OperationSpec = {
   responses: {
     200: {
       bodyMapper: Mappers.SpecBoxWebApiModelProjectStructureModel,
+    },
+  },
+  urlParameters: [Parameters.$host, Parameters.project1],
+  headerParameters: [Parameters.accept],
+  serializer,
+};
+const projectsProjectGraphOperationSpec: coreClient.OperationSpec = {
+  path: '/projects/{project}/graph',
+  httpMethod: 'GET',
+  responses: {
+    200: {
+      bodyMapper: Mappers.SpecBoxWebApiModelProjectGraphModel,
     },
   },
   urlParameters: [Parameters.$host, Parameters.project1],

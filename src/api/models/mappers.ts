@@ -21,6 +21,13 @@ export const SpecBoxWebApiModelUploadData: coreClient.CompositeMapper = {
     name: 'Composite',
     className: 'SpecBoxWebApiModelUploadData',
     modelProperties: {
+      message: {
+        serializedName: 'message',
+        nullable: true,
+        type: {
+          name: 'String',
+        },
+      },
       features: {
         serializedName: 'features',
         required: true,
@@ -130,6 +137,18 @@ export const SpecBoxWebApiModelUploadFeatureModel: coreClient.CompositeMapper = 
           name: 'Dictionary',
           value: {
             type: { name: 'Sequence', element: { type: { name: 'String' } } },
+          },
+        },
+      },
+      dependencies: {
+        serializedName: 'dependencies',
+        nullable: true,
+        type: {
+          name: 'Sequence',
+          element: {
+            type: {
+              name: 'String',
+            },
           },
         },
       },
@@ -412,16 +431,16 @@ export const SpecBoxWebApiModelProjectFeatureModel: coreClient.CompositeMapper =
       },
       dependencies: {
         serializedName: 'dependencies',
-        required: false,
-        type:{
+        required: true,
+        type: {
           name: 'Sequence',
-          element:{
+          element: {
             type: {
               name: 'Composite',
-              className: 'SpecBoxWebApiModelDependentFeatureModel'
-            }
-          }
-        }
+              className: 'SpecBoxWebApiModelProjectFeatureDependencyModel',
+            },
+          },
+        },
       },
       assertionGroups: {
         serializedName: 'assertionGroups',
@@ -441,10 +460,10 @@ export const SpecBoxWebApiModelProjectFeatureModel: coreClient.CompositeMapper =
   },
 };
 
-export const SpecBoxWebApiModelDependentFeatureModel: coreClient.CompositeMapper = {
+export const SpecBoxWebApiModelProjectFeatureDependencyModel: coreClient.CompositeMapper = {
   type: {
     name: 'Composite',
-    className: 'SpecBoxWebApiModelDependentFeatureModel',
+    className: 'SpecBoxWebApiModelProjectFeatureDependencyModel',
     modelProperties: {
       code: {
         constraints: {
@@ -473,8 +492,8 @@ export const SpecBoxWebApiModelDependentFeatureModel: coreClient.CompositeMapper
           allowedValues: ['Functional', 'Visual'],
         },
       },
-      assertionsCount: {
-        serializedName: 'assertionsCount',
+      totalCount: {
+        serializedName: 'totalCount',
         required: true,
         type: {
           name: 'Number',
@@ -486,7 +505,14 @@ export const SpecBoxWebApiModelDependentFeatureModel: coreClient.CompositeMapper
         type: {
           name: 'Number',
         },
-      }
+      },
+      problemCount: {
+        serializedName: 'problemCount',
+        required: true,
+        type: {
+          name: 'Number',
+        },
+      },
     },
   },
 };
@@ -504,6 +530,13 @@ export const SpecBoxWebApiModelProjectAssertionGroupModel: coreClient.CompositeM
         required: true,
         type: {
           name: 'String',
+        },
+      },
+      sortOrder: {
+        serializedName: 'sortOrder',
+        nullable: true,
+        type: {
+          name: 'Number',
         },
       },
       assertions: {
@@ -544,6 +577,13 @@ export const SpecBoxWebApiModelProjectAssertionModel: coreClient.CompositeMapper
         nullable: true,
         type: {
           name: 'String',
+        },
+      },
+      sortOrder: {
+        serializedName: 'sortOrder',
+        nullable: true,
+        type: {
+          name: 'Number',
         },
       },
       automationState: {
@@ -653,6 +693,128 @@ export const SpecBoxWebApiModelProjectTreeNodeModel: coreClient.CompositeMapper 
         nullable: true,
         type: {
           name: 'Number',
+        },
+      },
+    },
+  },
+};
+
+export const SpecBoxWebApiModelProjectGraphModel: coreClient.CompositeMapper = {
+  type: {
+    name: 'Composite',
+    className: 'SpecBoxWebApiModelProjectGraphModel',
+    modelProperties: {
+      nodes: {
+        serializedName: 'nodes',
+        required: true,
+        type: {
+          name: 'Sequence',
+          element: {
+            type: {
+              name: 'Composite',
+              className: 'SpecBoxWebApiModelProjectNodeModel',
+            },
+          },
+        },
+      },
+      edges: {
+        serializedName: 'edges',
+        required: true,
+        type: {
+          name: 'Sequence',
+          element: {
+            type: {
+              name: 'Composite',
+              className: 'SpecBoxWebApiModelProjectEdgeModel',
+            },
+          },
+        },
+      },
+    },
+  },
+};
+
+export const SpecBoxWebApiModelProjectNodeModel: coreClient.CompositeMapper = {
+  type: {
+    name: 'Composite',
+    className: 'SpecBoxWebApiModelProjectNodeModel',
+    modelProperties: {
+      id: {
+        serializedName: 'id',
+        required: true,
+        type: {
+          name: 'Uuid',
+        },
+      },
+      featureCode: {
+        constraints: {
+          MinLength: 1,
+        },
+        serializedName: 'featureCode',
+        required: true,
+        type: {
+          name: 'String',
+        },
+      },
+      featureType: {
+        serializedName: 'featureType',
+        type: {
+          name: 'Enum',
+          allowedValues: ['Functional', 'Visual'],
+        },
+      },
+      title: {
+        constraints: {
+          MinLength: 1,
+        },
+        serializedName: 'title',
+        required: true,
+        type: {
+          name: 'String',
+        },
+      },
+      totalCount: {
+        serializedName: 'totalCount',
+        required: true,
+        type: {
+          name: 'Number',
+        },
+      },
+      automatedCount: {
+        serializedName: 'automatedCount',
+        required: true,
+        type: {
+          name: 'Number',
+        },
+      },
+      problemCount: {
+        serializedName: 'problemCount',
+        required: true,
+        type: {
+          name: 'Number',
+        },
+      },
+    },
+  },
+};
+
+export const SpecBoxWebApiModelProjectEdgeModel: coreClient.CompositeMapper = {
+  type: {
+    name: 'Composite',
+    className: 'SpecBoxWebApiModelProjectEdgeModel',
+    modelProperties: {
+      sourceId: {
+        serializedName: 'sourceId',
+        required: true,
+        type: {
+          name: 'Uuid',
+        },
+      },
+      targetId: {
+        serializedName: 'targetId',
+        required: true,
+        type: {
+          name: 'Uuid',
         },
       },
     },
