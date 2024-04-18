@@ -11,7 +11,6 @@ node_modules
 dist
 dist-ssr
 *.local
-.config
 
 # Editor directories and files
 .vscode/*
@@ -25,3 +24,4 @@ dist-ssr
 *.sw?
 
 swagger.json
+jest-report.json

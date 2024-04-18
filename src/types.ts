@@ -34,6 +34,8 @@ export interface Assertion {
   automationState: AutomationState;
 }
 
+export type Highlight = [number, number];
+
 export interface BaseTreeNode {
   id: string;
   parentId?: string;
@@ -42,6 +44,7 @@ export interface BaseTreeNode {
   automatedCount: number;
   problemCount: number;
   sortOrder?: number;
+  highlight?: Highlight;
 }
 
 export interface FeatureTreeNode extends BaseTreeNode {
@@ -52,9 +55,12 @@ export interface FeatureTreeNode extends BaseTreeNode {
 
 export interface GroupTreeNode extends BaseTreeNode {
   type: 'group';
+  childrenIds: string[];
 }
 
 export type TreeNode = GroupTreeNode | FeatureTreeNode;
+
+export type NormalizedTree = Record<string, TreeNode>;
 
 export interface ProjectStructure {
   project: Project;
