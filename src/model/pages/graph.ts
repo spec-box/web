@@ -44,7 +44,11 @@ sample({
   clock: combine([$feature, $graphData]),
   fn: ([feature, graph]) => {
     graph = structuredClone(graph);
-    const target = graph.nodes.find((node) => node.featureCode === feature?.code) || { id: 'root' };
+    const target = graph.nodes.find((node) => node.featureCode === feature?.code) || {
+      id: 'root',
+      root: true,
+    };
+    target.root = true;
     const gmap = new Map<string, Set<string>>();
 
     for (const node of graph.nodes) {

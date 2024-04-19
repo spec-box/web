@@ -22,7 +22,7 @@ const featureTypeMap: Record<FeatureType, Record<string, string>> = {
   },
 };
 const sizeCalculate = (initialSize: number, weight: number) => {
-  return initialSize + (weight * initialSize) * 0.5;
+  return initialSize + weight * initialSize * 0.5;
 };
 
 type StylesSetter = (node: DrawnNode['style'], parent: DrawnNode) => DrawnNode['style'];
@@ -39,11 +39,18 @@ const getStatus = ({ totalCount, automatedCount, problemCount }: Status): string
 };
 
 const setNodeStyle: StylesSetter = (node, parent) => {
-  const color = COLORS[getStatus(parent)];
+  const color = parent.root ? COLORS['root'] : COLORS[getStatus(parent)];
   const defaultSize = 25;
+  const rootLineWidth = 2;
+
   return {
     ...node,
-    keyshape: { stroke: color, fill: color, size: sizeCalculate(defaultSize, parent.weight) },
+    keyshape: {
+      stroke: color,
+      fill: color,
+      size: sizeCalculate(defaultSize, parent.weight),
+      lineWidth: parent.root ? rootLineWidth : undefined,
+    },
   };
 };
 
