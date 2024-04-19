@@ -5,6 +5,7 @@ export const COLORS: Record<string, string> = {
   success: 'green',
   error: 'red',
   warn: 'orange',
+  root: 'rebeccapurple',
 };
 export const INDENT = 32;
 
