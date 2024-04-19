@@ -159,17 +159,34 @@ export function mapProjectStat(stat: StatResponse): ProjectStat {
   };
 }
 
-export function mapProjectGraph({ nodes, edges, project }: ProjectGraph): ProjectGraphData {
-  return {
+export function mapProjectGraph({
+  nodes,
+  edges,
+  project,
+  feature,
+}: ProjectGraph): ProjectGraphData {
+  const graph: ProjectGraphData = {
     nodes: nodes.map(({ title, ...arg }) => ({
       ...arg,
       title,
-      // здесь нужны изменения из ветки Леши
       weight: Math.floor(Math.random() * 11),
       label: title,
       style: { label: { value: title } },
     })),
     edges: edges.map(({ sourceId, targetId }) => ({ target: targetId, source: sourceId })),
     project,
+    feature,
   };
+
+  const target = graph.nodes.find((node) => node.featureCode === feature);
+  const data = graph.edges.filter((e) => e.source === target?.id || e.target === target?.id);
+  const allIds = data.map((d) => [d.source, d.target]).flat();
+
+  const modified = {
+    ...graph,
+    nodes: graph.nodes.filter((node) => allIds.includes(node.id)),
+    edges: data,
+  };
+
+  return modified;
 }

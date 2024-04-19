@@ -100,6 +100,7 @@ export interface ProjectStat {
 }
 export interface ProjectGraph extends SpecBoxWebApiModelProjectGraphModel {
   project: Project;
+  feature: string;
 }
 
 export interface DrawnNode extends SpecBoxWebApiModelProjectNodeModel, IUserNode {
@@ -110,6 +111,7 @@ export interface ProjectGraphData {
   nodes: DrawnNode[];
   edges: IUserEdge[];
   project: Project;
+  feature: string;
 }
 
 export interface CfgConfig extends ModelConfig, SpecBoxWebApiModelProjectNodeModel {}

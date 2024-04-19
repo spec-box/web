@@ -11,17 +11,19 @@ const STUB: ProjectGraphData = {
   nodes: [],
   edges: [],
   project: { code: '', title: '' },
+  feature: '',
 };
 
 interface LoadGraphFxParams {
   project: string;
+  feature: string;
 }
 
 export const loadGraphFx = createSpecBoxEffect(
-  async ({ project }: LoadGraphFxParams, deps: StoreDependencies) => {
+  async ({ project, feature }: LoadGraphFxParams, deps: StoreDependencies) => {
     try {
       const graph = await deps.api.projectsProjectGraph(project);
-      return mapProjectGraph({ ...graph, project: { code: project, title: project } });
+      return mapProjectGraph({ ...graph, feature, project: { code: project, title: project } });
     } catch (e) {
       console.error(e);
       throw e;
@@ -34,6 +36,6 @@ export const $graphIsLoading = loadGraphFx.pending;
 
 sample({
   clock: [graphRoute.opened],
-  fn: ({ params: { project = '' } }) => ({ project }),
+  fn: ({ params: { project = '' }, query: { feature = '' } }) => ({ project, feature }),
   target: loadGraphFx,
 });
