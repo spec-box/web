@@ -1,9 +1,9 @@
 .ProjectTree-SkeletonRow {
-    display: flex;
+  display: flex;
 }
 
 .ProjectTree-SkeletonItem {
-    flex-grow: 1;
-    line-height: 0;
-    padding: var(--g-spacing-1) 0;
+  flex-grow: 1;
+  line-height: 0;
+  padding: var(--g-spacing-1) 0;
 }

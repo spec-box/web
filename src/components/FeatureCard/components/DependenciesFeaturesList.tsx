@@ -20,15 +20,15 @@ export const DependenciesFeaturesList: FC<DependenciesFeaturesListProps> = (prop
     setIsOpen((prev) => !prev);
   }, []);
   const arrow = (
-    <ArrowToggle className={bem('CollapseIcon')} direction={isOpen ? 'top' : 'bottom'} />
+    <ArrowToggle className={bem('CollapseIcon')} direction={isOpen ? 'bottom' : 'top'} />
   );
-  const list = features.map(({ featureType, code, title, assertionsCount, automatedCount }) => (
+  const list = features.map(({ featureType, code, title, totalCount, automatedCount }) => (
     <DependenciesFeatureListItem
       featureType={featureType}
       code={code}
       key={code}
       title={title}
-      totalCount={assertionsCount}
+      totalCount={totalCount}
       automatedCount={automatedCount}
     />
   ));
