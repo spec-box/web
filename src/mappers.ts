@@ -165,11 +165,13 @@ export function mapProjectGraph({
   project,
   feature,
 }: ProjectGraph): ProjectGraphData {
+
+
   const graph: ProjectGraphData = {
     nodes: nodes.map(({ title, ...arg }) => ({
       ...arg,
       title,
-      weight: Math.floor(Math.random() * 11),
+      weight: 1,
       label: title,
       style: { label: { value: title } },
     })),
@@ -178,15 +180,49 @@ export function mapProjectGraph({
     feature,
   };
 
-  const target = graph.nodes.find((node) => node.featureCode === feature);
-  const data = graph.edges.filter((e) => e.source === target?.id || e.target === target?.id);
-  const allIds = data.map((d) => [d.source, d.target]).flat();
+  const target = graph.nodes.find((node) => node.featureCode === feature) || { id: 'root' };
 
-  const modified = {
+  // prepare map and do bfs
+  const maxDistance = 3;
+  const gmap = new Map<string, Set<string>>();
+
+  for (const node of graph.nodes) {
+    gmap.set(node.id, new Set());
+  }
+
+  for (const edge of graph.edges) {
+    gmap.get(edge.source)?.add(edge.target);
+    gmap.get(edge.target)?.add(edge.source);
+  }
+
+  const allIds = new Set<string>();
+  const queue = [target?.id];
+  const distance = new Map<string, number>();
+  distance.set(target?.id, 0);
+
+  while (queue.length > 0) {
+    const current = queue.shift();
+    
+    if (current) {
+      allIds.add(current);
+      for (const node of gmap.get(current) ?? []) {
+        if (!allIds.has(node)) {
+          const d = (distance.get(current) || 0) + 1;
+          distance.set(node, d);
+          if (d <= maxDistance) {
+            queue.unshift(node);
+          }
+        }
+      }
+    }
+  }
+
+  return {
     ...graph,
-    nodes: graph.nodes.filter((node) => allIds.includes(node.id)),
-    edges: data,
+    nodes: graph.nodes.filter((node) => {
+      node.weight = gmap.get(node.id)?.size || 0;
+      return allIds.has(node.id)
+    }),
+    edges: graph.edges.filter((e) => allIds.has(e.source) || allIds.has(e.target)),
   };
-
-  return modified;
 }
