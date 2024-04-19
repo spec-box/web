@@ -18,3 +18,4 @@ trees:
   - code: pages
     title: Страницы
     group-by: [section, component]
+    
