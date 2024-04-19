@@ -22,7 +22,7 @@ const featureTypeMap: Record<FeatureType, Record<string, string>> = {
   },
 };
 const sizeCalculate = (initialSize: number, weight: number) => {
-  return initialSize + (weight * initialSize) / 10;
+  return initialSize + (weight * initialSize) * 0.5;
 };
 
 type StylesSetter = (node: DrawnNode['style'], parent: DrawnNode) => DrawnNode['style'];
