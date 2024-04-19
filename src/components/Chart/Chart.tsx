@@ -23,6 +23,7 @@ import { StatAssertion, StatAutotestsItem } from '@/types';
 import { bem } from './Chart.cn';
 import { Layout } from './components/Layout';
 import { LegendDataset } from './components/Legend';
+import { Theme } from '@/localStorage';
 
 ChartJS.register(TimeScale, LinearScale, PointElement, LineElement, BarElement, Tooltip, Filler);
 
@@ -87,16 +88,6 @@ const getOptions = (config: {
     },
   };
 };
-
-const axisGridColorByTheme = {
-  light: '#0000001a',
-  dark: '#ffffff26',
-} as const;
-
-const axisTicksColorByTheme = {
-  light: '#00000080',
-  dark: '#ffffff80',
-} as const;
 
 type Colors = {
   borderColor: string;
@@ -193,6 +184,46 @@ export interface AssertionsChartProps {
   stat: StatAssertion[];
 }
 
+const colorByTheme: Record<
+  | 'colorBaseDangerHeavy'
+  | 'colorBaseDangerMedium'
+  | 'colorBaseInfoHeavy'
+  | 'colorBaseInfoMedium'
+  | 'colorBaseWarningHeavy'
+  | 'colorTextSecondary'
+  | 'colorLineGeneric',
+  Record<Theme, string>
+> = {
+  colorBaseDangerHeavy: {
+    light: '#E9033A',
+    dark: '#E8476D',
+  },
+  colorBaseDangerMedium: {
+    light: '#FF66B299',
+    dark: '#E5325D80',
+  },
+  colorBaseInfoHeavy: {
+    light: '#348BDC',
+    dark: '#4AA1F2',
+  },
+  colorBaseInfoMedium: {
+    light: '#BDD8F3',
+    dark: '#3B6696',
+  },
+  colorBaseWarningHeavy: {
+    light: '#FFBE5C',
+    dark: '#FFC56C',
+  },
+  colorTextSecondary: {
+    light: '#00000080',
+    dark: '#ffffff80',
+  },
+  colorLineGeneric: {
+    light: '#0000001a',
+    dark: '#ffffff26',
+  },
+};
+
 export const AssertionsChart: FC<AssertionsChartProps> = ({ stat, isPending }) => {
   const theme = useUnit($theme);
 
@@ -201,15 +232,15 @@ export const AssertionsChart: FC<AssertionsChartProps> = ({ stat, isPending }) =
       createAssertionsDataSets(stat, {
         colors: {
           problem: {
-            borderColor: theme === 'light' ? '#FFBE5C' : '#FFC56C',
+            borderColor: colorByTheme.colorBaseWarningHeavy[theme],
           },
           automated: {
-            borderColor: theme === 'light' ? '#348BDC' : '#4AA1F2',
-            backgroundColor: theme === 'light' ? '#BDD8F3' : '#3B6696',
+            borderColor: colorByTheme.colorBaseInfoHeavy[theme],
+            backgroundColor: colorByTheme.colorBaseInfoMedium[theme],
           },
           total: {
-            borderColor: theme === 'light' ? '#E9033A' : '#E8476D',
-            backgroundColor: theme === 'light' ? '#FF66B299' : '#E5325D80',
+            borderColor: colorByTheme.colorBaseDangerHeavy[theme],
+            backgroundColor: colorByTheme.colorBaseDangerMedium[theme],
           },
         },
       }),
@@ -229,21 +260,18 @@ export const AssertionsChart: FC<AssertionsChartProps> = ({ stat, isPending }) =
   const options = useMemo(
     () =>
       getOptions({
-        xGridColor: axisGridColorByTheme[theme],
-        xTicksColor: axisTicksColorByTheme[theme],
-        yGridColor: axisGridColorByTheme[theme],
-        yTicksColor: axisTicksColorByTheme[theme],
+        xGridColor: colorByTheme.colorLineGeneric[theme],
+        xTicksColor: colorByTheme.colorTextSecondary[theme],
+        yGridColor: colorByTheme.colorLineGeneric[theme],
+        yTicksColor: colorByTheme.colorTextSecondary[theme],
       }),
     [theme],
   );
 
   return (
-    <>
-      <div className="TestTest" />
-      <Layout className={bem()} title="Покрытие автотестами" isPending={isPending} legend={legend}>
-        <Line options={options} data={data} />
-      </Layout>
-    </>
+    <Layout className={bem()} title="Покрытие автотестами" isPending={isPending} legend={legend}>
+      <Line options={options} data={data} />
+    </Layout>
   );
 };
 
@@ -259,8 +287,8 @@ export const AutotestsChart: FC<AutotestsChartProps> = ({ stat, isPending }) => 
     () =>
       createAutotestsDataSets(stat, {
         colors: {
-          borderColor: theme === 'light' ? '#E9033A' : '#E8476D',
-          backgroundColor: theme === 'light' ? '#FF66B299' : '#E5325D80',
+          borderColor: colorByTheme.colorBaseDangerHeavy[theme],
+          backgroundColor: colorByTheme.colorBaseDangerMedium[theme],
         },
       }),
     [stat, theme],
@@ -280,10 +308,10 @@ export const AutotestsChart: FC<AutotestsChartProps> = ({ stat, isPending }) => 
   const options = useMemo(
     () =>
       getOptions({
-        xGridColor: axisGridColorByTheme[theme],
-        xTicksColor: axisTicksColorByTheme[theme],
-        yGridColor: axisGridColorByTheme[theme],
-        yTicksColor: axisTicksColorByTheme[theme],
+        xGridColor: colorByTheme.colorLineGeneric[theme],
+        xTicksColor: colorByTheme.colorTextSecondary[theme],
+        yGridColor: colorByTheme.colorLineGeneric[theme],
+        yTicksColor: colorByTheme.colorTextSecondary[theme],
       }),
     [theme],
   );
