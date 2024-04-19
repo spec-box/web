@@ -2,10 +2,8 @@ import { FC } from 'react';
 
 import { AssertionGroup as AssertionGroupData } from '@/types';
 
-import { bem } from '../FeatureCard.cn';
-import { Assertion } from './Assertion';
-
-import './AssertionGroup.css';
+import { Assertion } from '../Assertion';
+import { AssertionGroupLayout } from './AssertionGroupLayout';
 
 type AssertionGroupProps = {
   group: AssertionGroupData;
@@ -20,10 +18,5 @@ export const AssertionGroup: FC<AssertionGroupProps> = (props) => {
     <Assertion key={index} assertion={assertion} />
   ));
 
-  return (
-    <div className={bem('AssertionGroup')}>
-      <div className={bem('AssertionGroupTitle')}>{title}</div>
-      <div className={bem('Assertions')}>{list}</div>
-    </div>
-  );
+  return <AssertionGroupLayout title={title} assertions={list} />;
 };

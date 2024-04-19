@@ -7,11 +7,10 @@ import { Feature } from '@/types';
 import { Copy } from '@gravity-ui/icons';
 import { Button, Icon } from '@gravity-ui/uikit';
 
-import { bem } from '../FeatureCard.cn';
+import { bem } from '../../FeatureCard.cn';
 
-import { Stat } from './Stat';
-
-import './Header.css';
+import { Stat } from '../Stat';
+import { HeaderLayout } from './HeaderLayout';
 
 type HeaderProps = {
   feature: Feature;
@@ -35,11 +34,7 @@ export const Header: FC<HeaderProps> = (props) => {
     copyToClipboard({ text: feature.code });
   }, [feature.code, copyToClipboard]);
 
-  const description = feature.description ? (
-    <div className={bem('Description')}>
-      <FormattedText text={feature.description} />
-    </div>
-  ) : null;
+  const description = feature.description ? <FormattedText text={feature.description} /> : null;
 
   const link = useMemo(
     () => buildUrl(feature.filePath, repositoryUrl),
@@ -53,23 +48,19 @@ export const Header: FC<HeaderProps> = (props) => {
   ) : null;
 
   return (
-    <div className={bem('Header')}>
-      <div className={bem('HeaderBody')}>
-        <div className={bem('HeaderContent')}>
-          <div className={bem('Title')}>{feature.title}</div>
-          {description}
-        </div>
-        <div className={bem('Actions')}>
+    <HeaderLayout
+      title={feature.title}
+      description={description}
+      actions={
+        <>
           <Button view="outlined" size="m" pin="circle-circle" onClick={onClickCopyButton}>
             {feature.code}
             <Icon className={bem('CopyIcon')} size={16} data={Copy} />
           </Button>
           {goToYmlButton}
-        </div>
-      </div>
-      <div className={bem('HeaderSidebar')}>
-        <Stat total={total} automated={automated} />
-      </div>
-    </div>
+        </>
+      }
+      sidebar={<Stat total={total} automated={automated} />}
+    />
   );
 };

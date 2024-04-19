@@ -1,0 +1,14 @@
+.ProjectTree-Empty {
+  position: relative;
+  flex: 1;
+}
+
+.ProjectTree-Empty .PlaceholderMessage-Content {
+  --placeholder-height: 90px;
+  --search-shift: 52px;
+  max-width: 80%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, calc((var(--placeholder-height) + var(--search-shift)) / -2));
+}
