@@ -1,0 +1,14 @@
+feature: Навигационное меню
+code: menu-section
+
+specs-unit:
+  Содержимое страницы:
+    - assert: Содержимое страницы соответствует макету
+
+definitions:
+  section:
+    - index
+  component:
+    - index
+  sub-component:
+    - index-page

@@ -1,0 +1,15 @@
+{
+    "api": {
+      "host": "http://localhost:5059/api",
+      "project": "id"
+    },
+    "yml": {
+      "files": ["specs/**/*.yml"]
+    },
+    "jest": {
+      "reportPath": "jest-report.json",
+  
+      "keys": ["$component", "featureTitle", "groupTitle", "assertionTitle"]
+    }
+  }
+  
