@@ -1,0 +1,15 @@
+feature: Содержимое главной страницы
+code: index-page
+
+specs-unit:
+  Содержимое страницы:
+    - assert: Страница содержит секцию профиля пользователя
+    - assert: Страница содержит секцию c навигационным меню $menu-section
+
+definitions:
+  section:
+    - index
+  component:
+    - index
+  sub-component:
+    - index-page

@@ -1,0 +1,20 @@
+attributes:
+  - code: component
+    title: Страница
+    values:
+      - code: features
+        title: features
+      - code: index
+        title: Страница Главная
+  - code: sub-component
+    title: Функциональный блок
+    values: []
+  - code: section
+    title: Раздел
+    values:
+      - code: index
+        title: Главная
+trees:
+  - code: pages
+    title: Страницы
+    group-by: [section, component]
