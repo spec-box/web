@@ -1,3 +1,11 @@
 .FeatureCard {
   width: 100%;
 }
+
+.FeatureCard_Loading .g-skeleton {
+  display: block;
+}
+
+.FeatureCard-EmptyState {
+  flex: 1;
+}

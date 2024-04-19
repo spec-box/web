@@ -26,7 +26,3 @@
   border-radius: var(--sb-border-radius-3-xl);
   background-color: var(--g-color-base-generic);
 }
-
-.Project-EmptyState {
-  flex: 1;
-}

@@ -1,68 +1,17 @@
 import { useUnit } from 'effector-react/scope';
 import { FC, useCallback } from 'react';
 
-import { FeatureCard } from '@/components/FeatureCard/FeatureCard';
-import { ProjectFeatures } from '@/components/ProjectFeatures/ProjectFeatures';
+import { ProjectTree } from '@/components/ProjectTree/ProjectTree';
 import { useTitle } from '@/hooks/useTitle';
 import * as model from '@/model/pages/project';
-import { Feature, TreeNode } from '@/types';
 import { cn } from '@bem-react/classname';
 
 import './Project.css';
 import { ProjectLayout } from '@/components/ProjectLayout/ProjectLayout';
-import { PlaceholderMessage } from '@/components/PlaceholderMessage/PlaceholderMessage';
-import { Search } from '@/components/Search/Search.tsx';
+import { Search } from '@/components/Search/Search';
+import { FeatureCard } from '@/components/FeatureCard/FeatureCard';
 
 const bem = cn('Project');
-
-interface ProjectTreeProps {
-  isPending: boolean;
-  tree: TreeNode[];
-  onFeatureSelected: (featureCode: string) => void;
-  selectedFeatureCode?: string;
-}
-
-const ProjectTree: FC<ProjectTreeProps> = (props) => {
-  const { isPending, tree, onFeatureSelected, selectedFeatureCode } = props;
-
-  // todo: сделать обработку пустого значения
-
-  if (isPending) {
-    return <div>загрузка</div>;
-  } else {
-    return (
-      <ProjectFeatures
-        tree={tree}
-        selectedFeatureCode={selectedFeatureCode}
-        onFeatureSelected={onFeatureSelected}
-      />
-    );
-  }
-};
-
-interface DetailsProps {
-  feature: Feature | null;
-  isPending: boolean;
-  repositoryUrl?: string;
-}
-
-const Details: FC<DetailsProps> = ({ isPending, feature, repositoryUrl }) => {
-  if (isPending) {
-    return <div>загрузка</div>;
-  } else if (!feature) {
-    return (
-      <PlaceholderMessage
-        className={bem('EmptyState')}
-        title="Ничего не выбрано"
-        description="Выберите элемент из списка для просмотра детальной информации"
-      />
-    );
-  } else {
-    return (
-      <FeatureCard className={bem('FeatureCard')} feature={feature} repositoryUrl={repositoryUrl} />
-    );
-  }
-};
 
 export const Project: FC = () => {
   const structureIsPending = useUnit(model.$structureIsLoading);
@@ -100,10 +49,11 @@ export const Project: FC = () => {
           tree={tree}
           onFeatureSelected={onFeatureSelected}
           selectedFeatureCode={featureCode}
+          search={search}
         />
       </div>
       <div className={bem('DetailsPanel')}>
-        <Details
+        <FeatureCard
           repositoryUrl={repositoryUrl}
           feature={feature}
           isPending={structureIsPending || featureIsPending}
