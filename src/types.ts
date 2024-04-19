@@ -13,6 +13,15 @@ export interface Feature {
   };
 }
 
+export interface TreeCodes {
+  trees: TreeCodeData[]
+}
+
+export interface TreeCodeData{
+  code: string,
+  title: string,
+}
+
 export interface AssertionGroup {
   title: string;
   assertions: Assertion[];

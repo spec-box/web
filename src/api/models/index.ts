@@ -84,6 +84,10 @@ export interface SpecBoxWebApiModelProjectStructureModel {
   tree: SpecBoxWebApiModelProjectTreeNodeModel[];
 }
 
+export interface SpecBoxWebApiModelProjectTreeCodesModel {
+  trees: SpecBoxWebApiModelProjectTreeCodeDataModel[];
+}
+
 export interface SpecBoxWebApiModelProjectTreeNodeModel {
   id: string;
   parentId?: string;
@@ -94,6 +98,11 @@ export interface SpecBoxWebApiModelProjectTreeNodeModel {
   automatedCount: number;
   problemCount: number;
   sortOrder?: number;
+}
+
+export interface SpecBoxWebApiModelProjectTreeCodeDataModel {
+  title: string;
+  code: string,
 }
 
 export interface SpecBoxWebApiModelStatAutotestsStatUploadData {
@@ -155,6 +164,8 @@ export interface ProjectsProjectStructureOptionalParams extends coreClient.Opera
 
 /** Contains response data for the projectsProjectStructure operation. */
 export type ProjectsProjectStructureResponse = SpecBoxWebApiModelProjectStructureModel;
+
+export type ProjectsProjectTreeCodesResponse = SpecBoxWebApiModelProjectTreeCodesModel;
 
 /** Optional parameters. */
 export interface StatUploadAutotestsOptionalParams extends coreClient.OperationOptions {

@@ -15,6 +15,7 @@ import {
   StatUploadAutotestsOptionalParams,
   StatOptionalParams,
   StatResponse,
+  ProjectsProjectTreeCodesResponse,
 } from './models';
 
 export class SpecBoxWebApi extends coreClient.ServiceClient {
@@ -90,6 +91,7 @@ export class SpecBoxWebApi extends coreClient.ServiceClient {
 
   /**
    * @param project
+   * @param treeCode
    * @param options The options parameters.
    */
   projectsProjectStructure(
@@ -98,6 +100,15 @@ export class SpecBoxWebApi extends coreClient.ServiceClient {
     options?: ProjectsProjectStructureOptionalParams,
   ): Promise<ProjectsProjectStructureResponse> {
     return this.sendOperationRequest({ project, treeCode, options }, projectsProjectStructureOperationSpec);
+  }
+
+  /**
+   * @param project
+   */
+  projectsProjectTreeCodes(
+    project: string,
+  ): Promise<ProjectsProjectTreeCodesResponse> {
+    return this.sendOperationRequest({ project}, projectsProjectTreeCodesOperationSpec);
   }
 
   /** @param options The options parameters. */
@@ -179,6 +190,18 @@ const projectsProjectStructureOperationSpec: coreClient.OperationSpec = {
     },
   },
   urlParameters: [Parameters.$host, Parameters.treeCode, Parameters.project1],
+  headerParameters: [Parameters.accept],
+  serializer,
+};
+const projectsProjectTreeCodesOperationSpec: coreClient.OperationSpec = {
+  path: '/projects/{project}/trees',
+  httpMethod: 'GET',
+  responses: {
+    200: {
+      bodyMapper: Mappers.SpecBoxWebApiModelProjectTreeCodesModel,
+    },
+  },
+  urlParameters: [Parameters.$host,Parameters.project1],
   headerParameters: [Parameters.accept],
   serializer,
 };

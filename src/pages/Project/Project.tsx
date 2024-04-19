@@ -1,11 +1,11 @@
 import { useEvent, useStore, useUnit } from 'effector-react/scope';
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 
 import { FeatureCard } from '@/components/FeatureCard/FeatureCard';
 import { ProjectFeatures } from '@/components/ProjectFeatures/ProjectFeatures';
 import { useTitle } from '@/hooks/useTitle';
 import * as model from '@/model/pages/project';
-import { Feature, TreeNode } from '@/types';
+import { Feature, TreeCodes, TreeNode } from '@/types';
 import { cn } from '@bem-react/classname';
 
 import './Project.css';
@@ -64,6 +64,27 @@ const Details: FC<DetailsProps> = ({ isPending, feature, repositoryUrl }) => {
     );
   }
 };
+interface TreeChoiceProps{
+  treeCodes: TreeCodes;
+  onUpdate: (value:string) => void;
+  defaultValue: string;
+}
+const TreesChoice: FC<TreeChoiceProps> = (props)=>{
+  const {treeCodes, onUpdate, defaultValue} = props
+  const selectOptions = useMemo(()=> treeCodes.trees.map((tree)=> ({value: tree.code, content: tree.title})), [treeCodes])
+  if (!defaultValue) return (<>Загрузка</>)
+
+  return (<span>
+    Сгруппировать по
+    <RadioButton
+    className={bem('TreeChoice')}
+    options={selectOptions} 
+    defaultValue={defaultValue}
+    onUpdate={onUpdate}
+  />
+  </span>)
+  
+}
 
 export const Project: FC = () => {
   const structureIsPending = useStore(model.$structureIsLoading);
@@ -88,25 +109,17 @@ export const Project: FC = () => {
   );
 
   useTitle(structureIsPending ? 'Структура проекта' : projectTitle);
-
-  const toggleTree = useUnit(model.toggleTree)
   const treeCode = useUnit(model.$treeCode)
-  const selectOptions = [
-  {value: 'sections', content: 'По разделам'},
-  {value: 'pages', content: 'По страницам'},
-  // {value: 'features', content: 'По блокам'},
-]
+  const toggleTree = useUnit(model.toggleTree)
+  const onUpdate= (value: string)=> {
+    toggleTree(value)}
+  const treeCodes = useUnit(model.$treeCodes)
+  
 
   return (
     <ProjectLayout contentClassName={bem()} project={projectCode} navigate={navigate}>
-      <div className={bem('t')}><RadioButton
-      style={{marginBottom: '20px', marginLeft: '15px'}} 
-          options={selectOptions} 
-          defaultValue={treeCode}
-          onUpdate={(value)=> {
-            console.log(value);
-            toggleTree(value)}}
-        />
+      <div className={bem('Tree')}>
+        <TreesChoice onUpdate={onUpdate} treeCodes={treeCodes} defaultValue={treeCode}/>
         <div className={bem('ListPanel')}>
         <ProjectTree
           isPending={structureIsPending}

@@ -4,14 +4,19 @@ import { combine, createEvent, createStore, merge, restore, sample, split } from
 import { toast } from 'react-toastify';
 
 import { mapFeature, mapStructure } from '@/mappers';
-import { Feature, ProjectStructure, TreeNode } from '@/types';
+import { Feature, ProjectStructure, TreeCodes, TreeNode } from '@/types';
 
 import { controls } from '../common';
 import { StoreDependencies, createSpecBoxEffect } from '../scope';
 
+
 const STRUCTURE_STUB: ProjectStructure = {
   tree: [],
   project: { code: '', title: '' },
+};
+
+const TREE_CODES_STUB: TreeCodes = {
+  trees: [],
 };
 
 export const projectRoute = createRoute<{ project?: string }>();
@@ -78,6 +83,7 @@ export const loadFeatureFx = createSpecBoxEffect(
   },
 );
 
+
 export const loadFeature = createEvent<LoadFeatureFxParams>();
 export const resetFeature = createEvent();
 
@@ -129,14 +135,41 @@ const getExpandedIds = (args: { feature: Feature | null; tree: ProjectStructure 
 
   return result;
 };
-export const $treeCode = createStore<string>('sections')
+
+export const loadTreeCodesFx = createSpecBoxEffect(
+  async ({ project}: LoadTreeCodesFxParams, deps: StoreDependencies): Promise<TreeCodes> => {
+    try {
+      const response = await deps.api.projectsProjectTreeCodes(project);
+      return response;
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  },
+);
+
+export const $treeCodes = restore(loadTreeCodesFx.doneData, TREE_CODES_STUB);
+export const $treeCode = createStore<string>('')
 export const toggleTree = createEvent<string>();
 export const $project = createStore<string>('')
+
+export interface LoadTreeCodesFxParams {
+  project: string;
+}
+
+export const loadTreeCodes = createEvent<LoadTreeCodesFxParams>();
 
 sample({
   clock: toggleTree,
   target: $treeCode
 })
+
+sample({
+  clock: [projectRoute.opened],
+  fn: ({ params: { project = '' } }) => ({ project}),
+  target: loadTreeCodesFx,
+});
+
 sample({
   clock: combine({
     feature: $feature,
@@ -147,10 +180,9 @@ sample({
 });
 
 sample({
-  clock: [projectRoute.opened],
-  source: $treeCode,
-  fn: (treeCode, { params: { project = '' } }) => ({ project, treeCode }),
-  target: loadStructureFx,
+  clock: loadTreeCodesFx.doneData,
+  fn: (treeCodes ) => treeCodes.trees?.length ? treeCodes.trees[0].code : '',
+  target: $treeCode,
 });
 
 sample({

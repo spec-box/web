@@ -524,6 +524,51 @@ export const SpecBoxWebApiModelProjectStructureModel: coreClient.CompositeMapper
   },
 };
 
+export const SpecBoxWebApiModelProjectTreeCodesModel: coreClient.CompositeMapper = {
+  type: {
+    name: 'Composite',
+    className: 'SpecBoxWebApiModelProjectTreeCodesModel',
+    modelProperties: {
+      trees: {
+        serializedName: 'trees',
+        required: true,
+        type: {
+          name: 'Sequence',
+          element: {
+            type: {
+              name: 'Composite',
+              className: 'SpecBoxWebApiModelProjectTreeCodeDataModel',
+            },
+          },
+        },
+      },
+    },
+  },
+};
+
+export const SpecBoxWebApiModelProjectTreeCodeDataModel: coreClient.CompositeMapper = {
+  type: {
+    name: 'Composite',
+    className: 'SpecBoxWebApiModelProjectTreeCodeDataModel',
+    modelProperties: {
+      code: {
+        serializedName: 'code',
+        required: true,
+        type: {
+          name: 'String',
+        },
+      },
+      title: {
+        serializedName: 'title',
+        nullable: true,
+        type: {
+          name: 'String',
+        },
+      },
+    },
+  },
+}
+
 export const SpecBoxWebApiModelProjectTreeNodeModel: coreClient.CompositeMapper = {
   type: {
     name: 'Composite',
