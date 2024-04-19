@@ -102,7 +102,9 @@ export interface ProjectGraph extends SpecBoxWebApiModelProjectGraphModel {
   project: Project;
 }
 
-export interface DrawnNode extends SpecBoxWebApiModelProjectNodeModel, IUserNode {}
+export interface DrawnNode extends SpecBoxWebApiModelProjectNodeModel, IUserNode {
+  weight: number;
+}
 
 export interface ProjectGraphData {
   nodes: DrawnNode[];
