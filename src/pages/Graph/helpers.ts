@@ -21,6 +21,9 @@ const featureTypeMap: Record<FeatureType, Record<string, string>> = {
     warn: imageWarn,
   },
 };
+const sizeCalculate = (initialSize: number, weight: number) => {
+  return initialSize + (weight * initialSize) / 10;
+};
 
 type StylesSetter = (node: DrawnNode['style'], parent: DrawnNode) => DrawnNode['style'];
 type Status = Pick<DrawnNode, 'totalCount' | 'automatedCount' | 'problemCount'>;
@@ -35,21 +38,27 @@ const getStatus = ({ totalCount, automatedCount, problemCount }: Status): string
   return 'success';
 };
 
-const setNodeColors: StylesSetter = (node, parent) => {
+const setNodeStyle: StylesSetter = (node, parent) => {
   const color = COLORS[getStatus(parent)];
-  return { ...node, keyshape: { stroke: color, fill: color } };
+  const defaultSize = 25;
+  return {
+    ...node,
+    keyshape: { stroke: color, fill: color, size: sizeCalculate(defaultSize, parent.weight) },
+  };
 };
 
 const setIcon: StylesSetter = (node, parent) => {
+  const defaultSize = 16;
   return {
     ...node,
     icon: {
       type: 'image',
       value: featureTypeMap[parent?.featureType || 'Functional'][getStatus(parent)],
-      size: [16, 16],
+      size: [sizeCalculate(defaultSize, parent.weight), sizeCalculate(defaultSize, parent.weight)],
     },
   };
 };
+
 export const prepareDataToView = (node: DrawnNode): DrawnNode => {
-  return { ...node, style: setIcon(setNodeColors(node.style, node), node) };
+  return { ...node, style: setIcon(setNodeStyle(node.style, node), node) };
 };
