@@ -1,9 +1,11 @@
 import listError from '@/assets/graph/list-ul-error.svg';
 import listSuccess from '@/assets/graph/list-ul-success.svg';
 import listWarn from '@/assets/graph/list-ul-warn.svg';
+import listRoot from '@/assets/graph/list-ul-root.svg';
 import imageError from '@/assets/graph/picture-error.svg';
 import imageSuccess from '@/assets/graph/picture-success.svg';
 import imageWarn from '@/assets/graph/picture-warn.svg';
+import imageRoot from '@/assets/graph/picture-root.svg';
 
 import { FeatureType } from '@/api';
 import { DrawnNode } from '@/types';
@@ -14,11 +16,13 @@ const featureTypeMap: Record<FeatureType, Record<string, string>> = {
     success: listSuccess,
     error: listError,
     warn: listWarn,
+    root: listRoot,
   },
   Visual: {
     success: imageSuccess,
     error: imageError,
     warn: imageWarn,
+    root: imageRoot,
   },
 };
 const sizeCalculate = (initialSize: number, weight: number) => {
@@ -56,11 +60,13 @@ const setNodeStyle: StylesSetter = (node, parent) => {
 
 const setIcon: StylesSetter = (node, parent) => {
   const defaultSize = 16;
+  const type = featureTypeMap[parent?.featureType || 'Functional'];
+
   return {
     ...node,
     icon: {
       type: 'image',
-      value: featureTypeMap[parent?.featureType || 'Functional'][getStatus(parent)],
+      value: parent.root ? type['root'] : type[getStatus(parent)],
       size: [sizeCalculate(defaultSize, parent.weight), sizeCalculate(defaultSize, parent.weight)],
     },
   };
