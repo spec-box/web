@@ -29,7 +29,7 @@ export const Graph = () => {
   };
 
   return (
-    <ProjectLayout project={project.code} contentClassName={bem()}>
+    <div className={bem()}>
       {isLoading ? (
         <div>...loading</div>
       ) : (
@@ -59,6 +59,6 @@ export const Graph = () => {
           </Tooltip>
         </Graphin>
       )}
-    </ProjectLayout>
+    </div>
   );
 };

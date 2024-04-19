@@ -70,7 +70,6 @@ export const ProjectLayout: FC<ProjectLayoutProps> = (props) => {
             <>
               <NavItem to={projectRoute} project={project} text="Структура" />
               <NavItem to={statRoute} project={project} text="Статистика" />
-              <NavItem to={graphRoute} project={project} text="Карта продукта" />
             </>
           }
           itemsRight={<ThemeToggler />}

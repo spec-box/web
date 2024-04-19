@@ -1,5 +1,5 @@
 import { useUnit } from 'effector-react/scope';
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useState } from 'react';
 
 import { ProjectTree } from '@/components/ProjectTree/ProjectTree';
 import { useTitle } from '@/hooks/useTitle';
@@ -10,6 +10,9 @@ import './Project.css';
 import { ProjectLayout } from '@/components/ProjectLayout/ProjectLayout';
 import { Search } from '@/components/Search/Search';
 import { FeatureCard } from '@/components/FeatureCard/FeatureCard';
+import { Graph } from '../Graph/Graph';
+import React from 'react';
+import { Button } from '@gravity-ui/uikit';
 
 const bem = cn('Project');
 

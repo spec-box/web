@@ -15,7 +15,6 @@ import {
   homeRoute,
   projectRoute,
   statRoute,
-  graphRoute,
 } from '@/model';
 
 import { Application } from './Application';
@@ -46,7 +45,6 @@ const routes = [
   { path: '/', route: homeRoute },
   { path: '/project/:project', route: projectRoute },
   { path: '/project/:project/stat', route: statRoute },
-  { path: '/project/:project/graph', route: graphRoute },
 ];
 
 const router = createHistoryRouter({ routes, controls });

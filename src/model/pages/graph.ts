@@ -1,11 +1,9 @@
-import { createRoute } from 'atomic-router';
 import { sample, restore } from 'effector';
 
 import { StoreDependencies, createSpecBoxEffect } from '../scope';
 import { ProjectGraphData } from '@/types';
 import { mapProjectGraph } from '@/mappers';
-
-export const graphRoute = createRoute<{ project?: string }>();
+import { projectRoute } from './project';
 
 const STUB: ProjectGraphData = {
   nodes: [],
@@ -33,7 +31,7 @@ export const $graph = restore<ProjectGraphData>(loadGraphFx.doneData, STUB);
 export const $graphIsLoading = loadGraphFx.pending;
 
 sample({
-  clock: [graphRoute.opened],
+  clock: [projectRoute.opened],
   fn: ({ params: { project = '' } }) => ({ project }),
   target: loadGraphFx,
 });
