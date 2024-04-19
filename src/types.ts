@@ -26,8 +26,9 @@ export interface DependentFeature {
   code: string;
   title: string;
   featureType?: FeatureType;
-  assertionsCount: number;
+  totalCount: number;
   automatedCount: number;
+  problemCount: number;
 }
 
 export interface AssertionGroup {
