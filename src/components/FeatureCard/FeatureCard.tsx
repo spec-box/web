@@ -11,7 +11,6 @@ import './FeatureCard.css';
 import { DependenciesFeaturesList } from './components/DependenciesFeaturesList';
 
 import { Graph } from '../../pages/Graph/Graph';
-import React from 'react';
 import { Button } from '@gravity-ui/uikit';
 
 type FeatureCardProps = {
@@ -55,7 +54,7 @@ export const FeatureCard: FC<FeatureCardProps> = (props) => {
   if (stats) {
     return (
       <>
-        <Button className={bem('Back')} size="m" view="action" onClick={openGraph}>
+        <Button className={bem('Back')} size="m" view="normal" onClick={openGraph}>
           Назад
         </Button>
         <Graph />

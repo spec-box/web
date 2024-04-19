@@ -1,6 +1,5 @@
 import Graphin, { Behaviors, Components } from '@antv/graphin';
 import { useStore } from 'effector-react/scope';
-import { ProjectLayout } from '@/components/ProjectLayout/ProjectLayout';
 import * as model from '@/model/pages/graph';
 import { prepareDataToView } from './helpers';
 import { CfgConfig } from '@/types';
@@ -14,7 +13,7 @@ const { Tooltip, ContextMenu } = Components;
 const { ZoomCanvas, ActivateRelations } = Behaviors;
 
 export const Graph = () => {
-  const { project, ...data } = useStore(model.$graph);
+  const data = useStore(model.$graph);
   const isLoading = useStore(model.$graphIsLoading);
 
   const drawingData = {

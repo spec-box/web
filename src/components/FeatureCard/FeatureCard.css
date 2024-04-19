@@ -12,5 +12,6 @@
 
 .FeatureCard-Back {
   position: absolute;
+  margin: var(--g-spacing-5);
   z-index: 1;
 }

@@ -59,8 +59,8 @@ export const Header: FC<HeaderProps> = (props) => {
             <Icon className={bem('CopyIcon')} size={16} data={Copy} />
           </Button>
           {goToYmlButton}
-          <Button size="m" view="outlined" onClick={openGraph}>
-            Перейти к карте фичи
+          <Button size="m" view="outlined" pin="circle-circle" onClick={openGraph}>
+            Посмотреть на схеме
           </Button>
         </>
       }
