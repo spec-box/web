@@ -60,7 +60,7 @@ export const Header: FC<HeaderProps> = (props) => {
           </Button>
           {goToYmlButton}
           <Button size="m" view="outlined" onClick={openGraph}>
-            Перейти к карте фичей
+            Перейти к карте фичи
           </Button>
         </>
       }
