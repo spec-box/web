@@ -9,6 +9,7 @@ import { PlaceholderMessage } from '@/components/PlaceholderMessage/PlaceholderM
 
 import './FeatureCard.css';
 import { DependenciesFeaturesList } from './components/DependenciesFeaturesList';
+
 import { Graph } from '../../pages/Graph/Graph';
 import React from 'react';
 import { Button } from '@gravity-ui/uikit';
@@ -64,6 +65,7 @@ export const FeatureCard: FC<FeatureCardProps> = (props) => {
 
   return (
     <div className={bem(null, [className])}>
+
       <Header feature={feature} repositoryUrl={repositoryUrl} openGraph={openGraph} />
       {feature.dependencies?.length ? (
         <DependenciesFeaturesList features={feature.dependencies} />

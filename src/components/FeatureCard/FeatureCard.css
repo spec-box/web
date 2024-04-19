@@ -9,6 +9,7 @@
 .FeatureCard-EmptyState {
   flex: 1;
 }
+
 .FeatureCard-Back {
   position: absolute;
   z-index: 1;

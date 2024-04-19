@@ -5,6 +5,7 @@ import { ProjectGraphData } from '@/types';
 import { mapProjectGraph } from '@/mappers';
 import { projectRoute } from './project';
 
+
 const STUB: ProjectGraphData = {
   nodes: [],
   edges: [],
