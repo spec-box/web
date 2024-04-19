@@ -15,6 +15,7 @@ import { HeaderLayout } from './HeaderLayout';
 type HeaderProps = {
   feature: Feature;
   repositoryUrl?: string;
+  openGraph: VoidFunction;
 };
 
 const buildUrl = (url?: string, baseUrl?: string): string | undefined => {
@@ -26,7 +27,7 @@ const buildUrl = (url?: string, baseUrl?: string): string | undefined => {
 };
 
 export const Header: FC<HeaderProps> = (props) => {
-  const { feature, repositoryUrl } = props;
+  const { feature, repositoryUrl, openGraph } = props;
   const { total, automated } = feature.assertionsCount;
 
   const copyToClipboard = useEvent(model.copyToClipboard);
@@ -58,6 +59,9 @@ export const Header: FC<HeaderProps> = (props) => {
             <Icon className={bem('CopyIcon')} size={16} data={Copy} />
           </Button>
           {goToYmlButton}
+          <Button size="m" view="outlined" pin="circle-circle" onClick={openGraph}>
+            Посмотреть на схеме
+          </Button>
         </>
       }
       sidebar={<Stat total={total} automated={automated} />}

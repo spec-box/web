@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useCallback, useState } from 'react';
 
 import { Feature } from '@/types';
 import { bem } from './FeatureCard.cn';
@@ -10,6 +10,9 @@ import { PlaceholderMessage } from '@/components/PlaceholderMessage/PlaceholderM
 import './FeatureCard.css';
 import { DependenciesFeaturesList } from './components/DependenciesFeaturesList';
 
+import { Graph } from '../../pages/Graph/Graph';
+import { Button } from '@gravity-ui/uikit';
+
 type FeatureCardProps = {
   className?: string;
   repositoryUrl?: string;
@@ -19,6 +22,11 @@ type FeatureCardProps = {
 
 export const FeatureCard: FC<FeatureCardProps> = (props) => {
   const { className, feature, repositoryUrl, isPending } = props;
+  const [stats, setStats] = useState(false);
+
+  const openGraph = useCallback(() => {
+    setStats((p) => !p);
+  }, []);
 
   if (isPending) {
     return (
@@ -43,10 +51,21 @@ export const FeatureCard: FC<FeatureCardProps> = (props) => {
   const groups = feature.assertionGroups.map((group, index) => (
     <AssertionGroup key={index} group={group} />
   ));
+  if (stats) {
+    return (
+      <>
+        <Button className={bem('Back')} size="m" view="normal" onClick={openGraph}>
+          Назад
+        </Button>
+        <Graph />
+      </>
+    );
+  }
 
   return (
     <div className={bem(null, [className])}>
-      <Header feature={feature} repositoryUrl={repositoryUrl} />
+
+      <Header feature={feature} repositoryUrl={repositoryUrl} openGraph={openGraph} />
       {feature.dependencies?.length ? (
         <DependenciesFeaturesList features={feature.dependencies} />
       ) : null}

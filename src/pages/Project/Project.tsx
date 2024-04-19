@@ -1,6 +1,7 @@
 import { useUnit } from 'effector-react/scope';
 import { FC, useCallback } from 'react';
 
+
 import { ProjectTree } from '@/components/ProjectTree/ProjectTree';
 import { useTitle } from '@/hooks/useTitle';
 import * as model from '@/model/pages/project';
