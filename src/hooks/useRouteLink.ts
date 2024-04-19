@@ -15,7 +15,7 @@ export interface RouteLinkParams<T extends RouteParams> {
 export const useRouteLink = <T extends RouteParams>(args: RouteLinkParams<T>) => {
   const { to, params, query, target, onPress } = args;
 
-  const href = useLink(to, params);
+  const href = useLink(to, params, query);
   const navigate = useEvent(to.navigate);
 
   const handler = useCallback(
