@@ -164,6 +164,8 @@ export function mapProjectGraph({ nodes, edges, project }: ProjectGraph): Projec
     nodes: nodes.map(({ title, ...arg }) => ({
       ...arg,
       title,
+      // здесь нужны изменения из ветки Леши
+      weight: Math.floor(Math.random() * 11),
       label: title,
       style: { label: { value: title } },
     })),
