@@ -22,6 +22,8 @@ export const GraphTooltip = ({
   code,
   title,
 }: GraphTooltipProps) => {
+  const problems = problemCount ? <Problems count={problemCount} /> : null;
+
   return (
     <div className={bem()} style={{ maxWidth: '360px' }}>
       <FormattedText text={`$${code}`} />
@@ -29,7 +31,7 @@ export const GraphTooltip = ({
       <Label className={bem('Label')} theme="unknown" size="xs">
         {automatedCount}/{totalCount} ({calculateRate(automatedCount, totalCount)}%)
       </Label>
-      <Problems count={problemCount} />
+      {problems}
     </div>
   );
 };
