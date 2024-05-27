@@ -21,6 +21,7 @@ export interface AssertionGroup {
 export interface Assertion {
   title: string;
   description?: string;
+  detailsUrl?: string;
   automationState: AutomationState;
 }
 

@@ -55,9 +55,9 @@ export const mapAssertionGroup = (
 };
 
 export const mapAssertion = (input: SpecBoxWebApiModelProjectAssertionModel): Assertion => {
-  const { title, description, automationState } = input;
+  const { title, description, detailsUrl, automationState } = input;
 
-  return { title, description, automationState };
+  return { title, description, detailsUrl, automationState };
 };
 
 export const mapProject = (project: SpecBoxWebApiModelCommonProjectModel): Project => {

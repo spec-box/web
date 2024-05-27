@@ -1,4 +1,6 @@
 import { FC } from 'react';
+import { Icon, Button } from '@gravity-ui/uikit';
+import { ArrowUpRightFromSquare } from '@gravity-ui/icons';
 
 import { FormattedText } from '@/components/FormattedText/FormattedText';
 import { Assertion as AssertionData } from '@/types';
@@ -20,6 +22,19 @@ export const Assertion: FC<AssertionProps> = (props) => {
     <div className={bem('AssertionDescription')}>{assertion.description}</div>
   ) : null;
 
+  const detailsLink =
+    assertion.detailsUrl && URL.canParse(assertion.detailsUrl) ? (
+      <Button
+        href={assertion.detailsUrl}
+        target="_blank"
+        size="s"
+        view="outlined"
+        pin="circle-circle"
+      >
+        Подробнее <Icon size={12} data={ArrowUpRightFromSquare} />
+      </Button>
+    ) : undefined;
+
   return (
     <div className={bem('Assertion')}>
       <div className={bem('AssertionBadge')}>
@@ -27,7 +42,7 @@ export const Assertion: FC<AssertionProps> = (props) => {
       </div>
       <div className={bem('AssertionContent')}>
         <div className={bem('AssertionTitle')}>
-          <FormattedText text={assertion.title} />
+          <FormattedText text={assertion.title} /> {detailsLink}
         </div>
         {description}
       </div>
