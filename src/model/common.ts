@@ -2,6 +2,7 @@ import { createRouterControls } from 'atomic-router';
 import { createEvent, createStore, sample } from 'effector';
 
 import { UiTheme } from '@/types';
+
 import { createSpecBoxEffect } from './scope';
 
 // routes

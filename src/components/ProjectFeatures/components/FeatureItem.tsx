@@ -1,7 +1,7 @@
 import { FC, ReactNode, useCallback } from 'react';
 import { ListUl, Picture } from '@gravity-ui/icons';
 import { ArrowToggle, Icon } from '@gravity-ui/uikit';
-import { useEvent, useStoreMap } from 'effector-react/scope';
+import { useUnit, useStoreMap } from 'effector-react';
 
 import { ListItem, ListItemState } from '@/components/ListItem/ListItem';
 import { FeatureTreeNode, GroupTreeNode } from '@/types';
@@ -31,7 +31,7 @@ export const FeatureGroupItem: FC<FeatureGroupItemProps> = (props) => {
   } = props;
 
   const isOpen = useIsOpen(id);
-  const toggleItem = useEvent(toggle);
+  const toggleItem = useUnit(toggle);
 
   const onSelect = useCallback(() => toggleItem(id), [toggleItem, id]);
 

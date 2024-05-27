@@ -2,7 +2,7 @@ import { RouteInstance } from 'atomic-router';
 import { FC, ReactNode } from 'react';
 import { cn } from '@bem-react/classname';
 import { Skeleton } from '@gravity-ui/uikit';
-import { useUnit } from 'effector-react/scope';
+import { useUnit } from 'effector-react';
 
 import {
   ProjectContext,

@@ -15,7 +15,7 @@ import { startOfDay } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { FC, useMemo } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
-import { useUnit } from 'effector-react/scope';
+import { useUnit } from 'effector-react';
 
 import { $theme } from '@/model';
 import { StatAssertion, StatAutotestsItem, UiTheme } from '@/types';

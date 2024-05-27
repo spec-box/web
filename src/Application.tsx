@@ -1,4 +1,4 @@
-import { Route } from 'atomic-router-react/scope';
+import { Route } from 'atomic-router-react';
 import { FC } from 'react';
 
 import { ApplicationLayout } from './components/ApplicationLayout/ApplicationLayout';

@@ -1,7 +1,7 @@
 import { createHistoryRouter } from 'atomic-router';
-import { RouterProvider } from 'atomic-router-react/scope';
+import { RouterProvider } from 'atomic-router-react';
 import { allSettled } from 'effector';
-import { Provider as ScopeProvider } from 'effector-react/scope';
+import { Provider as ScopeProvider } from 'effector-react';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import ReactDOM from 'react-dom/client';

@@ -1,4 +1,4 @@
-import { useUnit } from 'effector-react/scope';
+import { useUnit } from 'effector-react';
 import { FC } from 'react';
 
 import { useTitle } from '@/hooks/useTitle';
