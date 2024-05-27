@@ -18,12 +18,11 @@ import { Bar, Line } from 'react-chartjs-2';
 import { useUnit } from 'effector-react/scope';
 
 import { $theme } from '@/model';
-import { StatAssertion, StatAutotestsItem } from '@/types';
+import { StatAssertion, StatAutotestsItem, UiTheme } from '@/types';
 
 import { bem } from './Chart.cn';
 import { Layout } from './components/Layout';
 import { LegendDataset } from './components/Legend';
-import { Theme } from '@/localStorage';
 
 ChartJS.register(TimeScale, LinearScale, PointElement, LineElement, BarElement, Tooltip, Filler);
 
@@ -184,67 +183,59 @@ export interface AssertionsChartProps {
   stat: StatAssertion[];
 }
 
-const colorByTheme: Record<
-  | 'colorBaseDangerHeavy'
-  | 'colorBaseDangerMedium'
-  | 'colorBaseInfoHeavy'
-  | 'colorBaseInfoMedium'
-  | 'colorBaseWarningHeavy'
-  | 'colorTextSecondary'
-  | 'colorLineGeneric',
-  Record<Theme, string>
-> = {
-  colorBaseDangerHeavy: {
-    light: '#E9033A',
-    dark: '#E8476D',
+export interface ChartColors {
+  colorBaseDangerHeavy: string;
+  colorBaseDangerMedium: string;
+  colorBaseInfoHeavy: string;
+  colorBaseInfoMedium: string;
+  colorBaseWarningHeavy: string;
+  colorTextSecondary: string;
+  colorLineGeneric: string;
+}
+
+const colorsByTheme: Record<UiTheme, ChartColors> = {
+  light: {
+    colorBaseDangerHeavy: '#E9033A',
+    colorBaseDangerMedium: '#FF66B299',
+    colorBaseInfoHeavy: '#348BDC',
+    colorBaseInfoMedium: '#BDD8F3',
+    colorBaseWarningHeavy: '#FFBE5C',
+    colorTextSecondary: '#00000080',
+    colorLineGeneric: '#0000001a',
   },
-  colorBaseDangerMedium: {
-    light: '#FF66B299',
-    dark: '#E5325D80',
-  },
-  colorBaseInfoHeavy: {
-    light: '#348BDC',
-    dark: '#4AA1F2',
-  },
-  colorBaseInfoMedium: {
-    light: '#BDD8F3',
-    dark: '#3B6696',
-  },
-  colorBaseWarningHeavy: {
-    light: '#FFBE5C',
-    dark: '#FFC56C',
-  },
-  colorTextSecondary: {
-    light: '#00000080',
-    dark: '#ffffff80',
-  },
-  colorLineGeneric: {
-    light: '#0000001a',
-    dark: '#ffffff26',
+  dark: {
+    colorBaseDangerHeavy: '#E8476D',
+    colorBaseDangerMedium: '#E5325D80',
+    colorBaseInfoHeavy: '#4AA1F2',
+    colorBaseInfoMedium: '#3B6696',
+    colorBaseWarningHeavy: '#FFC56C',
+    colorTextSecondary: '#ffffff80',
+    colorLineGeneric: '#ffffff26',
   },
 };
 
 export const AssertionsChart: FC<AssertionsChartProps> = ({ stat, isPending }) => {
   const theme = useUnit($theme);
+  const colors = colorsByTheme[theme];
 
   const data = useMemo(
     () =>
       createAssertionsDataSets(stat, {
         colors: {
           problem: {
-            borderColor: colorByTheme.colorBaseWarningHeavy[theme],
+            borderColor: colors.colorBaseWarningHeavy,
           },
           automated: {
-            borderColor: colorByTheme.colorBaseInfoHeavy[theme],
-            backgroundColor: colorByTheme.colorBaseInfoMedium[theme],
+            borderColor: colors.colorBaseInfoHeavy,
+            backgroundColor: colors.colorBaseInfoMedium,
           },
           total: {
-            borderColor: colorByTheme.colorBaseDangerHeavy[theme],
-            backgroundColor: colorByTheme.colorBaseDangerMedium[theme],
+            borderColor: colors.colorBaseDangerHeavy,
+            backgroundColor: colors.colorBaseDangerMedium,
           },
         },
       }),
-    [stat, theme],
+    [stat, colors],
   );
   const legend = useMemo(
     () =>
@@ -260,12 +251,12 @@ export const AssertionsChart: FC<AssertionsChartProps> = ({ stat, isPending }) =
   const options = useMemo(
     () =>
       getOptions({
-        xGridColor: colorByTheme.colorLineGeneric[theme],
-        xTicksColor: colorByTheme.colorTextSecondary[theme],
-        yGridColor: colorByTheme.colorLineGeneric[theme],
-        yTicksColor: colorByTheme.colorTextSecondary[theme],
+        xGridColor: colors.colorLineGeneric,
+        xTicksColor: colors.colorTextSecondary,
+        yGridColor: colors.colorLineGeneric,
+        yTicksColor: colors.colorTextSecondary,
       }),
-    [theme],
+    [colors],
   );
 
   return (
@@ -282,16 +273,17 @@ export interface AutotestsChartProps {
 
 export const AutotestsChart: FC<AutotestsChartProps> = ({ stat, isPending }) => {
   const theme = useUnit($theme);
+  const colors = colorsByTheme[theme];
 
   const data = useMemo(
     () =>
       createAutotestsDataSets(stat, {
         colors: {
-          borderColor: colorByTheme.colorBaseDangerHeavy[theme],
-          backgroundColor: colorByTheme.colorBaseDangerMedium[theme],
+          borderColor: colors.colorBaseDangerHeavy,
+          backgroundColor: colors.colorBaseDangerMedium,
         },
       }),
-    [stat, theme],
+    [stat, colors],
   );
 
   const legend = useMemo(
@@ -308,12 +300,12 @@ export const AutotestsChart: FC<AutotestsChartProps> = ({ stat, isPending }) => 
   const options = useMemo(
     () =>
       getOptions({
-        xGridColor: colorByTheme.colorLineGeneric[theme],
-        xTicksColor: colorByTheme.colorTextSecondary[theme],
-        yGridColor: colorByTheme.colorLineGeneric[theme],
-        yTicksColor: colorByTheme.colorTextSecondary[theme],
+        xGridColor: colors.colorLineGeneric,
+        xTicksColor: colors.colorTextSecondary,
+        yGridColor: colors.colorLineGeneric,
+        yTicksColor: colors.colorTextSecondary,
       }),
-    [theme],
+    [colors],
   );
 
   return (

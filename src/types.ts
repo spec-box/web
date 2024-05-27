@@ -75,3 +75,5 @@ export interface ProjectStat {
   assertions: StatAssertion[];
   autotests: StatAutotestsItem[];
 }
+
+export type UiTheme = 'light' | 'dark';
