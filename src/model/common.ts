@@ -1,20 +1,25 @@
 import { createRouterControls } from 'atomic-router';
-import { createEvent, sample } from 'effector';
-import { $theme, createSpecBoxEffect } from './scope';
-import { Theme } from '@/localStorage';
+import { createEvent, createStore, sample } from 'effector';
 
+import { UiTheme } from '@/types';
+
+import { createSpecBoxEffect } from './scope';
+
+// routes
 export const controls = createRouterControls();
 
-const saveThemeFx = createSpecBoxEffect(async (theme: Theme, { ls }) => {
+// theme
+export const $theme = createStore<UiTheme>('light');
+export const toggleThemeEvent = createEvent();
+
+const saveThemeFx = createSpecBoxEffect(async (theme: UiTheme, { ls }) => {
   ls.setTheme(theme);
 });
 
-export const toggleThemeEvent = createEvent();
-
-const themeByPrevTheme = {
+const themeByPrevTheme: Record<UiTheme, UiTheme> = {
   light: 'dark',
   dark: 'light',
-} as const;
+};
 
 sample({
   source: $theme,

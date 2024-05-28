@@ -1,19 +1,28 @@
 import { createHistoryRouter } from 'atomic-router';
-import { RouterProvider } from 'atomic-router-react/scope';
+import { RouterProvider } from 'atomic-router-react';
 import { allSettled } from 'effector';
-import { Provider as ScopeProvider } from 'effector-react/scope';
+import { Provider as ScopeProvider } from 'effector-react';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import { SpecBoxWebApi, SpecBoxWebApiModelDefaultConfigurationModel } from '@/api';
-import { AnalyticsApi, controls, createScope, homeRoute, projectRoute, statRoute } from '@/model';
+import {
+  $theme,
+  AnalyticsApi,
+  SpecBoxLocalStorage,
+  controls,
+  createScope,
+  homeRoute,
+  projectRoute,
+  statRoute,
+} from '@/model';
+import { UiTheme } from '@/types';
 
 import { Application } from './Application';
 
 import 'bootstrap/dist/css/bootstrap-grid.css';
 import './index.css';
-import { specBoxLs } from './localStorage';
 
 // golbals
 declare global {
@@ -23,14 +32,23 @@ declare global {
   }
 }
 
-// scope // XXX
+enum SpecBoxLocalStorageKeys {
+  theme = 'spec-box-theme',
+}
+
+// scope
 const api = new SpecBoxWebApi(window.location.origin + '/api', { allowInsecureConnection: true });
 const analytics = window.__SPEC_BOX_ANALYTICS_API;
+const ls: SpecBoxLocalStorage = {
+  getTheme: () => {
+    return localStorage.getItem(SpecBoxLocalStorageKeys.theme) === 'dark' ? 'dark' : 'light';
+  },
+  setTheme: (theme: UiTheme) => {
+    return localStorage.setItem(SpecBoxLocalStorageKeys.theme, theme);
+  },
+};
 
-const themeFromLs = specBoxLs.getTheme();
-const theme = themeFromLs === 'light' || themeFromLs === 'dark' ? themeFromLs : 'light';
-
-const scope = createScope({ api, analytics, ls: specBoxLs }, theme);
+const scope = createScope({ api, analytics, ls }, [[$theme, ls.getTheme()]]);
 
 // router
 const routes = [

@@ -21,6 +21,13 @@ export const SpecBoxWebApiModelUploadData: coreClient.CompositeMapper = {
     name: 'Composite',
     className: 'SpecBoxWebApiModelUploadData',
     modelProperties: {
+      message: {
+        serializedName: 'message',
+        nullable: true,
+        type: {
+          name: 'String',
+        },
+      },
       features: {
         serializedName: 'features',
         required: true,
@@ -133,6 +140,18 @@ export const SpecBoxWebApiModelUploadFeatureModel: coreClient.CompositeMapper = 
           },
         },
       },
+      dependencies: {
+        serializedName: 'dependencies',
+        nullable: true,
+        type: {
+          name: 'Sequence',
+          element: {
+            type: {
+              name: 'String',
+            },
+          },
+        },
+      },
     },
   },
 };
@@ -186,6 +205,13 @@ export const SpecBoxWebApiModelUploadAssertionModel: coreClient.CompositeMapper 
       },
       description: {
         serializedName: 'description',
+        nullable: true,
+        type: {
+          name: 'String',
+        },
+      },
+      detailsUrl: {
+        serializedName: 'detailsUrl',
         nullable: true,
         type: {
           name: 'String',
@@ -410,6 +436,19 @@ export const SpecBoxWebApiModelProjectFeatureModel: coreClient.CompositeMapper =
           name: 'String',
         },
       },
+      usages: {
+        serializedName: 'usages',
+        required: true,
+        type: {
+          name: 'Sequence',
+          element: {
+            type: {
+              name: 'Composite',
+              className: 'SpecBoxWebApiModelProjectRelatedFeatureModel',
+            },
+          },
+        },
+      },
       assertionGroups: {
         serializedName: 'assertionGroups',
         required: true,
@@ -422,6 +461,63 @@ export const SpecBoxWebApiModelProjectFeatureModel: coreClient.CompositeMapper =
               className: 'SpecBoxWebApiModelProjectAssertionGroupModel',
             },
           },
+        },
+      },
+    },
+  },
+};
+
+export const SpecBoxWebApiModelProjectRelatedFeatureModel: coreClient.CompositeMapper = {
+  type: {
+    name: 'Composite',
+    className: 'SpecBoxWebApiModelProjectRelatedFeatureModel',
+    modelProperties: {
+      code: {
+        constraints: {
+          MinLength: 1,
+        },
+        serializedName: 'code',
+        required: true,
+        type: {
+          name: 'String',
+        },
+      },
+      title: {
+        constraints: {
+          MinLength: 1,
+        },
+        serializedName: 'title',
+        required: true,
+        type: {
+          name: 'String',
+        },
+      },
+      featureType: {
+        serializedName: 'featureType',
+        type: {
+          name: 'Enum',
+          allowedValues: ['Functional', 'Visual'],
+        },
+      },
+      totalCount: {
+        serializedName: 'totalCount',
+        required: true,
+        type: {
+          name: 'Number',
+        },
+      },
+      automatedCount: {
+        serializedName: 'automatedCount',
+        required: true,
+        type: {
+          name: 'Number',
+        },
+      },
+      problemCount: {
+        serializedName: 'problemCount',
+        required: true,
+        type: {
+          name: 'Number',
         },
       },
     },
@@ -441,6 +537,13 @@ export const SpecBoxWebApiModelProjectAssertionGroupModel: coreClient.CompositeM
         required: true,
         type: {
           name: 'String',
+        },
+      },
+      sortOrder: {
+        serializedName: 'sortOrder',
+        nullable: true,
+        type: {
+          name: 'Number',
         },
       },
       assertions: {
@@ -481,6 +584,20 @@ export const SpecBoxWebApiModelProjectAssertionModel: coreClient.CompositeMapper
         nullable: true,
         type: {
           name: 'String',
+        },
+      },
+      detailsUrl: {
+        serializedName: 'detailsUrl',
+        nullable: true,
+        type: {
+          name: 'String',
+        },
+      },
+      sortOrder: {
+        serializedName: 'sortOrder',
+        nullable: true,
+        type: {
+          name: 'Number',
         },
       },
       automationState: {

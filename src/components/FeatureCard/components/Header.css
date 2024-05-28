@@ -2,8 +2,6 @@
   display: flex;
   flex-direction: row;
   gap: var(--g-spacing-4);
-
-  padding: var(--g-spacing-6);
 }
 
 .FeatureCard-HeaderBody {

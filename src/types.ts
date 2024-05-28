@@ -1,16 +1,27 @@
 import { AutomationState, FeatureType } from './api';
 
+export interface FeatureStat {
+  total: number;
+  automated: number;
+  problem: number;
+}
+
 export interface Feature {
   code: string;
   title: string;
+  featureType?: FeatureType;
   description?: string;
   filePath?: string;
+  usages: RelatedFeature[];
   assertionGroups: AssertionGroup[];
-  assertionsCount: {
-    total: number;
-    automated: number;
-    problem: number;
-  };
+  assertionsCount: FeatureStat;
+}
+
+export interface RelatedFeature {
+  code: string;
+  title: string;
+  featureType?: FeatureType;
+  assertionsCount: FeatureStat;
 }
 
 export interface AssertionGroup {
@@ -21,6 +32,7 @@ export interface AssertionGroup {
 export interface Assertion {
   title: string;
   description?: string;
+  detailsUrl?: string;
   automationState: AutomationState;
 }
 
@@ -75,3 +87,5 @@ export interface ProjectStat {
   assertions: StatAssertion[];
   autotests: StatAutotestsItem[];
 }
+
+export type UiTheme = 'light' | 'dark';

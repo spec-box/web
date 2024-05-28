@@ -1,4 +1,4 @@
-import { useStore } from 'effector-react/scope';
+import { useUnit } from 'effector-react';
 import { FC } from 'react';
 import { cn } from '@bem-react/classname';
 
@@ -12,8 +12,8 @@ import './Stat.css';
 const bem = cn('Stat');
 
 export const Stat: FC = () => {
-  const { assertions, autotests, project } = useStore(model.$stat);
-  const isLoading = useStore(model.$statIsLoading);
+  const { assertions, autotests, project } = useUnit(model.$stat);
+  const isLoading = useUnit(model.$statIsLoading);
 
   useTitle(isLoading ? 'Статистика' : `${project.title}. Статистика`);
 

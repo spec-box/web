@@ -3,6 +3,7 @@ import {
   SpecBoxWebApiModelProjectAssertionGroupModel,
   SpecBoxWebApiModelProjectAssertionModel,
   SpecBoxWebApiModelProjectFeatureModel,
+  SpecBoxWebApiModelProjectRelatedFeatureModel,
   SpecBoxWebApiModelProjectStructureModel,
   SpecBoxWebApiModelProjectTreeNodeModel,
   StatResponse,
@@ -14,11 +15,31 @@ import {
   Project,
   ProjectStat,
   ProjectStructure,
+  RelatedFeature,
   TreeNode,
 } from './types';
 
+export const mapRelatedFeature = (
+  input: SpecBoxWebApiModelProjectRelatedFeatureModel,
+): RelatedFeature => {
+  const { code, title, totalCount, automatedCount, problemCount, featureType } = input;
+
+  return {
+    code,
+    title,
+    featureType,
+    assertionsCount: {
+      total: totalCount,
+      automated: automatedCount,
+      problem: problemCount,
+    },
+  };
+};
+
 export const mapFeature = (input: SpecBoxWebApiModelProjectFeatureModel): Feature => {
-  const { code, title, description, filePath } = input;
+  const { code, title, description, featureType, filePath } = input;
+
+  const usages = input.usages.map(mapRelatedFeature);
 
   const assertionGroups = input.assertionGroups.map(mapAssertionGroup);
   const allAssertions = new Array<Assertion>().concat(
@@ -32,8 +53,10 @@ export const mapFeature = (input: SpecBoxWebApiModelProjectFeatureModel): Featur
   return {
     code,
     title,
+    featureType,
     description,
     filePath,
+    usages,
     assertionGroups,
     assertionsCount: {
       total,
@@ -55,9 +78,9 @@ export const mapAssertionGroup = (
 };
 
 export const mapAssertion = (input: SpecBoxWebApiModelProjectAssertionModel): Assertion => {
-  const { title, description, automationState } = input;
+  const { title, description, detailsUrl, automationState } = input;
 
-  return { title, description, automationState };
+  return { title, description, detailsUrl, automationState };
 };
 
 export const mapProject = (project: SpecBoxWebApiModelCommonProjectModel): Project => {

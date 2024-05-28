@@ -1,5 +1,12 @@
 .Home {
   display: flex;
+  flex-direction: column;
+
+  flex: 1;
+}
+
+.Home-Body {
+  display: flex;
   justify-content: center;
   align-items: center;
 

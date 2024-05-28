@@ -1,4 +1,4 @@
-import { useEvent } from 'effector-react/scope';
+import { useUnit } from 'effector-react';
 import { FC, useCallback, useMemo } from 'react';
 
 import { FormattedText } from '@/components/FormattedText/FormattedText';
@@ -30,7 +30,7 @@ export const Header: FC<HeaderProps> = (props) => {
   const { feature, repositoryUrl } = props;
   const { total, automated } = feature.assertionsCount;
 
-  const copyToClipboard = useEvent(model.copyToClipboard);
+  const copyToClipboard = useUnit(model.copyToClipboard);
   const onClickCopyButton = useCallback(() => {
     copyToClipboard({ text: feature.code });
   }, [feature.code, copyToClipboard]);

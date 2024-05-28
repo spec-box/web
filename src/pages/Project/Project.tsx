@@ -1,4 +1,4 @@
-import { useEvent, useStore } from 'effector-react/scope';
+import { useUnit } from 'effector-react';
 import { FC, useCallback } from 'react';
 
 import { FeatureCard } from '@/components/FeatureCard/FeatureCard';
@@ -64,16 +64,16 @@ const Details: FC<DetailsProps> = ({ isPending, feature, repositoryUrl }) => {
 };
 
 export const Project: FC = () => {
-  const structureIsPending = useStore(model.$structureIsLoading);
+  const structureIsPending = useUnit(model.$structureIsLoading);
   const {
     project: { code: projectCode, title: projectTitle, repositoryUrl },
     tree,
-  } = useStore(model.$structure);
+  } = useUnit(model.$structure);
 
-  const loadFeature = useEvent(model.loadFeature);
-  const feature = useStore(model.$feature);
-  const featureCode = useStore(model.$featureCode);
-  const featureIsPending = useStore(model.$featureIsPending);
+  const loadFeature = useUnit(model.loadFeature);
+  const feature = useUnit(model.$feature);
+  const featureCode = useUnit(model.$featureCode);
+  const featureIsPending = useUnit(model.$featureIsPending);
 
   const onFeatureSelected = useCallback(
     (feature: string) => loadFeature({ project: projectCode, feature }),
@@ -98,7 +98,11 @@ export const Project: FC = () => {
         />
       </div>
       <div className={bem('DetailsPanel')}>
-        <Details repositoryUrl={repositoryUrl} feature={feature} isPending={structureIsPending || featureIsPending} />
+        <Details
+          repositoryUrl={repositoryUrl}
+          feature={feature}
+          isPending={structureIsPending || featureIsPending}
+        />
       </div>
     </ProjectLayout>
   );

@@ -1,8 +1,8 @@
 import { FC, ReactNode, useCallback } from 'react';
-import { ListUl, Picture } from '@gravity-ui/icons';
-import { ArrowToggle, Icon } from '@gravity-ui/uikit';
-import { useEvent, useStoreMap } from 'effector-react/scope';
+import { ArrowToggle } from '@gravity-ui/uikit';
+import { useUnit, useStoreMap } from 'effector-react';
 
+import { FeatureTypeIcon } from '@/components/FeatureTypeIcon/FeatureTypeIcon';
 import { ListItem, ListItemState } from '@/components/ListItem/ListItem';
 import { FeatureTreeNode, GroupTreeNode } from '@/types';
 import { $collapseState, toggle } from '@/model/pages/project';
@@ -31,7 +31,7 @@ export const FeatureGroupItem: FC<FeatureGroupItemProps> = (props) => {
   } = props;
 
   const isOpen = useIsOpen(id);
-  const toggleItem = useEvent(toggle);
+  const toggleItem = useUnit(toggle);
 
   const onSelect = useCallback(() => toggleItem(id), [toggleItem, id]);
 
@@ -71,9 +71,6 @@ interface FeatureItemProps {
   selectedCode?: string;
 }
 
-const commonFeatureIcon = <Icon className={bem('FeatureIcon')} size={16} data={ListUl} />;
-const visualFeatureIcon = <Icon className={bem('FeatureIcon')} size={16} data={Picture} />;
-
 export const FeatureItem: FC<FeatureItemProps> = (props) => {
   const {
     node: { totalCount, automatedCount, problemCount, featureCode, featureType, title },
@@ -88,7 +85,7 @@ export const FeatureItem: FC<FeatureItemProps> = (props) => {
 
   const state: ListItemState = featureCode === selectedCode ? 'active' : 'normal';
 
-  const icon = featureType === 'Visual' ? visualFeatureIcon : commonFeatureIcon;
+  const icon = <FeatureTypeIcon featureType={featureType} />;
 
   const problems = problemCount ? <Problems count={problemCount} /> : null;
 

@@ -1,7 +1,7 @@
 import { RouteInstance, RouteParams, RouteQuery } from 'atomic-router';
-import { useLink } from 'atomic-router-react/scope';
+import { useLink } from 'atomic-router-react';
 import { useCallback } from 'react';
-import { useEvent } from 'effector-react/scope';
+import { useUnit } from 'effector-react';
 import { PressEvent } from './usePress';
 
 export interface RouteLinkParams<T extends RouteParams> {
@@ -16,7 +16,7 @@ export const useRouteLink = <T extends RouteParams>(args: RouteLinkParams<T>) =>
   const { to, params, query, target, onPress } = args;
 
   const href = useLink(to, params, query);
-  const navigate = useEvent(to.navigate);
+  const navigate = useUnit(to.navigate);
 
   const handler = useCallback(
     (e: PressEvent) => {

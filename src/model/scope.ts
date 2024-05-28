@@ -1,29 +1,33 @@
-import { Effect, attach, createEffect, createStore, fork } from 'effector';
+import { Effect, StorePair, attach, createEffect, createStore, fork } from 'effector';
 
 import { SpecBoxWebApi } from '@/api';
-import { SpecBoxLs, Theme } from '@/localStorage';
+import { UiTheme } from '@/types';
 
 export const $deps = createStore<StoreDependencies>(null as unknown as StoreDependencies);
-
-export const $theme = createStore<Theme>('light');
 
 export interface AnalyticsApi {
   hit: (url: string) => void;
   sendEvent: (event: string, params: Record<string, unknown>) => void;
 }
 
+export interface SpecBoxLocalStorage {
+  getTheme: () => UiTheme;
+  setTheme: (theme: UiTheme) => void;
+}
+
 export interface StoreDependencies {
   api: SpecBoxWebApi;
-  ls: SpecBoxLs;
+  ls: SpecBoxLocalStorage;
   analytics?: AnalyticsApi;
 }
 
-export const createScope = (deps: StoreDependencies, theme: Theme) => {
+// в эффекторе кривые тайпинги
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ExtraValues = StorePair<any>[];
+
+export const createScope = (deps: StoreDependencies, extraValues: ExtraValues) => {
   return fork({
-    values: [
-      [$deps, deps],
-      [$theme, theme],
-    ],
+    values: [[$deps, deps], ...extraValues],
   });
 };
 

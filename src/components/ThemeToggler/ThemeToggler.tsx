@@ -1,10 +1,10 @@
 import { ReactNode } from 'react';
 import { Button, Icon } from '@gravity-ui/uikit';
 import { Moon, Sun } from '@gravity-ui/icons';
-import { useUnit } from 'effector-react/scope';
-import { Theme } from '@/localStorage';
+import { useUnit } from 'effector-react';
 
 import { $theme, toggleThemeEvent } from '@/model';
+import { UiTheme } from '@/types';
 
 export const ThemeToggler = () => {
   const theme = useUnit($theme);
@@ -16,7 +16,8 @@ export const ThemeToggler = () => {
     </Button>
   );
 };
-const ThemeToIcon: Record<Theme, ReactNode> = {
+
+const ThemeToIcon: Record<UiTheme, ReactNode> = {
   light: <Icon data={Moon} />,
   dark: <Icon data={Sun} />,
 };
