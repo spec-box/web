@@ -1,0 +1,13 @@
+.FeatureCard-UsageTable {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto auto;
+
+  gap: var(--g-spacing-4);
+
+  font: var(--sb-font-body-s);
+}
+
+.FeatureCard-UsageTableCell_column_stat {
+  text-align: right;
+  color: var(--g-color-text-secondary);
+}
