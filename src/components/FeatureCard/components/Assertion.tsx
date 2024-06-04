@@ -19,7 +19,9 @@ export const Assertion: FC<AssertionProps> = (props) => {
   const { assertion } = props;
 
   const description = assertion.description ? (
-    <div className={bem('AssertionDescription')}>{assertion.description}</div>
+    <div className={bem('AssertionDescription')}>
+      <FormattedText text={assertion.description} />
+    </div>
   ) : null;
 
   const detailsLink =
