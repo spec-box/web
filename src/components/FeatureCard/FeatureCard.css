@@ -1,6 +1,7 @@
 .FeatureCard {
   width: 100%;
 
+  box-sizing: border-box;
   padding: var(--g-spacing-6);
 
   display: flex;

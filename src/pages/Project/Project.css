@@ -10,7 +10,6 @@
 
 .Project-ListPanel,
 .Project-DetailsPanel {
-  display: flex;
   flex: 1;
 
   padding: var(--sb-outline-width);
@@ -23,5 +22,5 @@
 }
 
 .Project-EmptyState {
-  flex: 1;
+  height: 100%;
 }
