@@ -4,6 +4,9 @@
   flex: 1;
   min-height: 0;
   background-color: var(--g-color-base-background);
+
+  max-height: 100vh;
+  box-sizing: border-box;
 }
 
 .ProjectLayout-Content {
