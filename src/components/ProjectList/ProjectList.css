@@ -2,5 +2,17 @@
   display: flex;
   flex-direction: column;
 
+  gap: var(--g-spacing-2);
+}
+
+.ProjectList-Pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.ProjectList-Items {
+  display: flex;
+  flex-direction: column;
+
   gap: var(--g-spacing-1);
 }
