@@ -1,8 +1,8 @@
-import { RouteInstance } from 'atomic-router';
+import { Route } from '@virentia/router';
+import { useIsOpened } from '@virentia/router-react';
 import { FC, ReactNode } from 'react';
 import { cn } from '@bem-react/classname';
 import { Skeleton } from '@gravity-ui/uikit';
-import { useUnit } from 'effector-react';
 
 import {
   ProjectContext,
@@ -25,13 +25,13 @@ type ProjectLayoutProps = {
 };
 
 interface NavItemProps {
-  to: RouteInstance<{ project?: string }>;
+  to: Route<{ project?: string }>;
   text: string;
   project: string;
 }
 
 const NavItem: FC<NavItemProps> = ({ to, text, project }) => {
-  const isOpened = useUnit(to.$isOpened);
+  const isOpened = useIsOpened(to);
 
   if (!project) {
     return <Skeleton />;

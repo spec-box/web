@@ -6,7 +6,7 @@ import '@gravity-ui/uikit/styles/styles.css';
 
 import './ApplicationLayout.css';
 import { $theme } from '@/model';
-import { useUnit } from 'effector-react';
+import { useUnit } from '@virentia/react';
 
 const bem = cn('ApplicationLayout');
 

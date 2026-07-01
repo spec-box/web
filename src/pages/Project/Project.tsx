@@ -1,4 +1,4 @@
-import { useUnit } from 'effector-react';
+import { useUnit } from '@virentia/react';
 import { FC, useCallback } from 'react';
 
 import { FeatureCard } from '@/components/FeatureCard/FeatureCard';

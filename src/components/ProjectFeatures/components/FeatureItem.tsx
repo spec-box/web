@@ -1,6 +1,6 @@
 import { FC, ReactNode, useCallback } from 'react';
 import { ArrowToggle } from '@gravity-ui/uikit';
-import { useUnit, useStoreMap } from 'effector-react';
+import { useUnit } from '@virentia/react';
 
 import { FeatureTypeIcon } from '@/components/FeatureTypeIcon/FeatureTypeIcon';
 import { ListItem, ListItemState } from '@/components/ListItem/ListItem';
@@ -21,7 +21,11 @@ interface FeatureGroupItemProps {
   children: ReactNode;
 }
 
-const useIsOpen = (id: string) => useStoreMap($collapseState, (s) => Boolean(s[id]));
+const useIsOpen = (id: string) => {
+  const collapseState = useUnit($collapseState);
+
+  return Boolean(collapseState[id]);
+};
 
 export const FeatureGroupItem: FC<FeatureGroupItemProps> = (props) => {
   const {

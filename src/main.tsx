@@ -1,7 +1,6 @@
-import { createHistoryRouter } from 'atomic-router';
-import { RouterProvider } from 'atomic-router-react';
-import { allSettled } from 'effector';
-import { Provider as ScopeProvider } from 'effector-react';
+import { historyAdapter } from '@virentia/router';
+import { RouterProvider } from '@virentia/router-react';
+import { ScopeProvider } from '@virentia/react';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -11,11 +10,8 @@ import {
   $theme,
   AnalyticsApi,
   SpecBoxLocalStorage,
-  controls,
   createScope,
-  homeRoute,
-  projectRoute,
-  statRoute,
+  router,
 } from '@/model';
 import { UiTheme } from '@/types';
 
@@ -51,26 +47,16 @@ const ls: SpecBoxLocalStorage = {
 const scope = createScope({ api, analytics, ls }, [[$theme, ls.getTheme()]]);
 
 // router
-const routes = [
-  { path: '/', route: homeRoute },
-  { path: '/project/:project', route: projectRoute },
-  { path: '/project/:project/stat', route: statRoute },
-];
-
-const router = createHistoryRouter({ routes, controls });
 const history = createBrowserHistory();
 history.listen(({ location: { pathname, search, hash } }) =>
   analytics?.hit(pathname + search + hash),
 );
 
-// start
-allSettled(router.setHistory, { scope, params: history });
-
 // render
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ScopeProvider value={scope}>
-      <RouterProvider router={router}>
+    <ScopeProvider scope={scope}>
+      <RouterProvider router={router} history={historyAdapter(history)}>
         <Application />
       </RouterProvider>
     </ScopeProvider>

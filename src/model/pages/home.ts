@@ -1,13 +1,14 @@
-import { createRoute } from 'atomic-router';
-import { restore, sample } from 'effector';
+import { createRoute } from '@virentia/router';
+import { reaction, store } from '@virentia/core';
 
 import { mapProject } from '@/mappers';
+import { Project } from '@/types';
 
-import { createSpecBoxEffect } from '..';
+import { createSpecBoxEffect } from '../scope';
 
-export const homeRoute = createRoute();
+export const homeRoute = createRoute<Record<string, never>>();
 
-const loadProjectListFx = createSpecBoxEffect(async (_, { api }) => {
+const loadProjectListFx = createSpecBoxEffect(async (_: void, { api }) => {
   try {
     const response = await api.projectsList();
 
@@ -18,10 +19,19 @@ const loadProjectListFx = createSpecBoxEffect(async (_, { api }) => {
   }
 });
 
-export const $projects = restore(loadProjectListFx.doneData, []);
+export const $projects = store<Project[]>([]);
 export const $projectsIsLoading = loadProjectListFx.pending;
 
-sample({
-  clock: [homeRoute.opened],
-  target: loadProjectListFx,
+reaction({
+  on: loadProjectListFx.doneData,
+  run(projects) {
+    $projects.value = projects;
+  },
+});
+
+reaction({
+  on: homeRoute.opened,
+  run() {
+    loadProjectListFx();
+  },
 });
