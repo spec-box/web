@@ -1,4 +1,4 @@
-import { useUnit } from 'effector-react';
+import { useUnit } from '@virentia/react';
 import { FC, useCallback, useMemo } from 'react';
 
 import { FormattedText } from '@/components/FormattedText/FormattedText';

@@ -1,6 +1,6 @@
-import { createRoute, querySync } from 'atomic-router';
+import { createRoute } from '@virentia/router';
 import copy from 'copy-to-clipboard';
-import { combine, createEvent, createStore, merge, restore, sample, split } from 'effector';
+import { effect, event, reaction, store } from '@virentia/core';
 import { toast } from 'react-toastify';
 
 import { mapFeature, mapStructure } from '@/mappers';
@@ -15,6 +15,9 @@ const STRUCTURE_STUB: ProjectStructure = {
 };
 
 export const projectRoute = createRoute<{ project?: string }>();
+
+// код проекта, дедуплицированный: меняется только при смене проекта, а не query
+const $projectCode = projectRoute.params.map((params) => params.project ?? '');
 
 export interface LoadStructureFxParams {
   project: string;
@@ -36,21 +39,52 @@ export const loadStructureFx = createSpecBoxEffect(
   },
 );
 
-export const $structure = restore(loadStructureFx.doneData, STRUCTURE_STUB);
+export const $structure = store(STRUCTURE_STUB);
 export const $structureIsLoading = loadStructureFx.pending;
 
-export const toggle = createEvent<string>();
-export const expand = createEvent<string[]>();
+reaction({
+  on: loadStructureFx.doneData,
+  run(structure) {
+    $structure.value = structure;
+  },
+});
 
-export const $collapseState = createStore<Record<string, boolean>>({})
-  .on(toggle, (state, id) => ({ ...state, [id]: !state[id] }))
-  .on(expand, (state, ids) => ids.reduce((s, id) => ((s[id] = true), s), { ...state }));
+// структуру перезагружаем только когда реально сменился проект
+reaction({
+  on: $projectCode,
+  run(project) {
+    if (project) {
+      loadStructureFx({ project });
+    }
+  },
+});
+
+// collapse-state дерева
+export const toggle = event<string>();
+export const expand = event<string[]>();
+
+export const $collapseState = store<Record<string, boolean>>({});
+
+reaction({
+  on: toggle,
+  run(id) {
+    $collapseState.value = { ...$collapseState.value, [id]: !$collapseState.value[id] };
+  },
+});
+
+reaction({
+  on: expand,
+  run(ids) {
+    $collapseState.value = ids.reduce((s, id) => ((s[id] = true), s), { ...$collapseState.value });
+  },
+});
 
 export interface CopyToClipboardParams {
   text: string;
 }
 
-export const copyToClipboardFx = createSpecBoxEffect(async ({ text }: CopyToClipboardParams) => {
+// копирование в буфер — обычный сайд-эффект, зависимости не нужны
+export const copyToClipboard = effect(async ({ text }: CopyToClipboardParams) => {
   if (copy(text)) {
     toast('Скопировано');
   } else {
@@ -76,27 +110,58 @@ export const loadFeatureFx = createSpecBoxEffect(
   },
 );
 
-export const loadFeature = createEvent<LoadFeatureFxParams>();
-export const resetFeature = createEvent();
+// код выбранной фичи хранится в query (?feature=...) и синхронизируется с URL через trackQuery
+const featureQuery = controls.trackQuery<{ feature: string }>({
+  parameters: {
+    safeParse: (query) => {
+      const feature = query.feature;
 
-// код выбранной фичи (появляется в момент выбора)
-export const $featureCode = createStore<string>('')
-  .on(loadFeatureFx, (_, { feature }) => feature)
-  .reset(resetFeature);
+      return typeof feature === 'string' && feature
+        ? { success: true, data: { feature } }
+        : { success: false };
+    },
+  },
+});
+
+export const loadFeature = event<LoadFeatureFxParams>();
+
+// выбор фичи в UI — просто пишем её в URL, дальнейшее подхватит featureQuery.entered
+reaction({
+  on: loadFeature,
+  run({ feature }) {
+    featureQuery.enter({ feature });
+  },
+});
 
 // данные выбранной фичи (появляются после загрузки)
-export const $feature = createStore<Feature | null>(null).reset(resetFeature);
+export const $feature = store<Feature | null>(null);
+// код выбранной фичи (появляется в момент выбора)
+export const $featureCode = store('');
 export const $featureIsPending = loadFeatureFx.pending;
 
-querySync({
-  source: {
-    feature: restore(
-      loadFeature.map(({ feature }) => feature),
-      null,
-    ),
+// в URL появилась фича (или сменилась) — грузим её для текущего проекта
+reaction({
+  on: featureQuery.entered,
+  run({ feature }) {
+    $featureCode.value = feature;
+    loadFeatureFx({ project: projectRoute.params.value.project ?? '', feature });
   },
-  route: projectRoute,
-  controls,
+});
+
+// фича ушла из URL — сбрасываем выбор
+reaction({
+  on: featureQuery.exited,
+  run() {
+    $featureCode.value = '';
+    $feature.value = null;
+  },
+});
+
+reaction({
+  on: loadFeatureFx.doneData,
+  run(feature) {
+    $feature.value = feature;
+  },
 });
 
 // при выборе активной фичи раскрываем всех её родителей
@@ -128,43 +193,11 @@ const getExpandedIds = (args: { feature: Feature | null; tree: ProjectStructure 
   return result;
 };
 
-sample({
-  clock: combine({
-    feature: $feature,
-    tree: $structure,
-  }),
-  fn: getExpandedIds,
-  target: expand,
-});
+// как только доступны и фича, и структура — раскрываем ветку до выбранной фичи
+reaction(() => {
+  const ids = getExpandedIds({ feature: $feature.value, tree: $structure.value });
 
-sample({
-  clock: [projectRoute.opened],
-  fn: ({ params: { project = '' } }) => ({ project }),
-  target: loadStructureFx,
-});
-
-split({
-  source: merge([projectRoute.opened, projectRoute.updated]).map(
-    ({ params: { project = '' }, query: { feature = '' } }): LoadFeatureFxParams => ({
-      project,
-      feature,
-    }),
-  ),
-  match: ({ feature }: LoadFeatureFxParams) => (feature ? 'load' : 'reset'),
-  cases: {
-    load: loadFeatureFx,
-    reset: resetFeature,
-  },
-});
-
-sample({
-  clock: loadFeatureFx.doneData,
-  target: $feature,
-});
-
-export const copyToClipboard = createEvent<CopyToClipboardParams>();
-
-sample({
-  clock: copyToClipboard,
-  target: copyToClipboardFx,
+  if (ids.length) {
+    expand(ids);
+  }
 });

@@ -1,9 +1,9 @@
-import { Effect, StorePair, attach, createEffect, createStore, fork } from 'effector';
+import { Effect, StoreWritable, attach, scope, store } from '@virentia/core';
 
 import { SpecBoxWebApi } from '@/api';
 import { UiTheme } from '@/types';
 
-export const $deps = createStore<StoreDependencies>(null as unknown as StoreDependencies);
+export const $deps = store<StoreDependencies>(null as unknown as StoreDependencies);
 
 export interface AnalyticsApi {
   hit: (url: string) => void;
@@ -21,26 +21,23 @@ export interface StoreDependencies {
   analytics?: AnalyticsApi;
 }
 
-// в эффекторе кривые тайпинги
+// пары [store, значение] для засева дополнительных значений в scope
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ExtraValues = StorePair<any>[];
+export type ExtraValues = (readonly [StoreWritable<any>, unknown])[];
 
 export const createScope = (deps: StoreDependencies, extraValues: ExtraValues) => {
-  return fork({
+  return scope({
     values: [[$deps, deps], ...extraValues],
   });
 };
 
+// фабрика эффектов, которым нужен доступ к зависимостям приложения (api/ls/analytics).
+// deps подтягиваются из $deps через attach, поэтому хендлер остаётся чистой функцией.
 export const createSpecBoxEffect = <Params, Done, Fail = Error>(
   handler: (params: Params, deps: StoreDependencies) => Promise<Done>,
 ): Effect<Params, Done, Fail> => {
-  const requestFx = attach({
+  return attach<StoreDependencies, Params, Done, Fail>({
     source: $deps,
-    mapParams: (params: Params, deps: StoreDependencies) => ({ params, deps }),
-    effect: createEffect<{ params: Params; deps: StoreDependencies }, Done, Fail>(
-      ({ params, deps }) => handler(params, deps),
-    ),
+    effect: (deps, params) => handler(params, deps),
   });
-
-  return requestFx;
 };

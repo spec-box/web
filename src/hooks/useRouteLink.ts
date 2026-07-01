@@ -1,22 +1,24 @@
-import { RouteInstance, RouteParams, RouteQuery } from 'atomic-router';
-import { useLink } from 'atomic-router-react';
+import { Query, Route } from '@virentia/router';
+import { useLink } from '@virentia/router-react';
 import { useCallback } from 'react';
-import { useUnit } from 'effector-react';
 import { PressEvent } from './usePress';
 
-export interface RouteLinkParams<T extends RouteParams> {
-  to: RouteInstance<T>;
+export interface RouteLinkParams<T extends object> {
+  to: Route<T>;
   params: T;
-  query?: RouteQuery;
+  query?: Query;
   target?: string;
   onPress?: (e: PressEvent) => void;
 }
 
-export const useRouteLink = <T extends RouteParams>(args: RouteLinkParams<T>) => {
+export const useRouteLink = <T extends object>(args: RouteLinkParams<T>) => {
   const { to, params, query, target, onPress } = args;
 
-  const href = useLink(to, params, query);
-  const navigate = useUnit(to.navigate);
+  const link = useLink(to, params, query);
+  const href = link.path;
+  // useLink возвращает open с отложенным условным типом из-за дженерика T;
+  // на этом уровне payload всегда { params, query }
+  const open = link.open as (payload: { params: T; query?: Query }) => void;
 
   const handler = useCallback(
     (e: PressEvent) => {
@@ -44,12 +46,12 @@ export const useRouteLink = <T extends RouteParams>(args: RouteLinkParams<T>) =>
 
       e.source.preventDefault();
 
-      navigate({
-        params: params || {},
+      open({
+        params,
         query: query || {},
       });
     },
-    [navigate, params, query, target, onPress],
+    [open, params, query, target, onPress],
   );
 
   return { href, handler };

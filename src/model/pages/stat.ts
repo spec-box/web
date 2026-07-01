@@ -1,11 +1,12 @@
-import { createRoute } from 'atomic-router';
-import { restore, sample } from 'effector';
+import { createRoute } from '@virentia/router';
+import { reaction, store } from '@virentia/core';
+import { parseISO } from 'date-fns';
 
 import { mapProjectStat } from '@/mappers';
 import { ProjectStat } from '@/types';
 
+import { controls } from '../common';
 import { StoreDependencies, createSpecBoxEffect } from '../scope';
-import { parseISO } from 'date-fns';
 
 const STUB: ProjectStat = {
   assertions: [],
@@ -22,6 +23,10 @@ interface LoadStatFxParams {
 }
 
 const getDate = (str?: string) => (str ? parseISO(str) : undefined);
+
+// query-параметры приходят как string | null | string[]; берём только строковое значение
+const single = (value: string | null | Array<string | null> | undefined): string | undefined =>
+  typeof value === 'string' ? value : undefined;
 
 export const loadStatFx = createSpecBoxEffect(
   async (
@@ -42,11 +47,22 @@ export const loadStatFx = createSpecBoxEffect(
   },
 );
 
-export const $stat = restore<ProjectStat>(loadStatFx.doneData, STUB);
+export const $stat = store<ProjectStat>(STUB);
 export const $statIsLoading = loadStatFx.pending;
 
-sample({
-  clock: [statRoute.opened],
-  fn: ({ params: { project = '' }, query: { from, to } }) => ({ project, from, to }),
-  target: loadStatFx,
+reaction({
+  on: loadStatFx.doneData,
+  run(stat) {
+    $stat.value = stat;
+  },
+});
+
+reaction({
+  on: statRoute.opened,
+  run() {
+    const project = statRoute.params.value.project ?? '';
+    const { from, to } = controls.query.value;
+
+    loadStatFx({ project, from: single(from), to: single(to) });
+  },
 });

@@ -25,3 +25,8 @@ dist-ssr
 *.sw?
 
 swagger.json
+
+# Agent skills (installed via skills.sh)
+.claude/
+.agents/
+skills-lock.json

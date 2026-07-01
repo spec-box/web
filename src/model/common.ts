@@ -1,5 +1,5 @@
-import { createRouterControls } from 'atomic-router';
-import { createEvent, createStore, sample } from 'effector';
+import { createRouterControls } from '@virentia/router';
+import { event, reaction, store } from '@virentia/core';
 
 import { UiTheme } from '@/types';
 
@@ -9,8 +9,8 @@ import { createSpecBoxEffect } from './scope';
 export const controls = createRouterControls();
 
 // theme
-export const $theme = createStore<UiTheme>('light');
-export const toggleThemeEvent = createEvent();
+export const $theme = store<UiTheme>('light');
+export const toggleThemeEvent = event();
 
 const saveThemeFx = createSpecBoxEffect(async (theme: UiTheme, { ls }) => {
   ls.setTheme(theme);
@@ -21,14 +21,17 @@ const themeByPrevTheme: Record<UiTheme, UiTheme> = {
   dark: 'light',
 };
 
-sample({
-  source: $theme,
-  clock: toggleThemeEvent,
-  fn: (theme) => themeByPrevTheme[theme],
-  target: $theme,
+reaction({
+  on: toggleThemeEvent,
+  run() {
+    $theme.value = themeByPrevTheme[$theme.value];
+  },
 });
 
-sample({
-  source: $theme,
-  target: saveThemeFx,
+// сохраняем тему при каждом её изменении
+reaction({
+  on: $theme,
+  run(theme) {
+    saveThemeFx(theme);
+  },
 });
