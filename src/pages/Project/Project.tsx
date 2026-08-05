@@ -27,11 +27,11 @@ const ProjectTree: FC<ProjectTreeProps> = (props) => {
   const { isPending, filterIsActive, tree, onFeatureSelected, selectedFeatureCode } = props;
 
   if (isPending) {
-    return <div>загрузка</div>;
+    return <div className={bem('TreeScroll')}>загрузка</div>;
   } else if (!tree.length) {
     return (
       <PlaceholderMessage
-        className={bem('EmptyState')}
+        className={bem('TreeEmptyState')}
         title="Ничего не найдено"
         description={
           filterIsActive ? 'Попробуйте изменить условия фильтра' : 'В проекте пока нет фичей'
@@ -40,11 +40,13 @@ const ProjectTree: FC<ProjectTreeProps> = (props) => {
     );
   } else {
     return (
-      <ProjectFeatures
-        tree={tree}
-        selectedFeatureCode={selectedFeatureCode}
-        onFeatureSelected={onFeatureSelected}
-      />
+      <div className={bem('TreeScroll')}>
+        <ProjectFeatures
+          tree={tree}
+          selectedFeatureCode={selectedFeatureCode}
+          onFeatureSelected={onFeatureSelected}
+        />
+      </div>
     );
   }
 };
@@ -101,7 +103,7 @@ export const Project: FC = () => {
   return (
     <ProjectLayout contentClassName={bem()} project={projectCode} navigate={navigate}>
       <div className={bem('ListPanel')}>
-        <TreeFilterPanel />
+        <TreeFilterPanel className={bem('FilterPanel')} />
         <ProjectTree
           isPending={structureIsPending}
           filterIsActive={filterIsActive}

@@ -89,8 +89,9 @@ export const $filterIsActive = $filter.map(
 export const parseFeatureType = (value: unknown): FeatureType | null =>
   value === 'Functional' || value === 'Visual' ? value : null;
 
+// поисковая строка передается в url параметром search (в модели и api это title)
 const parseFilterQuery = (query: RouteQuery): StructureFilter => ({
-  title: typeof query.title === 'string' ? query.title : '',
+  title: typeof query.search === 'string' ? query.search : '',
   featureType: parseFeatureType(query.featureType),
   hasProblems: query.hasProblems === 'true',
 });
@@ -101,7 +102,7 @@ const buildPageQuery = (args: { featureCode: string; filter: StructureFilter }):
   const query: RouteQuery = {};
 
   if (featureCode) query.feature = featureCode;
-  if (filter.title) query.title = filter.title;
+  if (filter.title) query.search = filter.title;
   if (filter.featureType) query.featureType = filter.featureType;
   if (filter.hasProblems) query.hasProblems = 'true';
 

@@ -13,7 +13,39 @@
   flex: 1;
 
   padding: var(--sb-outline-width);
+}
+
+.Project-DetailsPanel {
   overflow-y: auto;
+}
+
+/* левая панель — грид из двух строк: панель фильтра и дерево.
+   скроллится только строка дерева, поэтому фильтр всегда остаётся на месте */
+.Project-ListPanel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-columns: 100%;
+}
+
+.Project-FilterPanel {
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.Project-TreeScroll {
+  grid-row: 2;
+  grid-column: 1;
+
+  overflow-y: auto;
+}
+
+/* заглушка пустого дерева занимает обе строки грида, чтобы её центр
+   совпадал с заглушкой в правой панели; клики она не перехватывает */
+.Project-TreeEmptyState {
+  grid-row: 1 / -1;
+  grid-column: 1;
+
+  pointer-events: none;
 }
 
 .Project-DetailsPanel {
