@@ -39,6 +39,11 @@
   overflow-y: auto;
 }
 
+/* скелетон карточки фичи повторяет её внутренние отступы */
+.Project-FeatureSkeleton {
+  padding: var(--g-spacing-6);
+}
+
 /* заглушка пустого дерева занимает обе строки грида, чтобы её центр
    совпадал с заглушкой в правой панели; клики она не перехватывает */
 .Project-TreeEmptyState {
@@ -47,7 +52,6 @@
 
   pointer-events: none;
 }
-
 .Project-DetailsPanel {
   border-radius: var(--sb-border-radius-3-xl);
   background-color: var(--g-color-base-generic);

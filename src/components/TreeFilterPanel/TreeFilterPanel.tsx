@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
-import { TriangleExclamation } from '@gravity-ui/icons';
-import { Button, Icon, Select, SelectOption, TextInput } from '@gravity-ui/uikit';
+import { Magnifier, TriangleExclamation } from '@gravity-ui/icons';
+import { Button, Icon, Select, SelectOption, Spin, TextInput } from '@gravity-ui/uikit';
 import { useUnit } from 'effector-react';
 
 import { FeatureTypeIcon } from '@/components/FeatureTypeIcon/FeatureTypeIcon';
@@ -9,6 +9,8 @@ import {
   $filterFeatureType,
   $filterHasProblems,
   $filterTitle,
+  $structureIsLoading,
+  $structureLoaded,
   parseFeatureType,
   setFilterFeatureType,
   setFilterHasProblems,
@@ -60,6 +62,11 @@ export const TreeFilterPanel: FC<TreeFilterPanelProps> = ({ className }) => {
     setFilterHasProblems,
   ]);
 
+  // индикатор перезагрузки структуры; при первичной загрузке
+  // не показывается — тогда вместо дерева рисуется скелетон
+  const [isLoading, isLoaded] = useUnit([$structureIsLoading, $structureLoaded]);
+  const showSpin = isLoading && isLoaded;
+
   return (
     <div className={bem(null, [className])}>
       <TextInput
@@ -68,6 +75,13 @@ export const TreeFilterPanel: FC<TreeFilterPanelProps> = ({ className }) => {
         value={title}
         onUpdate={onTitleChange}
         placeholder="Поиск"
+        startContent={
+          // контейнер фиксированного размера: иконка поиска и спиннер
+          // одинаковой геометрии, при переключении ничего не перескакивает
+          <span className={bem('SearchIcon')}>
+            {showSpin ? <Spin size="xs" /> : <Icon data={Magnifier} size={16} />}
+          </span>
+        }
         hasClear
       />
       <Select

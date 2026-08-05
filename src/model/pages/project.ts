@@ -143,8 +143,18 @@ sample({
   target: loadStructureFx,
 });
 
-export const $structure = restore(loadStructureFx.doneData, STRUCTURE_STUB);
+// сбрасывается при открытии страницы, чтобы при заходе в другой проект
+// на время первичной загрузки не показывалось дерево предыдущего
+export const $structure = restore(loadStructureFx.doneData, STRUCTURE_STUB).reset(
+  projectRoute.opened,
+);
 export const $structureIsLoading = loadStructureFx.pending;
+
+// завершилась ли первая (после открытия страницы) попытка загрузки структуры;
+// пока false — показывается скелетон, дальнейшие перезагрузки его не возвращают
+export const $structureLoaded = createStore(false)
+  .on(loadStructureFx.finally, () => true)
+  .reset(projectRoute.opened);
 
 export const toggle = createEvent<string>();
 export const expand = createEvent<string[]>();

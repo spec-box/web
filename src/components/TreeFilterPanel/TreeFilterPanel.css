@@ -18,6 +18,21 @@
   min-width: 160px;
 }
 
+.TreeFilterPanel-SearchIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 16px;
+  height: 16px;
+
+  /* слева — как вертикальный зазор иконки в инпуте размера l: (36px - 16px) / 2 */
+  margin-inline-start: 10px;
+  margin-inline-end: var(--g-spacing-2);
+
+  color: var(--g-color-text-hint);
+}
+
 .TreeFilterPanel-TypeOption {
   display: flex;
   align-items: center;
