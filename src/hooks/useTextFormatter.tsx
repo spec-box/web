@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useRef, type ReactNode } from 'react';
+import { Fragment, useMemo, type ReactNode } from 'react';
 import reactStringReplace from 'react-string-replace';
 
 import { parse } from '@spec-box/text-parser';
@@ -52,13 +52,10 @@ function createTextFormatter(replacers: Replacers) {
 }
 
 export function useTextFormatter(props: Replacers) {
-  const propsRef = useRef(props);
+  const { highlight, reference, url } = props;
 
-  propsRef.current = props;
-
-  const format = useMemo(() => {
-    return createTextFormatter(propsRef.current);
-  }, []);
-
-  return format;
+  return useMemo(
+    () => createTextFormatter({ highlight, reference, url }),
+    [highlight, reference, url],
+  );
 }

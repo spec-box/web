@@ -1,8 +1,8 @@
-import { ReactNode, ComponentProps, MouseEvent, useCallback } from 'react';
+import { ReactNode, MouseEvent, useCallback } from 'react';
 
 import { RouteParams } from 'atomic-router';
 import { cn } from '@bem-react/classname';
-import { Button } from '@gravity-ui/uikit';
+import { Button, ButtonProps } from '@gravity-ui/uikit';
 
 import { useRouteLink, RouteLinkParams } from '@/hooks/useRouteLink';
 
@@ -10,7 +10,7 @@ const bem = cn('RouteLink');
 
 export interface RouteLinkButtonProps<T extends RouteParams>
   extends RouteLinkParams<T>,
-    Omit<ComponentProps<typeof Button>, 'href'> {
+    Pick<ButtonProps, 'view' | 'size' | 'pin' | 'className' | 'disabled' | 'selected'> {
   children?: ReactNode;
 }
 

@@ -1,12 +1,15 @@
 import { FC, ReactNode } from 'react';
 
 import { cn } from '@bem-react/classname';
+import { ThemeProvider } from '@gravity-ui/uikit';
+import { $theme } from '@/model';
+import { useUnit } from 'effector-react';
+
 import '@gravity-ui/uikit/styles/fonts.css';
 import '@gravity-ui/uikit/styles/styles.css';
 
 import './ApplicationLayout.css';
-import { $theme } from '@/model';
-import { useUnit } from 'effector-react';
+
 
 const bem = cn('ApplicationLayout');
 
@@ -17,5 +20,9 @@ type ApplicationLayoutProps = {
 export const ApplicationLayout: FC<ApplicationLayoutProps> = ({ children }) => {
   const theme = useUnit($theme);
 
-  return <div className={bem(null, ['g-root', `g-root_theme_${theme}`])}>{children}</div>;
+  return (
+    <ThemeProvider theme={theme} scoped rootClassName={bem()}>
+      {children}
+    </ThemeProvider>
+  );
 };

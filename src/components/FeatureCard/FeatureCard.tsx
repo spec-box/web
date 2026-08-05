@@ -1,5 +1,5 @@
-import { FC, ReactNode, useCallback, useState } from 'react';
-import { Tabs } from '@gravity-ui/uikit';
+import { FC, ReactNode, useState } from 'react';
+import { Tab, TabList, TabProvider } from '@gravity-ui/uikit';
 
 import { Feature } from '@/types';
 import { bem } from './FeatureCard.cn';
@@ -23,8 +23,6 @@ export const FeatureCard: FC<FeatureCardProps> = (props) => {
   const { usages, assertionGroups, assertionsCount } = feature;
 
   const [activeTab, setActiveTab] = useState(tabIdAssertions);
-  const goToAssertions = useCallback(() => setActiveTab(tabIdAssertions), [setActiveTab]);
-  const goToUsages = useCallback(() => setActiveTab(tabIdUsages), [setActiveTab]);
 
   let content: ReactNode;
 
@@ -41,21 +39,16 @@ export const FeatureCard: FC<FeatureCardProps> = (props) => {
     <div className={bem(null, [className])}>
       <Header feature={feature} repositoryUrl={repositoryUrl} />
       <div>
-        <Tabs activeTab={activeTab}>
-          <Tabs.Item
-            id={tabIdAssertions}
-            title="Функциональные требования"
-            counter={assertionsCount.total}
-            onClick={goToAssertions}
-          />
-          <Tabs.Item
-            id={tabIdUsages}
-            title="Места использования"
-            counter={usages.length}
-            disabled={!usages.length}
-            onClick={goToUsages}
-          />
-        </Tabs>
+        <TabProvider value={activeTab} onUpdate={setActiveTab}>
+          <TabList>
+            <Tab value={tabIdAssertions} counter={assertionsCount.total}>
+              Функциональные требования
+            </Tab>
+            <Tab value={tabIdUsages} counter={usages.length} disabled={!usages.length}>
+              Места использования
+            </Tab>
+          </TabList>
+        </TabProvider>
       </div>
       {content}
     </div>

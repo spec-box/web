@@ -51,7 +51,7 @@ export interface CopyToClipboardParams {
 }
 
 export const copyToClipboardFx = createSpecBoxEffect(async ({ text }: CopyToClipboardParams) => {
-  if (copy(text)) {
+  if (await copy(text)) {
     toast('Скопировано');
   } else {
     toast.error('Ошибка при копировании');
