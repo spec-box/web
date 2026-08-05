@@ -1,6 +1,6 @@
 import * as coreClient from '@azure/core-client';
-import * as Parameters from './models/parameters';
-import * as Mappers from './models/mappers';
+import * as Parameters from './models/parameters.js';
+import * as Mappers from './models/mappers.js';
 import {
   SpecBoxWebApiOptionalParams,
   ConfigOptionalParams,
@@ -15,7 +15,7 @@ import {
   StatUploadAutotestsOptionalParams,
   StatOptionalParams,
   StatResponse,
-} from './models';
+} from './models/index.js';
 
 export class SpecBoxWebApi extends coreClient.ServiceClient {
   $host: string;
@@ -177,6 +177,7 @@ const projectsProjectStructureOperationSpec: coreClient.OperationSpec = {
       bodyMapper: Mappers.SpecBoxWebApiModelProjectStructureModel,
     },
   },
+  queryParameters: [Parameters.title, Parameters.featureType, Parameters.hasProblems],
   urlParameters: [Parameters.$host, Parameters.project1],
   headerParameters: [Parameters.accept],
   serializer,

@@ -3,6 +3,7 @@ import { FC, useCallback } from 'react';
 
 import { FeatureCard } from '@/components/FeatureCard/FeatureCard';
 import { ProjectFeatures } from '@/components/ProjectFeatures/ProjectFeatures';
+import { TreeFilterPanel } from '@/components/TreeFilterPanel/TreeFilterPanel';
 import { useTitle } from '@/hooks/useTitle';
 import * as model from '@/model/pages/project';
 import { Feature, TreeNode } from '@/types';
@@ -16,18 +17,27 @@ const bem = cn('Project');
 
 interface ProjectTreeProps {
   isPending: boolean;
+  filterIsActive: boolean;
   tree: TreeNode[];
   onFeatureSelected: (featureCode: string) => void;
   selectedFeatureCode?: string;
 }
 
 const ProjectTree: FC<ProjectTreeProps> = (props) => {
-  const { isPending, tree, onFeatureSelected, selectedFeatureCode } = props;
-
-  // todo: сделать обработку пустого значения
+  const { isPending, filterIsActive, tree, onFeatureSelected, selectedFeatureCode } = props;
 
   if (isPending) {
     return <div>загрузка</div>;
+  } else if (!tree.length) {
+    return (
+      <PlaceholderMessage
+        className={bem('EmptyState')}
+        title="Ничего не найдено"
+        description={
+          filterIsActive ? 'Попробуйте изменить условия фильтра' : 'В проекте пока нет фичей'
+        }
+      />
+    );
   } else {
     return (
       <ProjectFeatures
@@ -65,6 +75,7 @@ const Details: FC<DetailsProps> = ({ isPending, feature, repositoryUrl }) => {
 
 export const Project: FC = () => {
   const structureIsPending = useUnit(model.$structureIsLoading);
+  const filterIsActive = useUnit(model.$filterIsActive);
   const {
     project: { code: projectCode, title: projectTitle, repositoryUrl },
     tree,
@@ -90,8 +101,10 @@ export const Project: FC = () => {
   return (
     <ProjectLayout contentClassName={bem()} project={projectCode} navigate={navigate}>
       <div className={bem('ListPanel')}>
+        <TreeFilterPanel />
         <ProjectTree
           isPending={structureIsPending}
+          filterIsActive={filterIsActive}
           tree={tree}
           onFeatureSelected={onFeatureSelected}
           selectedFeatureCode={featureCode}

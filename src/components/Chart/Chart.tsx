@@ -239,12 +239,10 @@ export const AssertionsChart: FC<AssertionsChartProps> = ({ stat, isPending }) =
   );
   const legend = useMemo(
     () =>
-      data.datasets.map(
-        (ds): LegendDataset => ({
-          color: ds.borderColor?.toString(),
-          title: ds.label,
-        }),
-      ),
+      data.datasets.map((ds): LegendDataset => ({
+        color: ds.borderColor?.toString(),
+        title: ds.label,
+      })),
     [data],
   );
 
@@ -288,12 +286,10 @@ export const AutotestsChart: FC<AutotestsChartProps> = ({ stat, isPending }) => 
 
   const legend = useMemo(
     () =>
-      data.datasets.map(
-        (ds): LegendDataset => ({
-          color: ds.borderColor?.toString(),
-          title: ds.label,
-        }),
-      ),
+      data.datasets.map((ds): LegendDataset => ({
+        color: ds.borderColor?.toString(),
+        title: ds.label,
+      })),
     [data],
   );
 

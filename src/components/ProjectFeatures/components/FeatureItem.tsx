@@ -3,9 +3,10 @@ import { ArrowToggle } from '@gravity-ui/uikit';
 import { useUnit, useStoreMap } from 'effector-react';
 
 import { FeatureTypeIcon } from '@/components/FeatureTypeIcon/FeatureTypeIcon';
+import { HighlightedText } from '@/components/HighlightedText/HighlightedText';
 import { ListItem, ListItemState } from '@/components/ListItem/ListItem';
 import { FeatureTreeNode, GroupTreeNode } from '@/types';
-import { $collapseState, toggle } from '@/model/pages/project';
+import { $collapseState, $filterTitle, toggle } from '@/model/pages/project';
 
 import { bem } from '../ProjectFeatures.cn';
 
@@ -32,6 +33,7 @@ export const FeatureGroupItem: FC<FeatureGroupItemProps> = (props) => {
 
   const isOpen = useIsOpen(id);
   const toggleItem = useUnit(toggle);
+  const searchText = useUnit($filterTitle);
 
   const onSelect = useCallback(() => toggleItem(id), [toggleItem, id]);
 
@@ -55,7 +57,7 @@ export const FeatureGroupItem: FC<FeatureGroupItemProps> = (props) => {
           before={arrow}
           after={stat}
         >
-          {displayText}
+          <HighlightedText text={displayText} highlight={searchText} />
           {problems}
         </ListItem>
       </div>
@@ -80,6 +82,7 @@ export const FeatureItem: FC<FeatureItemProps> = (props) => {
   } = props;
 
   const onSelect = useCallback(() => onFeatureSelect(featureCode), [featureCode, onFeatureSelect]);
+  const searchText = useUnit($filterTitle);
 
   const stat = <ItemStat totalCount={totalCount} automatedCount={automatedCount} />;
 
@@ -100,7 +103,7 @@ export const FeatureItem: FC<FeatureItemProps> = (props) => {
         before={icon}
         after={stat}
       >
-        {title}
+        <HighlightedText text={title ?? ''} highlight={searchText} />
         {problems}
       </ListItem>
     </div>

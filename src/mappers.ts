@@ -110,6 +110,7 @@ function mapTreeNode(node: SpecBoxWebApiModelProjectTreeNodeModel): TreeNode {
     featureType,
     parentId,
     sortOrder,
+    isExpanded,
   } = node;
 
   if (featureCode) {
@@ -124,6 +125,7 @@ function mapTreeNode(node: SpecBoxWebApiModelProjectTreeNodeModel): TreeNode {
       featureType,
       parentId,
       sortOrder,
+      isExpanded,
     };
   }
 
@@ -136,6 +138,7 @@ function mapTreeNode(node: SpecBoxWebApiModelProjectTreeNodeModel): TreeNode {
     title,
     parentId,
     sortOrder,
+    isExpanded,
   };
 }
 

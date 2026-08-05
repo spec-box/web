@@ -709,6 +709,13 @@ export const SpecBoxWebApiModelProjectTreeNodeModel: coreClient.CompositeMapper 
           name: 'Number',
         },
       },
+      isExpanded: {
+        serializedName: 'isExpanded',
+        nullable: true,
+        type: {
+          name: 'Boolean',
+        },
+      },
     },
   },
 };

@@ -1,0 +1,14 @@
+.TreeFilterPanel {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+
+  gap: var(--g-spacing-2);
+  margin-bottom: var(--g-spacing-4);
+}
+
+.TreeFilterPanel-Title {
+  flex: 1;
+  min-width: 160px;
+}
