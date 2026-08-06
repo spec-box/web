@@ -1,3 +1,28 @@
+/* голубая акцентная тема: брендовые токены Gravity по умолчанию построены
+   на жёлтой палитре (выглядят как warning), переопределяем на голубую —
+   в духе элементов типа info */
+.ApplicationLayout.g-root_theme_light {
+  --g-color-base-brand: var(--g-color-private-blue-550-solid);
+  --g-color-base-brand-hover: var(--g-color-private-blue-600-solid);
+  --g-color-base-selection: var(--g-color-private-blue-200);
+  --g-color-base-selection-hover: var(--g-color-private-blue-300);
+  --g-color-line-brand: var(--g-color-private-blue-600-solid);
+  --g-color-text-brand: var(--g-color-private-blue-700-solid);
+  --g-color-text-brand-heavy: var(--g-color-private-blue-800-solid);
+  --g-color-text-brand-contrast: var(--g-color-text-light-primary);
+}
+
+.ApplicationLayout.g-root_theme_dark {
+  --g-color-base-brand: var(--g-color-private-blue-550-solid);
+  --g-color-base-brand-hover: var(--g-color-private-blue-650-solid);
+  --g-color-base-selection: var(--g-color-private-blue-150);
+  --g-color-base-selection-hover: var(--g-color-private-blue-200);
+  --g-color-line-brand: var(--g-color-private-blue-600-solid);
+  --g-color-text-brand: var(--g-color-private-blue-600-solid);
+  --g-color-text-brand-heavy: var(--g-color-private-blue-700-solid);
+  --g-color-text-brand-contrast: var(--g-color-text-light-primary);
+}
+
 .ApplicationLayout {
   --g-color-text-link: var(--g-color-private-blue-500-solid);
   --g-color-text-link-hover: var(--g-color-private-red-400-solid);

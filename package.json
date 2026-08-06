@@ -27,6 +27,7 @@
     "effector": "23.4.4",
     "effector-react": "23.3.0",
     "history": "5.3.0",
+    "patronum": "2.3.0",
     "react": "18.2.0",
     "react-chartjs-2": "5.3.1",
     "react-dom": "18.2.0",

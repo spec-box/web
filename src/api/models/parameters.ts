@@ -6,7 +6,7 @@ import {
 import {
   SpecBoxWebApiModelUploadData as SpecBoxWebApiModelUploadDataMapper,
   SpecBoxWebApiModelStatAutotestsStatUploadData as SpecBoxWebApiModelStatAutotestsStatUploadDataMapper,
-} from '../models/mappers';
+} from '../models/mappers.js';
 
 export const accept: OperationParameter = {
   parameterPath: 'accept',
@@ -77,6 +77,37 @@ export const feature: OperationURLParameter = {
     required: true,
     type: {
       name: 'String',
+    },
+  },
+};
+
+export const title: OperationQueryParameter = {
+  parameterPath: ['options', 'title'],
+  mapper: {
+    serializedName: 'title',
+    type: {
+      name: 'String',
+    },
+  },
+};
+
+export const featureType: OperationQueryParameter = {
+  parameterPath: ['options', 'featureType'],
+  mapper: {
+    serializedName: 'featureType',
+    type: {
+      name: 'Enum',
+      allowedValues: ['Functional', 'Visual'],
+    },
+  },
+};
+
+export const hasProblems: OperationQueryParameter = {
+  parameterPath: ['options', 'hasProblems'],
+  mapper: {
+    serializedName: 'hasProblems',
+    type: {
+      name: 'Boolean',
     },
   },
 };

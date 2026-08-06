@@ -110,6 +110,7 @@ export interface SpecBoxWebApiModelProjectTreeNodeModel {
   automatedCount: number;
   problemCount: number;
   sortOrder?: number;
+  isExpanded?: boolean;
 }
 
 export interface SpecBoxWebApiModelStatAutotestsStatUploadData {
@@ -167,7 +168,11 @@ export interface ProjectsProjectFeaturesFeatureOptionalParams extends coreClient
 export type ProjectsProjectFeaturesFeatureResponse = SpecBoxWebApiModelProjectFeatureModel;
 
 /** Optional parameters. */
-export interface ProjectsProjectStructureOptionalParams extends coreClient.OperationOptions {}
+export interface ProjectsProjectStructureOptionalParams extends coreClient.OperationOptions {
+  title?: string;
+  featureType?: FeatureType;
+  hasProblems?: boolean;
+}
 
 /** Contains response data for the projectsProjectStructure operation. */
 export type ProjectsProjectStructureResponse = SpecBoxWebApiModelProjectStructureModel;

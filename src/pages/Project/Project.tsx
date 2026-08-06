@@ -2,7 +2,13 @@ import { useUnit } from 'effector-react';
 import { FC, useCallback } from 'react';
 
 import { FeatureCard } from '@/components/FeatureCard/FeatureCard';
+import { LinesSkeleton } from '@/components/LinesSkeleton/LinesSkeleton';
+import {
+  FEATURE_SKELETON_LINES,
+  TREE_SKELETON_LINES,
+} from '@/components/LinesSkeleton/LinesSkeleton.presets';
 import { ProjectFeatures } from '@/components/ProjectFeatures/ProjectFeatures';
+import { TreeFilterPanel } from '@/components/TreeFilterPanel/TreeFilterPanel';
 import { useTitle } from '@/hooks/useTitle';
 import * as model from '@/model/pages/project';
 import { Feature, TreeNode } from '@/types';
@@ -15,28 +21,43 @@ import { PlaceholderMessage } from '@/components/PlaceholderMessage/PlaceholderM
 const bem = cn('Project');
 
 interface ProjectTreeProps {
-  isPending: boolean;
+  isLoaded: boolean;
+  filterIsActive: boolean;
   tree: TreeNode[];
   onFeatureSelected: (featureCode: string) => void;
   selectedFeatureCode?: string;
 }
 
 const ProjectTree: FC<ProjectTreeProps> = (props) => {
-  const { isPending, tree, onFeatureSelected, selectedFeatureCode } = props;
+  const { isLoaded, filterIsActive, tree, onFeatureSelected, selectedFeatureCode } = props;
 
-  // todo: сделать обработку пустого значения
+  // скелетон — только пока не завершилась первая загрузка после открытия страницы;
+  // индикатор последующих перезагрузок показывается в инпуте панели фильтра
+  if (!isLoaded) {
+    return <LinesSkeleton className={bem('TreeScroll')} lines={TREE_SKELETON_LINES} />;
+  }
 
-  if (isPending) {
-    return <div>загрузка</div>;
-  } else {
+  if (!tree.length) {
     return (
+      <PlaceholderMessage
+        className={bem('TreeEmptyState')}
+        title="Ничего не найдено"
+        description={
+          filterIsActive ? 'Попробуйте изменить условия фильтра' : 'В проекте пока нет фичей'
+        }
+      />
+    );
+  }
+
+  return (
+    <div className={bem('TreeScroll')}>
       <ProjectFeatures
         tree={tree}
         selectedFeatureCode={selectedFeatureCode}
         onFeatureSelected={onFeatureSelected}
       />
-    );
-  }
+    </div>
+  );
 };
 
 interface DetailsProps {
@@ -47,7 +68,7 @@ interface DetailsProps {
 
 const Details: FC<DetailsProps> = ({ isPending, feature, repositoryUrl }) => {
   if (isPending) {
-    return <div>загрузка</div>;
+    return <LinesSkeleton className={bem('FeatureSkeleton')} lines={FEATURE_SKELETON_LINES} />;
   } else if (!feature) {
     return (
       <PlaceholderMessage
@@ -65,6 +86,8 @@ const Details: FC<DetailsProps> = ({ isPending, feature, repositoryUrl }) => {
 
 export const Project: FC = () => {
   const structureIsPending = useUnit(model.$structureIsLoading);
+  const structureLoaded = useUnit(model.$structureLoaded);
+  const filterIsActive = useUnit(model.$filterIsActive);
   const {
     project: { code: projectCode, title: projectTitle, repositoryUrl },
     tree,
@@ -90,19 +113,17 @@ export const Project: FC = () => {
   return (
     <ProjectLayout contentClassName={bem()} project={projectCode} navigate={navigate}>
       <div className={bem('ListPanel')}>
+        <TreeFilterPanel className={bem('FilterPanel')} />
         <ProjectTree
-          isPending={structureIsPending}
+          isLoaded={structureLoaded}
+          filterIsActive={filterIsActive}
           tree={tree}
           onFeatureSelected={onFeatureSelected}
           selectedFeatureCode={featureCode}
         />
       </div>
       <div className={bem('DetailsPanel')}>
-        <Details
-          repositoryUrl={repositoryUrl}
-          feature={feature}
-          isPending={structureIsPending || featureIsPending}
-        />
+        <Details repositoryUrl={repositoryUrl} feature={feature} isPending={featureIsPending} />
       </div>
     </ProjectLayout>
   );

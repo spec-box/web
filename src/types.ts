@@ -44,6 +44,8 @@ export interface BaseTreeNode {
   automatedCount: number;
   problemCount: number;
   sortOrder?: number;
+  /** узел нужно показать раскрытым, чтобы были видны совпадения с фильтром */
+  isExpanded?: boolean;
 }
 
 export interface FeatureTreeNode extends BaseTreeNode {

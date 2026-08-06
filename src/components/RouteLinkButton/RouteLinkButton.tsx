@@ -9,7 +9,8 @@ import { useRouteLink, RouteLinkParams } from '@/hooks/useRouteLink';
 const bem = cn('RouteLink');
 
 export interface RouteLinkButtonProps<T extends RouteParams>
-  extends RouteLinkParams<T>,
+  extends
+    RouteLinkParams<T>,
     Pick<ButtonProps, 'view' | 'size' | 'pin' | 'className' | 'disabled' | 'selected'> {
   children?: ReactNode;
 }

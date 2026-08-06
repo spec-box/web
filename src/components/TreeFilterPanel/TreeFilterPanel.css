@@ -1,0 +1,49 @@
+.TreeFilterPanel {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+
+  gap: var(--g-spacing-2);
+  margin-bottom: var(--g-spacing-4);
+
+  /* контролы панели — с круглыми краями, как кнопки в шапке;
+     переменные действуют только внутри панели (меню селекта — в портале) */
+  --g-border-radius-m: 100px;
+  --g-border-radius-l: 100px;
+}
+
+.TreeFilterPanel-Title {
+  flex: 1;
+  min-width: 160px;
+}
+
+.TreeFilterPanel-SearchIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 16px;
+  height: 16px;
+
+  /* слева — как вертикальный зазор иконки в инпуте размера l: (36px - 16px) / 2 */
+  margin-inline-start: 10px;
+  margin-inline-end: var(--g-spacing-2);
+
+  color: var(--g-color-text-hint);
+}
+
+.TreeFilterPanel-TypeOption {
+  display: flex;
+  align-items: center;
+
+  gap: var(--g-spacing-2);
+}
+
+.TreeFilterPanel-TypeOptionIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 16px;
+}

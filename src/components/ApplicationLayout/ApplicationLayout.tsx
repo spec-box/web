@@ -10,7 +10,6 @@ import '@gravity-ui/uikit/styles/styles.css';
 
 import './ApplicationLayout.css';
 
-
 const bem = cn('ApplicationLayout');
 
 type ApplicationLayoutProps = {

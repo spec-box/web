@@ -1,0 +1,4 @@
+.HighlightedText-Match {
+  border-radius: var(--g-border-radius-xs);
+  background-color: var(--g-color-base-warning-light);
+}
