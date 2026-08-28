@@ -1,6 +1,6 @@
 import { CSSProperties, FC } from 'react';
 
-import { INDENT, bem } from '../ProjectFeatures.cn';
+import { bem, INDENT } from '../ProjectFeatures.cn';
 
 import './Indent.css';
 

@@ -1,9 +1,9 @@
 import { FC, ReactNode } from 'react';
+
 import { cn } from '@bem-react/classname';
-
 import { Icon } from '@gravity-ui/uikit';
-import Logo from '@/assets/logo.svg?react';
 
+import Logo from '@/assets/logo.svg?react';
 import { RouteLinkButton } from '@/components/RouteLinkButton/RouteLinkButton';
 import { ThemeToggler } from '@/components/ThemeToggler/ThemeToggler';
 import { homeRoute } from '@/model';

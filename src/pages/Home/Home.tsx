@@ -1,12 +1,12 @@
-import { useUnit } from 'effector-react';
 import { FC } from 'react';
 
+import { cn } from '@bem-react/classname';
+import { useUnit } from 'effector-react';
+
+import { Header } from '@/components/Header/Header';
+import { ProjectList } from '@/components/ProjectList/ProjectList';
 import { useTitle } from '@/hooks/useTitle';
 import * as model from '@/model/pages/home';
-import { cn } from '@bem-react/classname';
-
-import { ProjectList } from '@/components/ProjectList/ProjectList';
-import { Header } from '@/components/Header/Header';
 
 import './Home.css';
 

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { RATE_LIMIT, bem } from '../ProjectFeatures.cn';
+import { bem, RATE_LIMIT } from '../ProjectFeatures.cn';
 
 import './ItemStat.css';
 

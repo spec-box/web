@@ -1,21 +1,21 @@
+import { FC, useMemo } from 'react';
+
 import {
   BarElement,
-  ChartData,
   Chart as ChartJS,
+  ChartData,
   ChartOptions,
   Filler,
-  LineElement,
   LinearScale,
+  LineElement,
   PointElement,
   TimeScale,
   Tooltip,
 } from 'chart.js';
-import 'chartjs-adapter-date-fns';
 import { startOfDay } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import { FC, useMemo } from 'react';
-import { Bar, Line } from 'react-chartjs-2';
 import { useUnit } from 'effector-react';
+import { Bar, Line } from 'react-chartjs-2';
 
 import { $theme } from '@/model';
 import { StatAssertion, StatAutotestsItem, UiTheme } from '@/types';
@@ -23,6 +23,8 @@ import { StatAssertion, StatAutotestsItem, UiTheme } from '@/types';
 import { bem } from './Chart.cn';
 import { Layout } from './components/Layout';
 import { LegendDataset } from './components/Legend';
+
+import 'chartjs-adapter-date-fns';
 
 ChartJS.register(TimeScale, LinearScale, PointElement, LineElement, BarElement, Tooltip, Filler);
 

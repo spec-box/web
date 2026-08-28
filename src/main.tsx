@@ -1,20 +1,21 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+
 import { createHistoryRouter } from 'atomic-router';
 import { RouterProvider } from 'atomic-router-react';
 import { allSettled } from 'effector';
 import { Provider as ScopeProvider } from 'effector-react';
 import { createBrowserHistory } from 'history';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
 
 import { SpecBoxWebApi, SpecBoxWebApiModelDefaultConfigurationModel } from '@/api';
 import {
   $theme,
   AnalyticsApi,
-  SpecBoxLocalStorage,
   controls,
   createScope,
   homeRoute,
   projectRoute,
+  SpecBoxLocalStorage,
   statRoute,
 } from '@/model';
 import { UiTheme } from '@/types';
@@ -22,6 +23,7 @@ import { UiTheme } from '@/types';
 import { Application } from './Application';
 
 import 'bootstrap/dist/css/bootstrap-grid.css';
+
 import './index.css';
 
 // golbals

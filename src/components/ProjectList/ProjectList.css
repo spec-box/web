@@ -5,9 +5,8 @@
   gap: var(--g-spacing-2);
 }
 
-.ProjectList-Pagination {
-  display: flex;
-  justify-content: center;
+.ProjectList-AllProjects {
+  align-self: center;
 }
 
 .ProjectList-Items {

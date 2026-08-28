@@ -2,8 +2,9 @@ import { FC, ReactNode } from 'react';
 
 import { cn } from '@bem-react/classname';
 import { ThemeProvider } from '@gravity-ui/uikit';
-import { $theme } from '@/model';
 import { useUnit } from 'effector-react';
+
+import { $theme } from '@/model';
 
 import '@gravity-ui/uikit/styles/fonts.css';
 import '@gravity-ui/uikit/styles/styles.css';

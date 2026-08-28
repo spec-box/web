@@ -1,11 +1,12 @@
-import { useUnit } from 'effector-react';
 import { FC, useCallback, useMemo } from 'react';
+
+import { Copy } from '@gravity-ui/icons';
+import { Button, Icon } from '@gravity-ui/uikit';
+import { useUnit } from 'effector-react';
 
 import { FormattedText } from '@/components/FormattedText/FormattedText';
 import * as model from '@/model/pages/project';
 import { Feature } from '@/types';
-import { Copy } from '@gravity-ui/icons';
-import { Button, Icon } from '@gravity-ui/uikit';
 
 import { bem } from '../FeatureCard.cn';
 

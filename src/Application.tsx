@@ -1,5 +1,6 @@
-import { Route } from 'atomic-router-react';
 import { FC } from 'react';
+
+import { Route } from 'atomic-router-react';
 
 import { ApplicationLayout } from './components/ApplicationLayout/ApplicationLayout';
 import { ToastContainer } from './components/ToastContainer/ToastContainer';

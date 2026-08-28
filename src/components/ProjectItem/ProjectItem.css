@@ -1,7 +1,7 @@
-.ProjectList-ProjectTitle {
+.ProjectItem-ProjectTitle {
   font: var(--sb-font-body-m);
 }
 
-.ProjectList-ProjectDescription {
+.ProjectItem-ProjectDescription {
   color: var(--g-color-text-secondary);
 }

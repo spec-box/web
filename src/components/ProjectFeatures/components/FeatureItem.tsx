@@ -1,17 +1,18 @@
 import { FC, ReactNode, useCallback } from 'react';
+
 import { ArrowToggle } from '@gravity-ui/uikit';
-import { useUnit, useStoreMap } from 'effector-react';
+import { useStoreMap, useUnit } from 'effector-react';
 
 import { FeatureTypeIcon } from '@/components/FeatureTypeIcon/FeatureTypeIcon';
 import { HighlightedText } from '@/components/HighlightedText/HighlightedText';
 import { ListItem, ListItemState } from '@/components/ListItem/ListItem';
-import { FeatureTreeNode, GroupTreeNode } from '@/types';
 import { $collapseState, $filterTitle, toggle } from '@/model/pages/project';
+import { FeatureTreeNode, GroupTreeNode } from '@/types';
 
 import { bem } from '../ProjectFeatures.cn';
 
-import { ItemStat } from './ItemStat';
 import { Indent } from './Indent';
+import { ItemStat } from './ItemStat';
 import { Problems } from './Problems';
 
 import './FeatureItem.css';

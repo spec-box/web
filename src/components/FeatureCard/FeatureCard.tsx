@@ -1,11 +1,13 @@
 import { FC, ReactNode, useState } from 'react';
+
 import { Tab, TabList, TabProvider } from '@gravity-ui/uikit';
 
 import { Feature } from '@/types';
-import { bem } from './FeatureCard.cn';
+
 import { AssertionGroup } from './components/AssertionGroup';
 import { Header } from './components/Header';
 import { UsageTable } from './components/UsageTable';
+import { bem } from './FeatureCard.cn';
 
 import './FeatureCard.css';
 

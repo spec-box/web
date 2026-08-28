@@ -1,6 +1,9 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
   "plugins": ["typescript", "react", "oxc"],
+  "jsPlugins": [
+    { "name": "simple-import-sort", "specifier": "eslint-plugin-simple-import-sort" }
+  ],
   "categories": {
     "correctness": "error"
   },
@@ -8,7 +11,21 @@
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
     "react/only-export-components": ["warn", { "allowConstantExport": true }],
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "simple-import-sort/imports": [
+      "error",
+      {
+        "groups": [
+          ["^react$", "^react/", "^react-dom$", "^react-dom/"],
+          ["^node:", "^@?\\w", "^"],
+          ["^@/"],
+          ["^\\.\\."],
+          ["^\\./", "^\\.$"],
+          ["^\\u0000@?\\w"],
+          ["^\\u0000"]
+        ]
+      }
+    ]
   },
   "ignorePatterns": ["dist", "src/api"]
 }

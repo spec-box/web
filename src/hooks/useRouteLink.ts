@@ -1,7 +1,9 @@
+import { useCallback } from 'react';
+
 import { RouteInstance, RouteParams, RouteQuery } from 'atomic-router';
 import { useLink } from 'atomic-router-react';
-import { useCallback } from 'react';
 import { useUnit } from 'effector-react';
+
 import { PressEvent } from './usePress';
 
 export interface RouteLinkParams<T extends RouteParams> {

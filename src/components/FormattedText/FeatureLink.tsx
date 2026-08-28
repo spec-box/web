@@ -1,7 +1,7 @@
-import { type FC, type MouseEvent, useCallback, type ReactNode, useContext } from 'react';
+import { type FC, type MouseEvent, type ReactNode, useCallback, useContext } from 'react';
 
-import { RouteLink } from '@/components/RouteLink/RouteLink';
 import { ProjectContext } from '@/components/ProjectContext/ProjectContext';
+import { RouteLink } from '@/components/RouteLink/RouteLink';
 import { type PressEvent } from '@/hooks/usePress';
 import { projectRoute } from '@/model';
 

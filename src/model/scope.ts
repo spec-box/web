@@ -1,4 +1,4 @@
-import { Effect, StorePair, attach, createEffect, createStore, fork } from 'effector';
+import { attach, createEffect, createStore, Effect, fork, StorePair } from 'effector';
 
 import { SpecBoxWebApi } from '@/api';
 import { UiTheme } from '@/types';

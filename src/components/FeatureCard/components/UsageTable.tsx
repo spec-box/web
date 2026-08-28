@@ -1,8 +1,8 @@
 import { FC } from 'react';
 
-import { RelatedFeature as RelatedFeatureData } from '@/types';
-import { FeatureLink } from '@/components/FormattedText/FeatureLink';
 import { FeatureTypeIcon } from '@/components/FeatureTypeIcon/FeatureTypeIcon';
+import { FeatureLink } from '@/components/FormattedText/FeatureLink';
+import { RelatedFeature as RelatedFeatureData } from '@/types';
 
 import { bem } from '../FeatureCard.cn';
 

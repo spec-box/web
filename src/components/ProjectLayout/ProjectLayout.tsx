@@ -1,16 +1,16 @@
-import { RouteInstance } from 'atomic-router';
 import { FC, ReactNode } from 'react';
+
 import { cn } from '@bem-react/classname';
 import { Skeleton } from '@gravity-ui/uikit';
+import { RouteInstance } from 'atomic-router';
 import { useUnit } from 'effector-react';
 
+import { Header } from '@/components/Header/Header';
 import {
-  ProjectContext,
   OpenFeatureLinkEventHandler,
+  ProjectContext,
 } from '@/components/ProjectContext/ProjectContext';
 import { RouteLinkButton } from '@/components/RouteLinkButton/RouteLinkButton';
-import { Header } from '@/components/Header/Header';
-
 import { projectRoute, statRoute } from '@/model';
 
 import './ProjectLayout.css';
