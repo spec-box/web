@@ -23,15 +23,13 @@
   --g-color-text-brand-contrast: var(--g-color-text-light-primary);
 }
 
-:root {
+/* токены объявляем на `.g-root`, а не на `:root` или `.ApplicationLayout`:
+   этот класс есть и на узле ThemeProvider, и на узле любого Portal со scoped-темой
+   (Drawer, Modal, Popup, Select), поэтому `--sb-font-*` доезжают до содержимого порталов */
+.g-root {
   --sb-outline-width: 2px;
   --sb-border-radius-2-xl: 18px;
   --sb-border-radius-3-xl: 24px;
-}
-
-.ApplicationLayout {
-  --g-color-text-link: var(--g-color-private-blue-500-solid);
-  --g-color-text-link-hover: var(--g-color-private-red-400-solid);
 
   --sb-font-body-m: var(--g-text-body-font-weight) var(--g-text-body-2-font-size) /
     var(--g-text-body-2-line-height) var(--g-text-body-font-family);
@@ -47,6 +45,11 @@
     var(--g-text-subheader-2-line-height) var(--g-text-subheader-font-family);
   --sb-font-subheader-s: var(--g-text-subheader-font-weight) var(--g-text-subheader-1-font-size) /
     var(--g-text-subheader-1-line-height) var(--g-text-subheader-font-family);
+}
+
+.ApplicationLayout {
+  --g-color-text-link: var(--g-color-private-blue-500-solid);
+  --g-color-text-link-hover: var(--g-color-private-red-400-solid);
 
   display: flex;
   flex-direction: column;

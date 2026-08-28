@@ -4,9 +4,10 @@ import { cn } from '@bem-react/classname';
 import { useUnit } from 'effector-react';
 
 import { Header } from '@/components/Header/Header';
-import { ProjectList } from '@/components/ProjectList/ProjectList';
 import { useTitle } from '@/hooks/useTitle';
 import * as model from '@/model/pages/home';
+
+import { ProjectList } from './components/ProjectList/ProjectList';
 
 import './Home.css';
 

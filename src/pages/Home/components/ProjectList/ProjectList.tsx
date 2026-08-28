@@ -1,10 +1,13 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 
 import { Button } from '@gravity-ui/uikit';
+import { useUnit } from 'effector-react';
 
 import { ProjectItem } from '@/components/ProjectItem/ProjectItem';
-import { ProjectsDrawer } from '@/components/ProjectsDrawer/ProjectsDrawer';
+import { openProjectsDrawer } from '@/model/pages/home';
 import { Project } from '@/types';
+
+import { ProjectsDrawer } from '../ProjectsDrawer/ProjectsDrawer';
 
 import { bem } from './ProjectList.cn';
 
@@ -18,7 +21,7 @@ const SHORT_LIST_SIZE = 7;
 
 export const ProjectList: FC<ProjectListProps> = (props) => {
   const { projects } = props;
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const onOpenDrawer = useUnit(openProjectsDrawer);
 
   const items = projects
     .slice(0, SHORT_LIST_SIZE)
@@ -27,10 +30,10 @@ export const ProjectList: FC<ProjectListProps> = (props) => {
   return (
     <div className={bem()}>
       <div className={bem('Items')}>{items}</div>
-      <Button className={bem('AllProjects')} view="outlined" onClick={() => setDrawerOpen(true)}>
+      <Button className={bem('AllProjects')} view="outlined" onClick={onOpenDrawer}>
         Все проекты
       </Button>
-      <ProjectsDrawer projects={projects} open={drawerOpen} onClose={() => setDrawerOpen(false)} />
+      <ProjectsDrawer />
     </div>
   );
 };
