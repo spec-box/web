@@ -2,18 +2,19 @@ import { FC } from 'react';
 
 import { Project } from '@/types';
 
-import { bem } from '../ProjectList.cn';
+import { bem } from './ProjectItem.cn';
 
-import './Item.css';
 import { ListItem } from '@/components/ListItem/ListItem';
 import { useRouteLink } from '@/hooks/useRouteLink';
 import { projectRoute } from '@/model';
 
-export interface ItemProps {
+import './ProjectItem.css';
+
+export interface ProjectItemProps {
   project: Project;
 }
 
-export const Item: FC<ItemProps> = (props) => {
+export const ProjectItem: FC<ProjectItemProps> = (props) => {
   const { project } = props;
 
   const { href, handler } = useRouteLink({

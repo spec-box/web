@@ -1,9 +1,11 @@
-import { FC, useCallback, useState } from 'react';
-import { Pagination, PaginationProps } from '@gravity-ui/uikit';
+import { FC, useState } from 'react';
+import { Button } from '@gravity-ui/uikit';
 
 import { Project } from '@/types';
 
-import { Item } from './components/Item';
+import { ProjectItem } from '@/components/ProjectItem/ProjectItem';
+import { ProjectsDrawer } from '@/components/ProjectsDrawer/ProjectsDrawer';
+
 import { bem } from './ProjectList.cn';
 
 import './ProjectList.css';
@@ -12,37 +14,27 @@ export interface ProjectListProps {
   projects: Project[];
 }
 
-const PAGE_SIZE = 8;
-
-function paginate<T>(array: T[], page: number, pageSize: number) {
-  // human-readable page numbers usually start with 1, so we reduce 1 in the first argument
-  return array.slice((page - 1) * pageSize, page * pageSize);
-}
+const SHORT_LIST_SIZE = 7;
 
 export const ProjectList: FC<ProjectListProps> = (props) => {
   const { projects } = props;
-  const [page, setPage] = useState(1);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const handleUpdate: PaginationProps['onUpdate'] = useCallback((page) => setPage(page), []);
-
-  const pagination =
-    projects.length <= PAGE_SIZE ? null : (
-      <div className={bem('Pagination')}>
-        <Pagination
-          page={page}
-          pageSize={PAGE_SIZE}
-          total={projects.length}
-          onUpdate={handleUpdate}
-        />
-      </div>
-    );
-
-  const items = paginate(projects, page, PAGE_SIZE).map((p) => <Item key={p.code} project={p} />);
+  const items = projects
+    .slice(0, SHORT_LIST_SIZE)
+    .map((p) => <ProjectItem key={p.code} project={p} />);
 
   return (
     <div className={bem()}>
       <div className={bem('Items')}>{items}</div>
-      {pagination}
+      <Button className={bem('AllProjects')} view="outlined" onClick={() => setDrawerOpen(true)}>
+        Все проекты
+      </Button>
+      <ProjectsDrawer
+        projects={projects}
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+      />
     </div>
   );
 };

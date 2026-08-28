@@ -25,3 +25,6 @@ dist-ssr
 *.sw?
 
 swagger.json
+
+.agents
+.claude

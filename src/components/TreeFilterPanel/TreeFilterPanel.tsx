@@ -1,10 +1,11 @@
 import { FC } from 'react';
 
-import { Magnifier, TriangleExclamation } from '@gravity-ui/icons';
-import { Button, Icon, Select, SelectOption, Spin, TextInput } from '@gravity-ui/uikit';
+import { TriangleExclamation } from '@gravity-ui/icons';
+import { Button, Icon, Select, SelectOption } from '@gravity-ui/uikit';
 import { useUnit } from 'effector-react';
 
 import { FeatureTypeIcon } from '@/components/FeatureTypeIcon/FeatureTypeIcon';
+import { SearchInput } from '@/components/SearchInput/SearchInput';
 import {
   $filterFeatureType,
   $filterHasProblems,
@@ -69,20 +70,12 @@ export const TreeFilterPanel: FC<TreeFilterPanelProps> = ({ className }) => {
 
   return (
     <div className={bem(null, [className])}>
-      <TextInput
-        size="l"
+      <SearchInput
         className={bem('Title')}
         value={title}
         onUpdate={onTitleChange}
         placeholder="Поиск"
-        startContent={
-          // контейнер фиксированного размера: иконка поиска и спиннер
-          // одинаковой геометрии, при переключении ничего не перескакивает
-          <span className={bem('SearchIcon')}>
-            {showSpin ? <Spin size="xs" /> : <Icon data={Magnifier} size={16} />}
-          </span>
-        }
-        hasClear
+        loading={showSpin}
       />
       <Select
         size="l"
