@@ -48,5 +48,9 @@ export const $filteredProjects = combine($projects, $projectsFilter, (projects, 
     return projects;
   }
 
-  return projects.filter((project) => project.title.toLowerCase().includes(normalizedFilter));
+  return projects.filter(
+    ({ title, code }) =>
+      title.toLowerCase().includes(normalizedFilter) ||
+      code.toLowerCase().includes(normalizedFilter),
+  );
 });
