@@ -1,10 +1,10 @@
 import { FC } from 'react';
+
+import { cn } from '@bem-react/classname';
 import {
   ToastContainer as ToastContainerBase,
   ToastContainerProps as ToastContainerPropsBase,
 } from 'react-toastify';
-
-import { cn } from '@bem-react/classname';
 
 import 'react-toastify/dist/ReactToastify.css';
 

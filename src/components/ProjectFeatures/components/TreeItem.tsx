@@ -4,7 +4,7 @@ import { TreeNode } from '@/types';
 
 import { compareTreeNodes } from '../lib/compareTreeNodes';
 
-import { FeatureItem, FeatureGroupItem } from './FeatureItem';
+import { FeatureGroupItem, FeatureItem } from './FeatureItem';
 
 interface TreeItemProps {
   level: number;

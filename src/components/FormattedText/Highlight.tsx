@@ -1,4 +1,4 @@
-import { type ReactNode, type FC } from 'react';
+import { type FC, type ReactNode } from 'react';
 
 import { cn } from '@bem-react/classname';
 

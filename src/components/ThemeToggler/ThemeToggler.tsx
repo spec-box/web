@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
-import { Button, Icon } from '@gravity-ui/uikit';
+
 import { Moon, Sun } from '@gravity-ui/icons';
+import { Button, Icon } from '@gravity-ui/uikit';
 import { useUnit } from 'effector-react';
 
 import { $theme, toggleThemeEvent } from '@/model';

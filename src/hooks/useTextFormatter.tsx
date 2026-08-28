@@ -1,7 +1,7 @@
-import { Fragment, useMemo, type ReactNode } from 'react';
-import reactStringReplace from 'react-string-replace';
+import { Fragment, type ReactNode, useMemo } from 'react';
 
 import { parse } from '@spec-box/text-parser';
+import reactStringReplace from 'react-string-replace';
 
 interface Replacers {
   highlight: (props: { children: ReactNode }) => ReactNode;

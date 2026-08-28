@@ -1,6 +1,7 @@
 import { FC } from 'react';
-import { Icon, Button } from '@gravity-ui/uikit';
+
 import { ArrowUpRightFromSquare } from '@gravity-ui/icons';
+import { Button, Icon } from '@gravity-ui/uikit';
 
 import { FormattedText } from '@/components/FormattedText/FormattedText';
 import { Assertion as AssertionData } from '@/types';

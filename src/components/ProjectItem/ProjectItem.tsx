@@ -1,12 +1,11 @@
 import { FC } from 'react';
 
-import { Project } from '@/types';
-
-import { bem } from './ProjectItem.cn';
-
 import { ListItem } from '@/components/ListItem/ListItem';
 import { useRouteLink } from '@/hooks/useRouteLink';
 import { projectRoute } from '@/model';
+import { Project } from '@/types';
+
+import { bem } from './ProjectItem.cn';
 
 import './ProjectItem.css';
 

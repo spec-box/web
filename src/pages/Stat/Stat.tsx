@@ -1,6 +1,7 @@
-import { useUnit } from 'effector-react';
 import { FC } from 'react';
+
 import { cn } from '@bem-react/classname';
+import { useUnit } from 'effector-react';
 
 import { AssertionsChart, AutotestsChart } from '@/components/Chart/Chart';
 import { ProjectLayout } from '@/components/ProjectLayout/ProjectLayout';

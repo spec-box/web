@@ -1,11 +1,11 @@
 import { createRoute } from 'atomic-router';
+import { parseISO } from 'date-fns';
 import { restore, sample } from 'effector';
 
 import { mapProjectStat } from '@/mappers';
 import { ProjectStat } from '@/types';
 
-import { StoreDependencies, createSpecBoxEffect } from '../scope';
-import { parseISO } from 'date-fns';
+import { createSpecBoxEffect, StoreDependencies } from '../scope';
 
 const STUB: ProjectStat = {
   assertions: [],

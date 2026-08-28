@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react';
-import { Icon } from '@gravity-ui/uikit';
 
 import { CircleCheckFill, CircleXmarkFill, TriangleExclamationFill } from '@gravity-ui/icons';
+import { Icon } from '@gravity-ui/uikit';
 
 import { AutomationState } from '@/api';
 

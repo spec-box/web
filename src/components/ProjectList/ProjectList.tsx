@@ -1,10 +1,10 @@
 import { FC, useState } from 'react';
-import { Button } from '@gravity-ui/uikit';
 
-import { Project } from '@/types';
+import { Button } from '@gravity-ui/uikit';
 
 import { ProjectItem } from '@/components/ProjectItem/ProjectItem';
 import { ProjectsDrawer } from '@/components/ProjectsDrawer/ProjectsDrawer';
+import { Project } from '@/types';
 
 import { bem } from './ProjectList.cn';
 
@@ -30,11 +30,7 @@ export const ProjectList: FC<ProjectListProps> = (props) => {
       <Button className={bem('AllProjects')} view="outlined" onClick={() => setDrawerOpen(true)}>
         Все проекты
       </Button>
-      <ProjectsDrawer
-        projects={projects}
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-      />
+      <ProjectsDrawer projects={projects} open={drawerOpen} onClose={() => setDrawerOpen(false)} />
     </div>
   );
 };

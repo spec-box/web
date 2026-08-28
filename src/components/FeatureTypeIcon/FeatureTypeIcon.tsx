@@ -1,7 +1,8 @@
 import { FC } from 'react';
+
 import { cn } from '@bem-react/classname';
-import { Icon } from '@gravity-ui/uikit';
 import { ListUl, Picture } from '@gravity-ui/icons';
+import { Icon } from '@gravity-ui/uikit';
 
 import { FeatureType } from '@/api';
 

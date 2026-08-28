@@ -2,8 +2,8 @@ import { FC, useCallback } from 'react';
 
 import { TreeNode } from '@/types';
 
-import { compareTreeNodes } from './lib/compareTreeNodes';
 import { TreeItem } from './components/TreeItem';
+import { compareTreeNodes } from './lib/compareTreeNodes';
 import { bem } from './ProjectFeatures.cn';
 
 import './ProjectFeatures.css';

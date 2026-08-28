@@ -1,5 +1,7 @@
-import { useUnit } from 'effector-react';
 import { FC, useCallback } from 'react';
+
+import { cn } from '@bem-react/classname';
+import { useUnit } from 'effector-react';
 
 import { FeatureCard } from '@/components/FeatureCard/FeatureCard';
 import { LinesSkeleton } from '@/components/LinesSkeleton/LinesSkeleton';
@@ -7,16 +9,15 @@ import {
   FEATURE_SKELETON_LINES,
   TREE_SKELETON_LINES,
 } from '@/components/LinesSkeleton/LinesSkeleton.presets';
+import { PlaceholderMessage } from '@/components/PlaceholderMessage/PlaceholderMessage';
 import { ProjectFeatures } from '@/components/ProjectFeatures/ProjectFeatures';
+import { ProjectLayout } from '@/components/ProjectLayout/ProjectLayout';
 import { TreeFilterPanel } from '@/components/TreeFilterPanel/TreeFilterPanel';
 import { useTitle } from '@/hooks/useTitle';
 import * as model from '@/model/pages/project';
 import { Feature, TreeNode } from '@/types';
-import { cn } from '@bem-react/classname';
 
 import './Project.css';
-import { ProjectLayout } from '@/components/ProjectLayout/ProjectLayout';
-import { PlaceholderMessage } from '@/components/PlaceholderMessage/PlaceholderMessage';
 
 const bem = cn('Project');
 

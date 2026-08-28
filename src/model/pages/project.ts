@@ -1,4 +1,4 @@
-import { RouteQuery, createRoute } from 'atomic-router';
+import { createRoute, RouteQuery } from 'atomic-router';
 import copy from 'copy-to-clipboard';
 import { combine, createEvent, createStore, merge, restore, sample, split } from 'effector';
 import { debounce } from 'patronum';
@@ -8,7 +8,7 @@ import { FeatureType } from '@/api';
 import { mapFeature, mapStructure } from '@/mappers';
 import { Feature, ProjectStructure, TreeNode } from '@/types';
 
-import { StoreDependencies, createSpecBoxEffect } from '../scope';
+import { createSpecBoxEffect, StoreDependencies } from '../scope';
 
 const STRUCTURE_STUB: ProjectStructure = {
   tree: [],

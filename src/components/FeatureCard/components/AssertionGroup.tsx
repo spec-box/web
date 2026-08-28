@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { AssertionGroup as AssertionGroupData } from '@/types';
 
 import { bem } from '../FeatureCard.cn';
+
 import { Assertion } from './Assertion';
 
 import './AssertionGroup.css';

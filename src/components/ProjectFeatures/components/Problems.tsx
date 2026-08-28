@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { Icon, Label } from '@gravity-ui/uikit';
 
 import { TriangleExclamationFill } from '@gravity-ui/icons';
+import { Icon, Label } from '@gravity-ui/uikit';
 
 import { bem } from '../ProjectFeatures.cn';
 

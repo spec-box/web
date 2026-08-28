@@ -1,10 +1,10 @@
-import { ReactNode, MouseEvent, useCallback } from 'react';
+import { MouseEvent, ReactNode, useCallback } from 'react';
 
-import { RouteParams } from 'atomic-router';
 import { cn } from '@bem-react/classname';
 import { Button, ButtonProps } from '@gravity-ui/uikit';
+import { RouteParams } from 'atomic-router';
 
-import { useRouteLink, RouteLinkParams } from '@/hooks/useRouteLink';
+import { RouteLinkParams, useRouteLink } from '@/hooks/useRouteLink';
 
 const bem = cn('RouteLink');
 

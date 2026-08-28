@@ -1,4 +1,4 @@
-import { useCallback, MouseEvent, KeyboardEvent } from 'react';
+import { KeyboardEvent, MouseEvent, useCallback } from 'react';
 
 export interface MousePressEvent {
   type: 'mouse';
